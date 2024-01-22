@@ -35,11 +35,15 @@ CREATE TABLE USUARIO_POSEE_BARAJITA (
     PRIMARY KEY (id_album, id_barajita, id_usuario)
 );
 
+CREATE TYPE BARAJITA_ID_LIST AS INT[];
+
 CREATE TABLE TRADE (
     id SERIAL PRIMARY KEY,
-    id_usuario INT NOT NULL REFERENCES USUARIO,
-    id_album INT NOT NULL REFERENCES ALBUM,
-    id_barajita INT NOT NULL REFERENCES BARAJITA,
+    id_usuario_offer INT NOT NULL REFERENCES USUARIO,
+    id_usuario_recieve INT NOT NULL REFERENCES USUARIO,
+    id_album_offer INT NOT NULL REFERENCES ALBUM,
+    id_album_recieve INT NOT NULL REFERENCES ALBUM,
+    id_barajitas_offer BARAJITA_ID_LIST NOT NULL,
+    id_barajitas_recieve BARAJITA_ID_LIST NOT NULL,
     status VARCHAR(50) NOT NULL
 );
-
