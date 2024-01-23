@@ -45,5 +45,5 @@ CREATE TABLE TRADE (
     id_album_recieve INT NOT NULL REFERENCES ALBUM,
     id_barajitas_offer BARAJITA_ID_LIST NOT NULL,
     id_barajitas_recieve BARAJITA_ID_LIST NOT NULL,
-    status VARCHAR(50) NOT NULL
+    status VARCHAR(50) NOT NULL CHECK (status IN ('PENDING', 'ACEPTED', 'CANCELLED', 'COUNTEROFFER'))
 );
