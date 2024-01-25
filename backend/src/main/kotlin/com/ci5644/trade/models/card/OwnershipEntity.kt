@@ -5,8 +5,6 @@ import com.ci5644.trade.models.card.CardEntity
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
-import lombok.Getter
-import lombok.Setter
 
 /**
  * Entity representing the ownership of a card by a user
@@ -15,35 +13,37 @@ import lombok.Setter
 @Table(
     uniqueConstraints = [UniqueConstraint(columnNames = ["user_id", "card_id"])]
 )
-@Getter
-@Setter
 class OwnershipEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long = 0,                           // Ownership id
 
     @Column(name = "user_id", nullable = false)
     @NotNull
-    var userId: Long,
+    var userId: Long,                           // User id
 
     @Column(name = "card_id", nullable = false)
     @NotNull
-    val cardId: Int,
+    val cardId: Int,                            // Card id
 
     @NotNull
-    @Column(nullable = false)
-    var quantity: Int = 1,
+    var quantity: Int = 1,                      // Quantity of cards own
 
     @NotNull
-    @Column(nullable = false)
-    var visibility: Boolean = true
-
+    var visibility: Boolean = true              // User preferrence visibility
 ) {
 
+    /**
+     * Increase the quantity of this card own by the user
+     */
     fun increaseQuantity() {
         quantity += 1
     }
 
+    /**
+     * Decrease the quantity of this card own by the user
+     * Minimun quantity required: 1
+     */
     fun decreaseQuantity() {
         if (quantity > 0) {
             quantity -= 1
@@ -52,33 +52,47 @@ class OwnershipEntity (
         throw IllegalStateException("Quantity cannot be decreased below 0.")
     }
 
+    /**
+     * Set the ownership to another user
+     * 
+     * @param newUserId the id of the user to be set
+     */
     fun setUser(newUserId: Long) {
         userId = newUserId
     }
 
-    /*
-    fun setQuantity(newQuantity: Long) {
-        userId = newQuantity
+    /**
+     * Set the quantity of this card owned
+     * 
+     * @param newQuantity the quantity to be set
+     */
+    fun setQuantty(newQuantity: Int) {
+        quantity = newQuantity
     }
 
-    fun setVisibility(newVisibility: Boolean) {
+    /**
+     * Set the visibility of the card owned
+     * 
+     * @param newVisibility the visibility to be set
+     */
+    fun setVisiblity(newVisibility: Boolean) {
         visibility = newVisibility
     }
 
-    fun getVisibility(): Boolean {
+    // #region GETTERS
+    fun getVisiblity(): Boolean {
         return visibility
     }
 
-    fun getQuantity(): Int {
+    fun getQuantty(): Int {
         return quantity
     }
-     */
 
     fun getUser(): Long {
         return userId
     }
 
-    fun getCar(): Int {
+    fun getCard(): Int {
         return cardId
     }
 }

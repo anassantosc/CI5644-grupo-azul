@@ -20,7 +20,7 @@ class UserMapperTests {
 
     @Test
     fun testFromEntity() {
-        val userEntity = UserEntity("616", "Peter", "Parker")
+        val userEntity = UserEntity(616L, "Peter", "Parker")
         val userDto = userMapper.fromEntity(userEntity)
         assertEquals(userEntity.id, userDto.id)
         assertEquals(userEntity.username, userDto.username)
@@ -29,7 +29,7 @@ class UserMapperTests {
 
     @Test
     fun testToEntity() {
-        val userDto = UserDto("456", "María", "García")
+        val userDto = UserDto(456L, "María", "García")
         val userEntity = userMapper.toEntity(userDto)
         assertEquals(userDto.id, userEntity.id)
         assertEquals(userDto.username, userEntity.username)
