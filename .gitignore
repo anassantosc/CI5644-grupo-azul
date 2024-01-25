@@ -1,0 +1,49 @@
+# Ignorar archivos generados por el sistema operativo
+.DS_Store
+
+# Ignorar archivos generados por IntelliJ IDEA
+.idea/
+
+# Ignorar carpetas y archivos generados por npm y yarn
+node_modules/
+yarn-error.log
+yarn-debug.log*
+npm-debug.log*
+.npm/
+
+# Ignorar carpetas y archivos generados por Gradle
+build/
+.gradle/
+
+# Ignorar carpetas y archivos generados por el sistema
+bin/
+target/
+
+# Ignorar archivos generados por Docker
+docker-compose.override.yml
+docker-compose.yml
+
+# Ignorar archivos de respaldo y temporales
+*~
+*.swp
+*.swo
+*.bak
+
+# Ignorar archivos de configuración específicos
+.env
+.env.local
+
+# Ignorar archivos de configuración de Next.js
+.next/
+out/
+
+# Ignorar archivos de compilación de TypeScript
+*.tsbuildinfo
+
+# Ignorar archivos de logs
+logs/
+*.log
+
+# Ignorar archivos de compilación de Java
+*.class
+*.jar
