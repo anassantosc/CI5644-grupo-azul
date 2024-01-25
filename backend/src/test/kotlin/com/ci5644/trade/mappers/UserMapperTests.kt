@@ -1,7 +1,7 @@
 package com.ci5644.trade.mappers
 
 import com.ci5644.trade.dto.UserDto
-import com.ci5644.trade.entities.UserEntity
+import com.ci5644.trade.models.user.UserEntity
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll

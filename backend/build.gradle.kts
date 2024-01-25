@@ -30,6 +30,9 @@ dependencies {
 	implementation("org.postgresql:postgresql")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("jakarta.validation:jakarta.validation-api:3.0.0")
+    implementation("org.hibernate.validator:hibernate-validator:7.0.2.Final")
+    implementation("org.projectlombok:lombok:1.18.22")
 }
 
 allOpen {
