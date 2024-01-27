@@ -1,13 +1,11 @@
+import React from 'react';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import Link from 'next/link'
+import Link from 'next/link';
 
-import { Container } from '@mui/material';
 
 
 export default function Layout() {
@@ -15,7 +13,7 @@ export default function Layout() {
       <AppBar position="sticky" style={{minWidth: 1000}}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link href="/" underline="none" color="primary">Futbarajitas</Link>
+            <Link href="/" color="primary">Futbarajitas</Link>
           </Typography>
           
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
