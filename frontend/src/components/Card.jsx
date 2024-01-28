@@ -1,11 +1,15 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styles from "./../../styles/Card.module.css";
 import playerImage from "./../assets/player-background.png";
 import Image from "next/image";
-import { faRulerVertical,faDumbbell, faFlag, faUpDownLeftRight } from '@fortawesome/free-solid-svg-icons'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-
-
+import {
+    faRulerVertical,
+    faDumbbell,
+    faFlag,
+    faUpDownLeftRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const Card = ({ name, number, position, height, weight }) => {
     return (
@@ -15,7 +19,7 @@ export const Card = ({ name, number, position, height, weight }) => {
                     <div
                         className={`${styles.card__attr__item}, ${styles.card__attr__itemReverse}`}
                     >
-                        <FontAwesomeIcon icon={faFlag}/>
+                        <FontAwesomeIcon icon={faFlag} />
                         <h3 className={styles.card__heading}>{number}</h3>
                     </div>
                     <div className={styles.card__attr__item}>
@@ -45,4 +49,12 @@ export const Card = ({ name, number, position, height, weight }) => {
             <div className={styles.card__playerName}>{name}</div>
         </div>
     );
+};
+
+Card.propTypes = {
+    name: PropTypes.string,
+    number: PropTypes.number,
+    position: PropTypes.string,
+    height: PropTypes.string,
+    weight: PropTypes.string,
 };
