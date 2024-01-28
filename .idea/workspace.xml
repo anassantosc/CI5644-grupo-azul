@@ -6,6 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="d5ddb6e6-9192-40c9-b6e8-b4f8bea05fbd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/dto/CardDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/dto/CardDto.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/entities/CardEntity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/models/card/CardEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/models/card/CardEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/repositories/CardRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/repositories/CardRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/services/CardService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/services/card/CardService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/services/CardServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/services/card/CardServiceImpl.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +58,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -63,45 +72,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build CI5644-grupo-azul.executor": "Run",
-    "Gradle.Build deck.executor": "Run",
-    "Gradle.UserMapperTests.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.DeckApplication.executor": "Run",
-    "Spring Boot.DeckApplicationKt.executor": "Run",
-    "Spring Boot.TradeApplication.executor": "Debug",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Ana/OneDrive/Documentos/Universidad/Herramientas de Prog en Internet/CI5644-grupo-azul",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build CI5644-grupo-azul.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build deck.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.UserMapperTests.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.DeckApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.DeckApplicationKt.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.TradeApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/backend&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Ana/OneDrive/Documentos/Universidad/Herramientas de Prog en Internet/CI5644-grupo-azul&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "h2",
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;h2&quot;,
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\cedgo\Documents\Universidad\Herramientas para desarrollo web\deck\src\test\kotlin" />
       <recent name="C:\Users\cedgo\Documents\Universidad\Herramientas para desarrollo web\deck\src\test\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Ana\OneDrive\Documentos\Universidad\Herramientas de Prog en Internet\CI5644-grupo-azul\backend\src\main\kotlin\com\ci5644\trade\services\card" />
       <recent name="C:\Users\cedgo\Documents\Universidad\Herramientas para desarrollo web\deck\src\main\kotlin\com\ci5644\trade\entities" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
@@ -187,6 +198,8 @@
       <workItem from="1705930510422" duration="420000" />
       <workItem from="1706314962363" duration="3059000" />
       <workItem from="1706318989662" duration="4967000" />
+      <workItem from="1706414163393" duration="870000" />
+      <workItem from="1706415424920" duration="7993000" />
     </task>
     <servers />
   </component>

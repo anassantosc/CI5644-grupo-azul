@@ -23,4 +23,34 @@ class CardEntity (
     @NotNull
     @Column(nullable = false)
     val position: String,
-) {}
+
+    @NotNull
+    @Column(nullable = false)
+    val height: Float,
+
+    @NotNull
+    @Column(nullable = false)
+    val weight: Float,
+) {
+    // #regio GETTERS
+
+    fun getId() : Int {
+        return Id
+    }
+
+    fun playerName : String {
+        return playerName
+    }
+
+    fun position : String {
+        return position
+    }
+
+    fun height: Float {
+        return height
+    }
+
+    fun weight : Float {
+        return weight
+    }
+}
