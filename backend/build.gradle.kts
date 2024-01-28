@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "3.2.1"
 	id("io.spring.dependency-management") version "1.1.4"
+    id("org.flywaydb.flyway") version "10.0.0"
 	kotlin("jvm") version "1.9.21"
 	kotlin("plugin.spring") version "1.9.21"
 	kotlin("plugin.jpa") version "1.9.21"
@@ -33,6 +34,19 @@ dependencies {
     implementation("jakarta.validation:jakarta.validation-api:3.0.0")
     implementation("org.hibernate.validator:hibernate-validator:7.0.2.Final")
     implementation("org.projectlombok:lombok:1.18.22")
+}
+
+buildscript {
+    dependencies {
+        classpath("org.postgresql:postgresql:42.7.1")
+        classpath("org.flywaydb:flyway-database-postgresql:10.4.1")
+    }
+}
+
+flyway {
+    url = "jdbc:postgresql://azulito-pg:5432/trade-db"
+    user = "azulito"
+    password = "azul"
 }
 
 allOpen {
