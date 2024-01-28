@@ -18,7 +18,14 @@ const settings = ['Perfil', 'Mi Álbum', 'Salir'];
 
 import { useRouter } from 'next/navigation';
 
-import HOME from '../general/url'
+import Image from "next/image";
+
+import logo from "./../assets/logo.png";
+
+const HOME = '/'
+const PROFILE = '/Profile'
+const ALBUM = '/Album'
+const STORE = '/Store'
 
 export default function Layout() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -27,25 +34,25 @@ export default function Layout() {
 
   const handleClick = (key) => {
     if (key == "Inicio"){
-      router.push('/', { scroll: false })
+      router.push(HOME, { scroll: false })
     }
     if (key == "Álbum"){
-      router.push('/Album', { scroll: false })
+      router.push(ALBUM, { scroll: false })
     }
     if (key == "Comprar"){
-      router.push('/Store', { scroll: false })
+      router.push(STORE, { scroll: false })
     }
-
-    /*
-    pages.map((page)=>{
-      if (page == key){
-        router.push(HOME, { scroll: false })
-      }
-    })*/
   };
   const handleClickMenu = (key) => {
-    router.push('/dashboard', { scroll: false })
-    console.log(key)
+    if (key == "Perfil"){
+      router.push(PROFILE, { scroll: false })
+    }
+    if (key == "Mi Álbum"){
+      router.push(ALBUM, { scroll: false })
+    }
+    if (key == "Salir"){
+      router.push(HOME, { scroll: false })
+    }
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -54,56 +61,45 @@ export default function Layout() {
     setAnchorElUser(null);
   };
   const handleMainPage = () => {
-    console.log("main")
-    router.push('/', { scroll: false })
+    router.push(HOME, { scroll: false })
   };
-  //backgroundColor: { xs: 'black', sm: '#3A114D' }, sx
+
   return (
       <AppBar position="sticky" 
       style={{
-        background: "rgb(110, 25, 66)",
-        background: "linear-gradient(277deg, rgb(58, 17, 77) 2%, rgb(54, 54, 54) 12%, rgb(77, 17, 61) 50%, rgb(110, 26, 25) 100%)"
-      }}
+        background: "rgb(97,31,63)",
+        background: "linear-gradient(500deg, rgba(97,31,63,1) 10%, rgb(83,28,60) 30%, rgb(99,52,79) 70%, rgba(88,49,78,255) 98%)"
+        }}
       sx={{
-          borderRadius: '10px',
-          border: '1px solid white',
-          top : 0,
-          height: 70,
+          borderBottomLeftRadius : "10px",
+          borderBottomRightRadius : "10px",
+          borderBottom: 1,
+          borderBottomColor : 'white',
+          height: 75,
           width: { xs: '100%', sm: '100%' }
         }}>
         <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 0, marginLeft : 2, marginRight : 2}}>
+
+          <Box sx={{ flexGrow: 0, marginLeft : 2, marginRight : 0, width : '100px', height : '90px'}}>
             <Button
                 onClick={handleMainPage}
               >
-              <Avatar alt="Futbarajitas" src="/static/images/avatar/2.jpg" />
+              <Image
+                        src={logo}
+                        sizes="100vw"
+                        style={{ width: "100%", height: "100%" }}
+                        alt="logo"
+                    />
             </Button>
           </Box>
 
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            Futbarajitas
-          </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={() => handleClick(page)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, mx : 1, color: 'white', display: 'block' ,textTransform: "none",fontWeight: "bold", fontSize : "15px"}}
               >
                 {page}
               </Button>
@@ -128,7 +124,13 @@ export default function Layout() {
 
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' , marginLeft : 5, marginTop : 8}}
+              sx={
+                { mt: "45px", marginLeft : 4, marginTop : 7,
+                "& .MuiMenu-paper": 
+                  { backgroundColor: "#531c3c"}, 
+                }
+              }
+
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -145,7 +147,7 @@ export default function Layout() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={() => handleClickMenu(setting)}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center" color="common.white">{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -154,8 +156,3 @@ export default function Layout() {
       </AppBar>
     );
 }
-
-
-// <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              //  <Avatar src="/static/images/avatar/2.jpg" />
-              // </IconButton>
