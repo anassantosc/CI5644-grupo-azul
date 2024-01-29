@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository
 interface OwnershipRepository: JpaRepository<OwnershipEntity, Long> {
     fun existsByCardId(cardId: Int): Boolean
     fun existsByUserId(userId: Long): Boolean
-    fun existByUserIdAndCardId(userId: Long, cardId: Int): Boolean
+    fun existsByUserIdAndCardId(userId: Long, cardId: Int): Boolean
 
     fun findByUserIdAndCardId(userId: Long, cardId: Int): OwnershipEntity
 
