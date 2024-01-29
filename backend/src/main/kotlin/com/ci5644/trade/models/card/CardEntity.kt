@@ -10,47 +10,29 @@ import jakarta.validation.constraints.NotNull
 @Entity
 class CardEntity (
     @Id
-    val id: Int,
+    var id: Int,
 
     @Column(length = 64)
     @NotNull
-    val playerName: String,
-    
-    @NotNull
+    var playerName: String,
+
     @Column(nullable = false)
-    val country: String,
-    
     @NotNull
-    @Column(nullable = false)
-    val position: String,
+    var number: Int,
 
     @NotNull
     @Column(nullable = false)
-    val height: Float,
+    var country: String,
 
     @NotNull
     @Column(nullable = false)
-    val weight: Float,
-) {
-    // #regio GETTERS
+    var position: String,
 
-    fun getId() : Int {
-        return Id
-    }
+    @NotNull
+    @Column(nullable = false)
+    var height: Double,
 
-    fun playerName : String {
-        return playerName
-    }
-
-    fun position : String {
-        return position
-    }
-
-    fun height: Float {
-        return height
-    }
-
-    fun weight : Float {
-        return weight
-    }
-}
+    @NotNull
+    @Column(nullable = false)
+    var weight: Double,
+) {}

@@ -6,7 +6,7 @@ data class CardDto(
     val number: Int,
     val country: String,
     val position: String,
-    val height: Float,
-    val weight: Float,
+    val height: Double,
+    val weight: Double,
 )
 
