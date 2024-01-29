@@ -10,7 +10,7 @@ interface CardRepository: JpaRepository<CardEntity, Int> {
 
     fun findCardById(cardId: Int) : CardRepository
 
-    @Query("SELECT * FROM CardEntity")
+    @Query("SELECT c FROM CardEntity c")
     override fun findAll() : List<CardEntity>
 
 }
