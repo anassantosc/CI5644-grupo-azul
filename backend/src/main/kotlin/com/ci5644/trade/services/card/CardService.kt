@@ -5,22 +5,6 @@ import com.ci5644.trade.repositories.CardRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
-interface CardService {
-
-    var cardRepository: CardRepository
-
-    /**
-     * Add a new card
-     *
-     */
-    fun addCard(id: Int, playerName: String, number: Int, country: String, position: String, height: Double, weight: Double)
-
-    fun deleteCard(id: Int)
-
-    fun updateCard(card: CardEntity)
-
-    fun getCard(id: Int) : CardEntity
-}
 
 @Service
 class CardServiceImpl : CardService {
