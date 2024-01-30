@@ -22,7 +22,7 @@ interface CardRepository: JpaRepository<CardEntity, Int> {
     fun getCard(id: Int) : CardEntity
 
 
-    @Query("SELECT * FROM CardEntity")
+    @Query("SELECT c FROM CardEntity c")
     override fun findAll() : List<CardEntity>
 
 }
