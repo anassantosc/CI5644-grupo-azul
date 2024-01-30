@@ -20,11 +20,7 @@ class UserMapperTests {
 
     @Test
     fun testFromEntity() {
-<<<<<<< Updated upstream
         val userEntity = UserEntity(616L, "Peter", "Parker")
-=======
-        val userEntity = UserEntity(616, "Peter", "Parker")
->>>>>>> Stashed changes
         val userDto = userMapper.fromEntity(userEntity)
         assertEquals(userEntity.id, userDto.id)
         assertEquals(userEntity.username, userDto.username)
