@@ -1,16 +1,25 @@
-package com.ci5644.trade.services
+package com.ci5644.trade.services.card
 
 import com.ci5644.trade.models.card.CardEntity
 import com.ci5644.trade.repositories.CardRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Example
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.repository.query.FluentQuery
 import org.springframework.stereotype.Service
+import java.util.*
+import java.util.function.Function
 
 
 @Service
-class CardServiceImpl : CardService {
+abstract class CardService  {
 
-    override lateinit var cardRepository: CardRepository
-    override fun addCard(id: Int, playerName: String, number: Int, country: String, position: String, height: Double, weight: Double) {
+    @Autowired
+    lateinit var cardRepository: CardRepository
+
+     fun addCard(id: Int, playerName: String, number: Int, country: String, position: String, height: Double, weight: Double) {
         var card = CardEntity(0,"",0,"","",0.0,0.0)
 
         card.id = id
@@ -23,7 +32,7 @@ class CardServiceImpl : CardService {
         cardRepository.save(card)
     }
 
-    override fun deleteCard(id: Int) {
+     fun deleteCard(id: Int) {
         try {
             cardRepository.deleteById(id)
         } catch (e: Exception) {
@@ -31,7 +40,7 @@ class CardServiceImpl : CardService {
         }
     }
 
-    override fun updateCard(card: CardEntity) {
+     fun updateCard(card: CardEntity) {
         try {
             if (cardRepository.existsById(card.id)) {
                 cardRepository.save(card)
@@ -43,7 +52,7 @@ class CardServiceImpl : CardService {
         }
     }
 
-    override fun getCard(id: Int) : CardEntity {
+     fun getCard(id: Int) : CardEntity {
         val optionalCard = cardRepository.findById(id)
         if (optionalCard.isPresent) {
             return optionalCard.get()
@@ -51,4 +60,6 @@ class CardServiceImpl : CardService {
             throw Exception("Card not found")
         }
     }
+
 }
+
