@@ -3,8 +3,13 @@ package com.ci5644.trade.models.card
 import com.ci5644.trade.models.user.UserEntity
 import com.ci5644.trade.models.card.CardEntity
 import jakarta.persistence.*
+<<<<<<< Updated upstream
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
+=======
+//import jakarta.validation.constraints.NotEmpty
+//import jakarta.validation.constraints.NotNull
+>>>>>>> Stashed changes
 
 /**
  * Entity representing the ownership of a card by a user
@@ -19,6 +24,7 @@ class OwnershipEntity (
     val id: Long = 0,                           // Ownership id
 
     @Column(name = "user_id", nullable = false)
+<<<<<<< Updated upstream
     @NotNull
     var userId: Long,                           // User id
 
@@ -30,6 +36,19 @@ class OwnershipEntity (
     var quantity: Int = 1,                      // Quantity of cards own
 
     @NotNull
+=======
+    //@NotNull
+    var userId: Long,                           // User id
+
+    @Column(name = "card_id", nullable = false)
+    //@NotNull
+    val cardId: Int,                            // Card id
+
+    //@NotNull
+    var quantity: Int = 1,                      // Quantity of cards own
+
+    //@NotNull
+>>>>>>> Stashed changes
     var visibility: Boolean = true              // User preferrence visibility
 ) {
 
