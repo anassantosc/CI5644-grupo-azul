@@ -1,37 +1,29 @@
-package com.ci5644.trade.services
+package com.ci5644.trade.services.card
 
 import com.ci5644.trade.models.card.CardEntity
 import com.ci5644.trade.repositories.CardRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Example
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.repository.query.FluentQuery
 import org.springframework.stereotype.Service
+import java.util.*
+import java.util.function.Function
 
-interface CardService {
-
-    var cardRepository: CardRepository
-
-    /**
-     * Add a new card
-     *
-     */
-    fun addCard(id: Int, playerName: String, number: Int, country: String, position: String, height: Double, weight: Double)
-
-    fun deleteCard(id: Int)
-
-    fun updateCard(card: CardEntity)
-
-    fun getCard(id: Int) : CardEntity
-}
 
 @Service
-class CardServiceImpl : CardService {
+class CardService  {
 
-    override lateinit var cardRepository: CardRepository
-    override fun addCard(id: Int, playerName: String, number: Int, country: String, position: String, height: Double, weight: Double) {
-        var card = CardEntity(0,"",0,"","",0.0,0.0)
+    @Autowired
+    lateinit var cardRepository: CardRepository
+
+    fun addCard(id: Int, playerName: String, country: String, position: String, height: Double, weight: Double) {
+        var card = CardEntity(0,"","","",0.0,0.0)
 
         card.id = id
         card.playerName = playerName
-        card.number = number
         card.country = country
         card.position = position
         card.height = height
@@ -39,15 +31,18 @@ class CardServiceImpl : CardService {
         cardRepository.save(card)
     }
 
-    override fun deleteCard(id: Int) {
+    /*
+
+    fun deleteCard(id: Int) {
         try {
             cardRepository.deleteById(id)
         } catch (e: Exception) {
             throw  Exception("Card doesn't exist")
         }
     }
+     
 
-    override fun updateCard(card: CardEntity) {
+    fun updateCard(card: CardEntity) {
         try {
             if (cardRepository.existsById(card.id)) {
                 cardRepository.save(card)
@@ -59,12 +54,15 @@ class CardServiceImpl : CardService {
         }
     }
 
-    override fun getCard(id: Int) : CardEntity {
+     fun getCard(id: Int) : CardEntity {
         val optionalCard = cardRepository.findById(id)
         if (optionalCard.isPresent) {
-            return optionalCard.get()
+            return optionalCard
         } else {
             throw Exception("Card not found")
         }
     }
+    */
+
 }
+

@@ -34,12 +34,12 @@ dependencies {
     implementation("jakarta.validation:jakarta.validation-api:3.0.0")
     implementation("org.hibernate.validator:hibernate-validator:7.0.2.Final")
     implementation("org.projectlombok:lombok:1.18.22")
+    implementation("org.flywaydb:flyway-core")
 }
 
 buildscript {
     dependencies {
         classpath("org.postgresql:postgresql:42.7.1")
-        classpath("org.flywaydb:flyway-database-postgresql:10.4.1")
     }
 }
 

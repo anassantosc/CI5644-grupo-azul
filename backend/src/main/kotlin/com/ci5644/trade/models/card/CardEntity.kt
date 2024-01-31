@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull
  * Entity representing a card
  */
 @Entity
+@Table(name = "BARAJITA")
 class CardEntity (
     @Id
     var id: Int,
@@ -15,10 +16,6 @@ class CardEntity (
     @Column(length = 64)
     @NotNull
     var playerName: String,
-
-    @Column(nullable = false)
-    @NotNull
-    var number: Int,
 
     @NotNull
     @Column(nullable = false)

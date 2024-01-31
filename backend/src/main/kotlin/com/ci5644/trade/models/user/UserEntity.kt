@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator
 
 @Entity
+@Table(name = "USUARIO")
 class UserEntity (
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,3 +12,4 @@ class UserEntity (
         var username: String,
         var password: String,
 )
+//psql -U azulito - azulito-pg
