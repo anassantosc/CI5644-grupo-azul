@@ -1,0 +1,77 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    gap: 145px;
+}
+
+/* Top Content */
+
+.homeTop {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.topText {
+    color: #b8b8b8;
+    text-align: center;
+    font-family: Inter;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.cardPack {
+    position: relative;
+}
+
+.leftCard {
+    position: absolute;
+    top: 35px;
+    transform: translateX(-190px) rotate(-30deg);
+    z-index: -1;
+}
+.rightCard {
+    position: absolute;
+    top: 35px;
+    transform: translateX(190px) rotate(30deg);
+    z-index: -1;
+}
+
+/* Middle content */
+
+.homeMiddle,
+.homeBottom {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.homeMiddle {
+    flex-direction: row;
+}
+
+.homeMiddleText,
+.homeBottomText {
+    max-width: 398px;
+    text-align: center;
+    color: #b8b8b8;
+    text-align: center;
+    font-family: "Open Sans";
+    font-size: 32px;
+    font-weight: lighter;
+}
+
+/* Bottom content */
+
+.homeBottom {
+    flex-direction: row-reverse;
+    margin-bottom: 145px;
+}

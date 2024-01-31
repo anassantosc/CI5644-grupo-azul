@@ -13,7 +13,7 @@ import Image from "next/image";
 import React from "react";
 import logo from "./../assets/logo.png";
 
-const pages = ["Inicio", "Álbum", "Comprar"];
+const pages = ["Inicio", "Album", "Comprar"];
 const settings = ["Perfil", "Mi Álbum", "Salir"];
 
 export const Navbar = ({
@@ -31,7 +31,7 @@ export const Navbar = ({
                 backgroundColor: "rgba(255, 255, 255, 0.1);",
                 borderRadius: "0 0 15px 15px",
                 borderBottom: "1px solid #FFF",
-                width: "100vw",
+                width: "auto",
             }}
         >
             <Box

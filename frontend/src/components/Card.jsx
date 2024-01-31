@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styles from "./../../styles/Card.module.css";
-import playerImage from "./../assets/player-background.png";
-import Image from "next/image";
 import {
-    faRulerVertical,
     faDumbbell,
     faFlag,
+    faRulerVertical,
     faUpDownLeftRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import PropTypes from "prop-types";
+import React from "react";
+import styles from "./../../styles/Card.module.css";
+import playerImage from "./../assets/player-background.png";
 
 export const Card = ({ name, number, position, height, weight }) => {
     return (

@@ -1,18 +1,18 @@
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { Background } from "./../components/Background";
 import { Footer } from "./../components/Footer";
 
 export default function Layout({ children }) {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
     const router = useRouter();
 
     const routes = {
         Inicio: "/",
         Perfil: "/Profile",
-        Álbum: "/Album",
+        Album: "/Album",
         Comprar: "/Store",
         "Mi Álbum": "/Album",
         Salir: "/",
@@ -35,9 +35,11 @@ export default function Layout({ children }) {
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
+
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
     const handleMainPage = () => {
         router.push(HOME, { scroll: false });
     };
@@ -52,10 +54,10 @@ export default function Layout({ children }) {
 
     return (
         <>
+            <Background />
             <Navbar {...handlers} />
             {children}
             <Footer />
-            <Background />
         </>
     );
 }
