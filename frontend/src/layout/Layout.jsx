@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { Background } from "./../components/Background";
 import { Footer } from "./../components/Footer";
+import styles from "./../../styles/Layout.module.css";
 
 export default function Layout({ children }) {
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -50,13 +51,14 @@ export default function Layout({ children }) {
         handleOpenUserMenu,
         handleCloseUserMenu,
         handleClickMenu,
+        anchorElUser
     };
 
     return (
         <>
             <Background />
             <Navbar {...handlers} />
-            {children}
+            <div className={styles.layout}>{children}</div>
             <Footer />
         </>
     );

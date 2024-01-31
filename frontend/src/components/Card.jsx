@@ -43,6 +43,7 @@ export const Card = ({ name, number, position, height, weight }) => {
                         sizes="100vw"
                         style={{ width: "100%", height: "100%" }}
                         alt="Imagen de jugador"
+                        priority={true}
                     />
                 </div>
             </div>

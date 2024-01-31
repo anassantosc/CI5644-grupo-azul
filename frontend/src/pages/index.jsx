@@ -8,13 +8,13 @@ import Image from "next/image";
 import albumImage from "./../assets/album.png";
 import packImage from "./../assets/pack.png";
 
-const ColorButton = styled(Button)(({ theme, marginTop }) => ({
+const ColorButton = styled(Button)(({ theme, margintop }) => ({
     color: "#581E3D",
     fontWeight: "600",
     backgroundColor: "#FFF",
     padding: "10px 30px 10px 30px",
     textTransform: "none",
-    marginTop: marginTop,
+    marginTop: margintop,
     "&:hover": {
         backgroundColor: "#FFF",
     },
@@ -56,13 +56,13 @@ export default function Home() {
                                 />
                             </div>
                         </div>
-                        <ColorButton marginTop="70px">
+                        <ColorButton margintop="70px">
                             Comienza ahora
                         </ColorButton>
                     </div>
 
                     <div className={styles.homeMiddle}>
-                        <Image src={albumImage} width={398} height={552} />
+                        <Image src={albumImage} width={398} height={552} alt="Imagen de album" />
                         <span className={styles.homeMiddleText}>
                             <p>
                                 ¡Revive la magia del Mundial 2022 con nuestro
@@ -78,7 +78,7 @@ export default function Home() {
                     </div>
 
                     <div className={styles.homeBottom}>
-                        <Image src={packImage} width={407} height={432} />
+                        <Image src={packImage} width={407} height={432} alt="Imagen de paquete de barajitas" />
                         <span className={styles.homeBottomText}>
                             <p>
                                 ¡Descubre la emoción del Mundial 2026 con cada

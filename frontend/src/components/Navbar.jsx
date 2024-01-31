@@ -31,7 +31,9 @@ export const Navbar = ({
                 backgroundColor: "rgba(255, 255, 255, 0.1);",
                 borderRadius: "0 0 15px 15px",
                 borderBottom: "1px solid #FFF",
-                width: "auto",
+                position: "fixed",
+                width: "100%",
+                zIndex: "1"
             }}
         >
             <Box
