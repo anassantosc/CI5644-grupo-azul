@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import logo from "./../assets/logo.png";
 import { Background } from "./../components/Background";
+import { Footer } from "./../components/Footer";
 
 const pages = ["Inicio", "Álbum", "Comprar"];
 const settings = ["Perfil", "Mi Álbum", "Salir"];
@@ -175,6 +176,7 @@ export default function Layout() {
                     </Box>
                 </Toolbar>
             </AppBar>
+            <Footer />
             <Background />
         </>
     );

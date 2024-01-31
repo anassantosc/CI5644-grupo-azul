@@ -1,8 +1,7 @@
 import React from "react";
-import Layout from "../layout/Layout";
 import { Card } from "../components/Card";
-import { Footer } from "../components/Footer";
 import { SearchBar } from "../components/SearchBar";
+import Layout from "../layout/Layout";
 
 export default function Home() {
     return (
@@ -17,7 +16,6 @@ export default function Home() {
                 weight={"72kg"}
                 position={"DC"}
             />
-            <Footer />
         </>
     );
 }
