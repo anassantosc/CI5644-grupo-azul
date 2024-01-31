@@ -8,19 +8,9 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CardRepository: JpaRepository<CardEntity, Int> {
 
+    //override fun findById(id: Int) : Optional<CardEntity>
 
-    /**
-     * Add a new card
-     *
-     */
-    fun addCard(id: Int, playerName: String, number: Int, country: String, position: String, height: Double, weight: Double)
-
-    fun deleteCard(id: Int)
-
-    fun updateCard(card: CardEntity)
-
-    fun getCard(id: Int) : CardEntity
-
+    override fun existsById(id: Int) : Boolean
 
     @Query("SELECT c FROM CardEntity c")
     override fun findAll() : List<CardEntity>

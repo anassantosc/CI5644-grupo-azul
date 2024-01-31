@@ -14,17 +14,16 @@ import java.util.function.Function
 
 
 @Service
-abstract class CardService  {
+class CardService  {
 
     @Autowired
     lateinit var cardRepository: CardRepository
 
-     fun addCard(id: Int, playerName: String, number: Int, country: String, position: String, height: Double, weight: Double) {
-        var card = CardEntity(0,"",0,"","",0.0,0.0)
+    fun addCard(id: Int, playerName: String, country: String, position: String, height: Double, weight: Double) {
+        var card = CardEntity(0,"","","",0.0,0.0)
 
         card.id = id
         card.playerName = playerName
-        card.number = number
         card.country = country
         card.position = position
         card.height = height
@@ -32,15 +31,18 @@ abstract class CardService  {
         cardRepository.save(card)
     }
 
-     fun deleteCard(id: Int) {
+    /*
+
+    fun deleteCard(id: Int) {
         try {
             cardRepository.deleteById(id)
         } catch (e: Exception) {
             throw  Exception("Card doesn't exist")
         }
     }
+     
 
-     fun updateCard(card: CardEntity) {
+    fun updateCard(card: CardEntity) {
         try {
             if (cardRepository.existsById(card.id)) {
                 cardRepository.save(card)
@@ -55,11 +57,12 @@ abstract class CardService  {
      fun getCard(id: Int) : CardEntity {
         val optionalCard = cardRepository.findById(id)
         if (optionalCard.isPresent) {
-            return optionalCard.get()
+            return optionalCard
         } else {
             throw Exception("Card not found")
         }
     }
+    */
 
 }
 

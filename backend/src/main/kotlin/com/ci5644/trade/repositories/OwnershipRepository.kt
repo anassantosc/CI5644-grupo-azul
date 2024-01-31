@@ -9,17 +9,17 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface OwnershipRepository: JpaRepository<OwnershipEntity, Long> {
-    fun existsByCardId(cardId: Int): Boolean
-    fun existsByUserId(userId: Long): Boolean
-    fun existsByUserIdAndCardId(userId: Long, cardId: Int): Boolean
+    fun existsByCard(card: Int): Boolean
+    fun existsByUser(user: Long): Boolean
+    fun existsByUserAndCard(user: Long, card: Int): Boolean
 
-    fun findByUserIdAndCardId(userId: Long, cardId: Int): OwnershipEntity
+    fun findByUserAndCard(user: Long, card: Int): OwnershipEntity
 
-    fun findByCardId(cardId: Int): List<OwnershipEntity>
-    fun findByUserId(userId: Long): List<OwnershipEntity>
-    fun findByUserIdAndVisibility(userId: Long, visibility: Boolean, pageable: Pageable): Page<OwnershipEntity>
+    fun findByCard(card: Int): List<OwnershipEntity>
+    fun findByUser(user: Long): List<OwnershipEntity>
+    fun findByUserAndVisibility(user: Long, visibility: Boolean, pageable: Pageable): Page<OwnershipEntity>
     override fun findAll(pageable: Pageable): Page<OwnershipEntity>
 
-    @Query("SELECT o.userId, COUNT(o) FROM OwnershipEntity o GROUP BY o.userId")
-    fun findAllUserIdsWithPossessions(): List<Pair<Long, Int>>
+    @Query("SELECT o.user, COUNT(o) FROM OwnershipEntity o GROUP BY o.user")
+    fun findAllUsersWithPossessions(): List<Pair<Long, Int>>
 }

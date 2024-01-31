@@ -1,10 +1,10 @@
-CREATE TABLE USUARIO (
+CREATE TABLE user_entity (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     psswd VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE BARAJITA (
+CREATE TABLE card_entity (
     id INT NOT NULL PRIMARY KEY,
     player_name VARCHAR(50) NOT NULL,
     height FLOAT,
@@ -13,7 +13,7 @@ CREATE TABLE BARAJITA (
     position VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE PERTENENCIA (
+CREATE TABLE ownership_entity (
     id_usuario INT NOT NULL REFERENCES USUARIO(id),
     id_barajita INT NOT NULL REFERENCES BARAJITA(id),
     visibilidad BOOLEAN NOT NULL,

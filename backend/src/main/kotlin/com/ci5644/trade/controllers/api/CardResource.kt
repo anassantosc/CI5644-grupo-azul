@@ -13,17 +13,17 @@ class CardResource @Autowired constructor(
     private val cardService: CardService
 ) {
 
+    /*
     @GetMapping("/{id}")
     fun getCard(@PathVariable id: Int): CardDto {
-        val cardEntity = cardService.getCard(id)
+        val cardEntity = cardService.findById(id)
         return entityToDto(cardEntity)
-    }
+    }*/
 
     private fun entityToDto(cardEntity: CardEntity) : CardDto {
         return CardDto(
             id = cardEntity.id,
             playerName = cardEntity.playerName,
-            number = cardEntity.number,
             position = cardEntity.position,
             country = cardEntity.country,
             height = cardEntity.height,

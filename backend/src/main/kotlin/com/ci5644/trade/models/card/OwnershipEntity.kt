@@ -11,20 +11,21 @@ import jakarta.validation.constraints.NotNull
  */
 @Entity
 @Table(
-    uniqueConstraints = [UniqueConstraint(columnNames = ["user_id", "card_id"])]
+    name = "PERTENENCIA",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["user", "card"])]
 )
 class OwnershipEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,                           // Ownership id
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user", nullable = false)
     @NotNull
-    var userId: Long,                           // User id
+    var user: Long,                           // User id
 
-    @Column(name = "card_id", nullable = false)
+    @Column(name = "card", nullable = false)
     @NotNull
-    val cardId: Int,                            // Card id
+    val card: Int,                            // Card id
 
     @NotNull
     var quantity: Int = 1,                      // Quantity of cards own
@@ -55,10 +56,10 @@ class OwnershipEntity (
     /**
      * Set the ownership to another user
      * 
-     * @param newUserId the id of the user to be set
+     * @param newUser the id of the user to be set
      */
-    fun setUser(newUserId: Long) {
-        userId = newUserId
+    fun setUsr(newUser: Long) {
+        user = newUser
     }
 
     /**
@@ -88,11 +89,11 @@ class OwnershipEntity (
         return quantity
     }
 
-    fun getUser(): Long {
-        return userId
+    fun getUsr(): Long {
+        return user
     }
 
-    fun getCard(): Int {
-        return cardId
+    fun getCrd(): Int {
+        return card
     }
 }
