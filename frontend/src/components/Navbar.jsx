@@ -17,7 +17,6 @@ const pages = ["Inicio", "Album", "Comprar"];
 const settings = ["Perfil", "Mi Álbum", "Salir"];
 
 export const Navbar = ({
-    handleMainPage,
     handleClick,
     handleOpenUserMenu,
     anchorElUser,
@@ -45,7 +44,7 @@ export const Navbar = ({
                     height: "90px",
                 }}
             >
-                <Button onClick={handleMainPage}>
+                <Button onClick={() => handleClickMenu('Inicio')}>
                     <Image
                         src={logo}
                         sizes="100vw"

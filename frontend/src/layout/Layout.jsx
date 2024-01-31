@@ -41,12 +41,7 @@ export default function Layout({ children }) {
         setAnchorElUser(null);
     };
 
-    const handleMainPage = () => {
-        router.push(HOME, { scroll: false });
-    };
-
     const handlers = {
-        handleMainPage,
         handleClick,
         handleOpenUserMenu,
         handleCloseUserMenu,
