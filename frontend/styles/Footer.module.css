@@ -1,0 +1,10 @@
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    border-top: 2px solid white;
+    text-align: center;
+    padding: 20px;
+    height: 150px;
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+}

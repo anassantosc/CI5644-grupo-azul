@@ -1,3 +1,4 @@
+import React from "react";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -7,20 +8,14 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import React from "react";
-
 import Menu from "@mui/material/Menu";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import logo from "./../assets/logo.png";
+import { Background } from "./../components/Background";
 
 const pages = ["Inicio", "Álbum", "Comprar"];
 const settings = ["Perfil", "Mi Álbum", "Salir"];
-
-import { useRouter } from "next/navigation";
-
-import Image from "next/image";
-
-import logo from "./../assets/logo.png";
-import { Background } from "../components/Background";
-
 const HOME = "/";
 const PROFILE = "/Profile";
 const ALBUM = "/Album";
@@ -65,7 +60,6 @@ export default function Layout() {
 
     return (
         <>
-            <Background />
             <AppBar
                 position="sticky"
                 style={{
@@ -181,6 +175,7 @@ export default function Layout() {
                     </Box>
                 </Toolbar>
             </AppBar>
+            <Background />
         </>
     );
 }
