@@ -18,12 +18,25 @@ const SignupPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(`Intentando registrarse con ${values.username} y ${values.password}`);
+
+        // Verificar si password y confirmPassword son iguales
+        if (values.password !== values.confirmPassword) {
+            // Si no son iguales, actualizar el estado de los errores
+            setErrors({
+                ...errors,
+                confirmPassword: 'La contraseña y la confirmación de la contraseña no coinciden',
+            });
+        } else {
+            console.log(`Intentando registrarse con ${values.username} y ${values.password}`);
+            // Si el ingreso es exitoso, restablecer el estado de los errores a un objeto vacío
+            setErrors({});
+        }
     };
 
     return (
         <div className={styles.login}>
             <Background/>
+
             <div className={styles.logoContainer}>
                 <Image
                     className={styles.loginLogo}

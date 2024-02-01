@@ -1,16 +1,20 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 
-const CustomInput = ({ type, placeholder, onChange}) => {
+const CustomInput = ({ type, label, onChange, error, name }) => {
     return (
         <TextField
+            required
+            name={name}
             style={{
                 width: '100%',
                 marginTop: '20px',
             }}
             type={type}
-            label={placeholder}
-            onChange={onChange}
+            label={label}
+            onChange={onChange} // Aquí pasas el evento completo a la función onChange
+            error={error ? true : false}
+            helperText={error}
             variant="standard"
             size = "small"
             InputProps={{

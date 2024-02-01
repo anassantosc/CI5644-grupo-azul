@@ -11,6 +11,8 @@ const LoginPage = () => {
     const [errors, setErrors] = useState({});
 
     const handleChange = (event) => {
+        console.log(event.target.name);
+        console.log(event.target.value);
         setValues({
             ...values,
             [event.target.name]: event.target.value,
