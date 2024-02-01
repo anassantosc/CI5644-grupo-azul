@@ -5,7 +5,7 @@ import AuthForm from '../components/AuthForm';
 import {Background} from "../components/Background";
 import styles from "./../../styles/Login.module.css";
 
-const SignupPage = () => {
+const RegisterPage = () => {
     const [values, setValues] = useState({username: '', password: '', confirmPassword: ''});
     const [errors, setErrors] = useState({});
 
@@ -57,4 +57,4 @@ const SignupPage = () => {
     );
 };
 
-export default SignupPage;
+export default RegisterPage;

@@ -78,7 +78,7 @@ const style = {
             </ColorButton>
             {isLogin ? (
                 <Box>
-                    ¿No tienes una cuenta? <Link href="/Signup" underline="hover" color="white">Registrate</Link>
+                    ¿No tienes una cuenta? <Link href="/Register" underline="hover" color="white">Registrate</Link>
                 </Box>
             ) : (
                 <Box>
