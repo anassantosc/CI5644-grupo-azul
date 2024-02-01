@@ -3,6 +3,13 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import styles from "./../../styles/Footer.module.css";
+import {
+    faFacebook,
+    faInstagram,
+    faTiktok,
+} from "@fortawesome/free-brands-svg-icons";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const FooterText = ({ first, second }) => {
     return (
@@ -16,6 +23,7 @@ export const FooterText = ({ first, second }) => {
     );
 };
 
+
 export const FooterLogo = () => {
     return (
         <Box sx={{ marginBottom: "15px" }}>
@@ -26,10 +34,10 @@ export const FooterLogo = () => {
                 Marmota{" "}
             </Box>
             <Box sx={{ typography: "h7" }}> Salvaje </Box>
-            <Box>
-                <Button>FB</Button>
-                <Button>IG</Button>
-                <Button>TK</Button>
+            <Box sx={{ marginTop : '10px' }}>
+                <Button sx={{ color : 'white'}}><FontAwesomeIcon icon={faFacebook} /></Button> 
+                <Button sx={{ color : 'white'}}><FontAwesomeIcon icon={faInstagram} /></Button>
+                <Button sx={{ color : 'white'}}><FontAwesomeIcon icon={faTiktok} /></Button>
             </Box>
         </Box>
     );
@@ -38,7 +46,7 @@ export const FooterLogo = () => {
 export const Footer = () => {
     return (
         <>
-            <div className={styles.container}>
+            <Box className={styles.container}>
                 <Grid
                     container
                     columnSpacing={1}
@@ -67,7 +75,7 @@ export const Footer = () => {
                         <FooterText first="Acerca de " second="Contáctanos" />
                     </Grid>
                 </Grid>
-            </div>
+            </Box>
         </>
     );
 };
