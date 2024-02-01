@@ -1,0 +1,30 @@
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.logoContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.loginLogo {
+    width: 15vw;
+    height: auto;
+    object-fit: contain
+}
+
+.loginH1 {
+    position: relative;
+    top: -20%;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
