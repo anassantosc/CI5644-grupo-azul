@@ -12,6 +12,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+/*
+    TODO: this is not working as expected, it's returning 401 without any message
+ */
 
 @Component
 @RequiredArgsConstructor
