@@ -6,7 +6,7 @@ const CustomInput = ({ type, placeholder, onChange}) => {
         <TextField
             style={{
                 width: '100%',
-                marginBottom: '20px',
+                marginTop: '20px',
             }}
             type={type}
             label={placeholder}
