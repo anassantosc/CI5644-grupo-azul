@@ -46,8 +46,9 @@ export const FooterLogo = () => {
 export const Footer = () => {
     return (
         <>
-            <Box className={styles.container}>
+            <Box fontFamily="inherit" className={styles.container}>
                 <Grid
+                    fontFamily="inherit"
                     container
                     columnSpacing={1}
                     justifyContent="center"
