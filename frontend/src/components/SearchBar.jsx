@@ -16,6 +16,7 @@ export const SearchBar = () => {
                 onInput={(e) => {
                     searchQuery(e.target.value);
                   }}
+                styles={{fontFamily:'inherit'}}
                 sx={{   borderRadius: 10, width : '100%',
                         "& .MuiFormLabel-root": {
                             color: "#370001"

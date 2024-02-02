@@ -19,7 +19,6 @@
 .topText {
     color: #b8b8b8;
     text-align: center;
-    font-family: Inter;
     font-size: 48px;
     font-style: normal;
     font-weight: 700;
@@ -64,7 +63,6 @@
     text-align: center;
     color: #b8b8b8;
     text-align: center;
-    font-family: "Open Sans";
     font-size: 32px;
     font-weight: lighter;
 }
