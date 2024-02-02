@@ -13,9 +13,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const FooterText = ({ first, second }) => {
     return (
-        <Box sx={{ textAlign: "left", marginBottom: "40px" }}>
+        <Box sx={{ textAlign: "left", marginBottom: "40px" , fontSize : '20px'}}>
             <Box>
-                <Divider sx={{ bgcolor: "white", marginBottom: "10px" }} />
+                <Divider sx={{ bgcolor: "white", marginBottom: "10px"}} />
             </Box>
             <Box>{first}</Box>
             <Box>{second}</Box>
@@ -35,9 +35,9 @@ export const FooterLogo = () => {
             </Box>
             <Box sx={{ typography: "h7" }}> Salvaje </Box>
             <Box sx={{ marginTop : '10px' }}>
-                <Button sx={{ color : 'white'}}><FontAwesomeIcon icon={faFacebook} /></Button> 
-                <Button sx={{ color : 'white'}}><FontAwesomeIcon icon={faInstagram} /></Button>
-                <Button sx={{ color : 'white'}}><FontAwesomeIcon icon={faTiktok} /></Button>
+                <Button sx={{ color : 'white'}}><FontAwesomeIcon size = '2x' icon={faFacebook} /></Button> 
+                <Button sx={{ color : 'white'}}><FontAwesomeIcon size = '2x' icon={faInstagram} /></Button>
+                <Button sx={{ color : 'white'}}><FontAwesomeIcon size = '2x' icon={faTiktok} /></Button>
             </Box>
         </Box>
     );
