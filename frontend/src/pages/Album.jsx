@@ -1,10 +1,13 @@
 import React from "react";
 import Layout from "../layout/Layout";
+import { SearchBar } from "./../components/SearchBar";
 
 function Album() {
     return (
         <>
-            <Layout>Album page</Layout>
+            <Layout>
+                <SearchBar />
+            </Layout>
         </>
     );
 }

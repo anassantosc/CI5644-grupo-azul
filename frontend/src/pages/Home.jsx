@@ -2,7 +2,6 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
 import { Card } from "../components/Card";
-import { SearchBar } from "../components/SearchBar";
 
 import styles from "./../../styles/Home.module.css";
 import albumImage from "./../assets/album.png";
@@ -27,7 +26,6 @@ export const Home = () => {
                 <h1 className={styles.topText}>
                     VIVA LA EMOCIÓN DEL DEPORTE REY
                 </h1>
-                <SearchBar/>
                 <div className={styles.cardPack}>
                     <Card
                         number={10}
