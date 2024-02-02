@@ -9,6 +9,7 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material";
+import PropTypes from "prop-types";
 import Image from "next/image";
 import React from "react";
 import logo from "./../assets/logo.png";
@@ -21,7 +22,6 @@ export const Navbar = ({
     handleOpenUserMenu,
     anchorElUser,
     handleCloseUserMenu,
-    handleClickMenu,
 }) => {
     return (
         <Toolbar
@@ -32,7 +32,7 @@ export const Navbar = ({
                 borderBottom: "1px solid #FFF",
                 position: "fixed",
                 width: "100%",
-                zIndex: "1"
+                zIndex: "1",
             }}
         >
             <Box
@@ -44,7 +44,7 @@ export const Navbar = ({
                     height: "90px",
                 }}
             >
-                <Button onClick={() => handleClickMenu('Inicio')}>
+                <Button onClick={() => handleClick("Inicio")}>
                     <Image
                         src={logo}
                         sizes="100vw"
@@ -118,7 +118,7 @@ export const Navbar = ({
                     {settings.map((setting) => (
                         <MenuItem
                             key={setting}
-                            onClick={() => handleClickMenu(setting)}
+                            onClick={() => handleClick(setting)}
                         >
                             <Typography textAlign="center" color="common.white">
                                 {setting}
@@ -129,4 +129,11 @@ export const Navbar = ({
             </Box>
         </Toolbar>
     );
+};
+
+Navbar.propTypes = {
+    handleClick: PropTypes.func,
+    handleOpenUserMenu: PropTypes.func,
+    anchorElUser: PropTypes.func,
+    handleCloseUserMenu: PropTypes.func,
 };

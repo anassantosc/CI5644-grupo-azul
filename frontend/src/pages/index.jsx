@@ -4,10 +4,8 @@ import { Home } from "./Home";
 
 export default function Index() {
     return (
-        <>
-            <Layout>
-                <Home />
-            </Layout>
-        </>
+        <Layout>
+            <Home />
+        </Layout>
     );
 }

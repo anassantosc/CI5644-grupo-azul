@@ -1,12 +1,12 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Navbar } from "../components/Navbar";
+import styles from "./../../styles/Layout.module.css";
 import { Background } from "./../components/Background";
 import { Footer } from "./../components/Footer";
-import styles from "./../../styles/Layout.module.css";
+import PropTypes from "prop-types";
 
 export default function Layout({ children }) {
-    const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const router = useRouter();
 
@@ -26,13 +26,6 @@ export default function Layout({ children }) {
         }
     };
 
-    const handleClickMenu = (key) => {
-        const route = routes[key];
-        if (route) {
-            router.push(route, { scroll: false });
-        }
-    };
-
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
@@ -45,8 +38,7 @@ export default function Layout({ children }) {
         handleClick,
         handleOpenUserMenu,
         handleCloseUserMenu,
-        handleClickMenu,
-        anchorElUser
+        anchorElUser,
     };
 
     return (
@@ -58,3 +50,7 @@ export default function Layout({ children }) {
         </>
     );
 }
+
+Layout.propTypes = {
+    children: PropTypes.node.isRequired,
+};

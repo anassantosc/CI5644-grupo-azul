@@ -8,14 +8,14 @@ import {
     faInstagram,
     faTiktok,
 } from "@fortawesome/free-brands-svg-icons";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
 
 export const FooterText = ({ first, second }) => {
     return (
-        <Box sx={{ textAlign: "left", marginBottom: "40px" , fontSize : '20px'}}>
+        <Box sx={{ textAlign: "left", marginBottom: "40px", fontSize: "20px" }}>
             <Box>
-                <Divider sx={{ bgcolor: "white", marginBottom: "10px"}} />
+                <Divider sx={{ bgcolor: "white", marginBottom: "10px" }} />
             </Box>
             <Box>{first}</Box>
             <Box>{second}</Box>
@@ -23,8 +23,7 @@ export const FooterText = ({ first, second }) => {
     );
 };
 
-
-export const FooterLogo = () => {
+export const FooterSocial = () => {
     return (
         <Box sx={{ marginBottom: "15px" }}>
             <Box
@@ -34,10 +33,16 @@ export const FooterLogo = () => {
                 Marmota{" "}
             </Box>
             <Box sx={{ typography: "h7" }}> Salvaje </Box>
-            <Box sx={{ marginTop : '10px' }}>
-                <Button sx={{ color : 'white'}}><FontAwesomeIcon size = '2x' icon={faFacebook} /></Button> 
-                <Button sx={{ color : 'white'}}><FontAwesomeIcon size = '2x' icon={faInstagram} /></Button>
-                <Button sx={{ color : 'white'}}><FontAwesomeIcon size = '2x' icon={faTiktok} /></Button>
+            <Box sx={{ marginTop: "10px" }}>
+                <Button sx={{ color: "white" }}>
+                    <FontAwesomeIcon icon={faFacebook} />
+                </Button>
+                <Button sx={{ color: "white" }}>
+                    <FontAwesomeIcon icon={faInstagram} />
+                </Button>
+                <Button sx={{ color: "white" }}>
+                    <FontAwesomeIcon icon={faTiktok} />
+                </Button>
             </Box>
         </Box>
     );
@@ -45,38 +50,40 @@ export const FooterLogo = () => {
 
 export const Footer = () => {
     return (
-        <>
-            <Box fontFamily="inherit" className={styles.container}>
-                <Grid
-                    fontFamily="inherit"
-                    container
-                    columnSpacing={1}
-                    justifyContent="center"
-                    alignItems="center"
-                    sx={{
-                        flexGrow: 1,
-                        flexDirection: "row",
-                        bgcolor: "transparent",
-                        width: "100%",
-                        height: "100%",
-                        display: { xs: "block", md: "flex" },
-                        color: "white",
-                    }}
-                >
-                    <Grid item xs={4}>
-                        <FooterText
-                            first="Copyright 2024 marmotasalvaje.com"
-                            second="Derechos reservados"
-                        />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <FooterLogo />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <FooterText first="Acerca de " second="Contáctanos" />
-                    </Grid>
+        <Box className={styles.container}>
+            <Grid
+                container
+                columnSpacing={1}
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                    flexGrow: 1,
+                    flexDirection: "row",
+                    bgcolor: "transparent",
+                    width: "100%",
+                    height: "100%",
+                    display: { xs: "block", md: "flex" },
+                    color: "white",
+                }}
+            >
+                <Grid item xs={4}>
+                    <FooterText
+                        first="Copyright 2024 marmotasalvaje.com"
+                        second="Derechos reservados"
+                    />
                 </Grid>
-            </Box>
-        </>
+                <Grid item xs={4}>
+                    <FooterSocial />
+                </Grid>
+                <Grid item xs={4}>
+                    <FooterText first="Acerca de " second="Contáctanos" />
+                </Grid>
+            </Grid>
+        </Box>
     );
+};
+
+FooterText.propTypes = {
+    first: PropTypes.string,
+    second: PropTypes.string,
 };
