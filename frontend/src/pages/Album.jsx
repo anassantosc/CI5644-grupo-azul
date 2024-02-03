@@ -4,11 +4,9 @@ import { SearchBar } from "./../components/SearchBar";
 
 function Album() {
     return (
-        <>
-            <Layout>
-                <SearchBar />
-            </Layout>
-        </>
+        <Layout>
+            <SearchBar />
+        </Layout>
     );
 }
 
