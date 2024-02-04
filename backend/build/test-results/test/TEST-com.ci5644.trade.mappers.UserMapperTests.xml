@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.ci5644.trade.mappers.UserMapperTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-01-18T00:43:19" hostname="azulito-TUF" time="0.587">
+<testsuite name="com.ci5644.trade.mappers.UserMapperTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-02-03T22:36:58" hostname="anassc" time="14.993">
   <properties/>
-  <testcase name="testToEntity()" classname="com.ci5644.trade.mappers.UserMapperTests" time="0.585"/>
-  <testcase name="testFromEntity()" classname="com.ci5644.trade.mappers.UserMapperTests" time="0.001"/>
+  <testcase name="testToEntity()" classname="com.ci5644.trade.mappers.UserMapperTests" time="14.971"/>
+  <testcase name="testFromEntity()" classname="com.ci5644.trade.mappers.UserMapperTests" time="0.011"/>
   <system-out><![CDATA[
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -12,9 +12,9 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.1)
 
-2024-01-17T20:43:18.644-04:00  INFO 29968 --- [    Test worker] c.ci5644.trade.mappers.UserMapperTests   : Starting UserMapperTests using Java 18.0.2 with PID 29968 (started by cedgo in C:\Users\cedgo\Documents\Universidad\Herramientas para desarrollo web\CI5644-grupo-azul)
-2024-01-17T20:43:18.647-04:00  INFO 29968 --- [    Test worker] c.ci5644.trade.mappers.UserMapperTests   : No active profile set, falling back to 1 default profile: "default"
-2024-01-17T20:43:19.070-04:00  INFO 29968 --- [    Test worker] c.ci5644.trade.mappers.UserMapperTests   : Started UserMapperTests in 0.594 seconds (process running for 1.478)
+2024-02-03T18:36:43.525-04:00  INFO 422 --- [    Test worker] c.ci5644.trade.mappers.UserMapperTests   : Starting UserMapperTests using Java 17.0.9 with PID 422 (started by anassc00 in /mnt/c/Users/Ana/OneDrive/Documentos/Universidad/Herramientas de Prog en Internet/CI5644-grupo-azul/backend)
+2024-02-03T18:36:43.551-04:00  INFO 422 --- [    Test worker] c.ci5644.trade.mappers.UserMapperTests   : No active profile set, falling back to 1 default profile: "default"
+2024-02-03T18:36:57.128-04:00  INFO 422 --- [    Test worker] c.ci5644.trade.mappers.UserMapperTests   : Started UserMapperTests in 18.05 seconds (process running for 31.813)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

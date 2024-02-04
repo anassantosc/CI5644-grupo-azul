@@ -1,49 +1,39 @@
-CREATE TABLE USUARIO (
+CREATE TABLE user_entity (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
-    password VARCHAR(50) NOT NULL
+    psswd VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE ALBUM (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    year INT NOT NULL
-);
-
-CREATE TABLE USUARIO_TIENE_ALBUM (
-    id_usuario INT NOT NULL REFERENCES USUARIO,
-    id_album INT NOT NULL REFERENCES ALBUM,
-    PRIMARY KEY (id_album, id_usuario)
-);
-
-CREATE TABLE BARAJITA (
-    id SERIAL,
-    id_album INT REFERENCES ALBUM,
+CREATE TABLE card_entity (
+    id INT NOT NULL PRIMARY KEY,
     player_name VARCHAR(50) NOT NULL,
-    cost INT NOT NULL,
+    height FLOAT,
+    weight FLOAT,
     country VARCHAR(50) NOT NULL,
     position VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id, id_album)
+    shirt_number INT
 );
 
-CREATE TABLE USUARIO_POSEE_BARAJITA (
-    id_usuario INT NOT NULL REFERENCES USUARIO,
-    id_album INT NOT NULL REFERENCES ALBUM,
-    id_barajita INT NOT NULL REFERENCES BARAJITA,
+CREATE TABLE ownership_entity (
+    id_usuario INT NOT NULL REFERENCES USUARIO(id),
+    id_barajita INT NOT NULL REFERENCES BARAJITA(id),
     visibilidad BOOLEAN NOT NULL,
     quantity INT NOT NULL,
-    PRIMARY KEY (id_album, id_barajita, id_usuario)
+    PRIMARY KEY (id_usuario, id_barajita)
 );
-
-CREATE TYPE BARAJITA_ID_LIST AS INT[];
 
 CREATE TABLE TRADE (
     id SERIAL PRIMARY KEY,
-    id_usuario_offer INT NOT NULL REFERENCES USUARIO,
-    id_usuario_recieve INT NOT NULL REFERENCES USUARIO,
-    id_album_offer INT NOT NULL REFERENCES ALBUM,
-    id_album_recieve INT NOT NULL REFERENCES ALBUM,
-    id_barajitas_offer BARAJITA_ID_LIST NOT NULL,
-    id_barajitas_recieve BARAJITA_ID_LIST NOT NULL,
+    id_usuario_offer INT NOT NULL REFERENCES USUARIO(id),
+    id_usuario_recieve INT NOT NULL REFERENCES USUARIO(id),
+    id_barajita_offer INT NOT NULL REFERENCES BARAJITA(id_barajita),
+    id_barajita_recieve INT NOT NULL REFERENCES BARAJITA(id_barajita),
     status VARCHAR(50) NOT NULL CHECK (status IN ('PENDING', 'ACEPTED', 'CANCELLED', 'COUNTEROFFER'))
+);
+
+CREATE TABLE COMPRA (
+    id SERIAL PRIMARY KEY,
+    id_usuario INT NOT NULL REFERENCES USUARIO(id),
+    dte DATE NOT NULL,
+    price FLOAT
 );
