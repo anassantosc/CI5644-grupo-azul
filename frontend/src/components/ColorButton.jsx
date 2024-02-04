@@ -3,29 +3,29 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 import PropTypes from "prop-types";
 
-const StyledButton = styled(Button)(({ bgColor, textColor }) => ({
-    backgroundColor: bgColor,
-    color: textColor,
+const StyledButton = styled(Button)(({ bgcolor, textcolor }) => ({
+    backgroundColor: bgcolor,
+    color: textcolor,
     padding: "10px 15px",
     borderRadius: "0.5rem",
     textTransform: "none",
     fontWeight: "bold",
     "&:hover": {
-        backgroundColor: bgColor,
+        backgroundColor: bgcolor,
     },
 }));
 
 export default function ColorButton({
-    bgColor,
-    textColor,
+    bgcolor,
+    textcolor,
     children,
     onClick,
     ...props
 }) {
     return (
         <StyledButton
-            bgColor={bgColor}
-            textColor={textColor}
+            bgcolor={bgcolor}
+            textcolor={textcolor}
             size="small"
             onClick={onClick}
             {...props}
@@ -38,6 +38,6 @@ export default function ColorButton({
 ColorButton.propTypes = {
     bgColor: PropTypes.string,
     textColor: PropTypes.string,
-    children: PropTypes.string,
+    children: PropTypes.node,
     onClick: PropTypes.func,
 };

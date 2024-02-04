@@ -32,7 +32,7 @@ const AuthForm = ({ onSubmit, onChange, values, errors, isLogin }) => {
     return (
         <Box component="form" onSubmit={onSubmit} sx={style}>
             <h1 style={{ margin: 0 }}>
-                {isLogin ? "Iniciar sesión" : "Registrate"}
+                {isLogin ? "Iniciar sesión." : "Registrate"}
             </h1>
 
             <CustomInput
@@ -74,8 +74,8 @@ const AuthForm = ({ onSubmit, onChange, values, errors, isLogin }) => {
             )}
 
             <ColorButton
-                textColor="#fff"
-                bgColor="#731530"
+                textcolor="#fff"
+                bgcolor="#731530"
                 type="submit"
                 sx={{ height: "29px", marginBottom: "1rem", marginTop: "1rem" }}
             >
@@ -84,8 +84,8 @@ const AuthForm = ({ onSubmit, onChange, values, errors, isLogin }) => {
             </ColorButton>
 
             <ColorButton
-                textColor="#fff"
-                bgColor="#EA5323"
+                textcolor="#fff"
+                bgcolor="#EA5323"
                 sx={{ height: "29px", marginBottom: "1rem" }}
             >
                 <LocalPoliceIcon />
@@ -118,15 +118,15 @@ export default AuthForm;
 AuthForm.propTypes = {
     onSubmit: PropTypes.func,
     onChange: PropTypes.func,
-    values: PropTypes.object(props: {
+    values: PropTypes.shape({
         username: PropTypes.string,
         password: PropTypes.string,
         confirmPassword: PropTypes.string
     }),
-    errors: PropTypes.object(props: {
+    errors: PropTypes.shape({
         username: PropTypes.string,
         password: PropTypes.string,
         confirmPassword: PropTypes.string
-    }),,
+    }),
     isLogin: PropTypes.bool,
 };
