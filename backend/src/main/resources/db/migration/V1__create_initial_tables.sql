@@ -10,7 +10,8 @@ CREATE TABLE BARAJITA (
     height      FLOAT,
     weight      FLOAT,
     country     VARCHAR(50) NOT NULL,
-    position    VARCHAR(50) NOT NULL
+    position    VARCHAR(50) NOT NULL,
+    shirt_number INT
 );
 
 CREATE TABLE PERTENENCIA (

@@ -20,16 +20,17 @@ class CardController {
         val cardEntity = cardService.findById(id)
         return entityToDto(cardEntity)
     }
-
+   
     private fun entityToDto(cardEntity: CardEntity) : CardDto {
         return CardDto(
             id = cardEntity.id,
             playerName = cardEntity.playerName,
             position = cardEntity.position,
+            shirtNumber = cardEntity.shirtNumber,
             country = cardEntity.country,
             height = cardEntity.height,
             weight = cardEntity.weight
         )
     }
-    */
+     */
 }
