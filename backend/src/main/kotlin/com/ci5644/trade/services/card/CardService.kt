@@ -75,8 +75,8 @@ class CardService  {
     }
 
 
-    /* 
-    fun changeShirtNumber(id: Int, newShirtNumber: String) {
+
+    fun changeShirtNumber(id: Int, newShirtNumber: Int) {
         val optionalCard = cardRepository.findById(id)
 
 
@@ -88,7 +88,7 @@ class CardService  {
             throw RuntimeException("CardEntity was not found")
         }
     }
-    */
+
   
 
     fun changePosition(id: Int, newPosition: String) {
