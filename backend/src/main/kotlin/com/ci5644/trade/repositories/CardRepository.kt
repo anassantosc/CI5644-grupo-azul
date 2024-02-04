@@ -15,4 +15,5 @@ interface CardRepository: JpaRepository<CardEntity, Int> {
     @Query("SELECT c FROM CardEntity c")
     override fun findAll() : List<CardEntity>
 
+    override fun findAllById(ids: Iterable<Int>): List<CardEntity>
 }

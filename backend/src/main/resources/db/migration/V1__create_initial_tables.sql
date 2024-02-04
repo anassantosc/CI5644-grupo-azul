@@ -14,11 +14,11 @@ CREATE TABLE BARAJITA (
 );
 
 CREATE TABLE PERTENENCIA (
-    id          BIGINT         NOT NULL PRIMARY KEY,
+    id          BIGINT          PRIMARY KEY,
     "user" BIGINT     NOT NULL REFERENCES USUARIO (id),
     card INT     NOT NULL REFERENCES BARAJITA (id),
-    visibility BOOLEAN NOT NULL,
-    quantity    INT     NOT NULL,
+    visibility BOOLEAN,
+    quantity    INT,
     UNIQUE ("user", card)
 );
 

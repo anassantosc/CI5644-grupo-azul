@@ -16,8 +16,8 @@ CREATE TABLE card_entity (
 CREATE TABLE ownership_entity (
     id_usuario INT NOT NULL REFERENCES USUARIO(id),
     id_barajita INT NOT NULL REFERENCES BARAJITA(id),
-    visibilidad BOOLEAN NOT NULL,
-    quantity INT NOT NULL,
+    visibilidad BOOLEAN,
+    quantity INT,
     PRIMARY KEY (id_usuario, id_barajita)
 );
 
