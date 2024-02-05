@@ -45,6 +45,7 @@ class SecurityConfig {
             .authorizeRequests { auth ->
                 auth
                     .requestMatchers("/api/admin/**").authenticated()
+                    .anyRequest().permitAll()
             }
         
         http.oauth2ResourceServer().jwt()
