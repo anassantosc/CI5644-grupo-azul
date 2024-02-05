@@ -1,6 +1,6 @@
 # Proyecto CI5644 equipo azul
 
-Este proyecto es una aplicación desarrollada por el Equipo Azul utilizando Spring Boot (Kotlin) para el backend y Next.js (TypeScript) para el frontend. La aplicación se ejecuta mediante Docker Compose y cuenta con scripts específicos para configurar y reiniciar el entorno de desarrollo.
+Este proyecto es una aplicación desarrollada por el Equipo Azul utilizando Spring Boot (Kotlin) para el backend y Next.js (Javascript) para el frontend. La aplicación se ejecuta mediante Docker Compose y cuenta con scripts específicos para configurar y reiniciar el entorno de desarrollo.
 
 ## Scripts de Gestión
 

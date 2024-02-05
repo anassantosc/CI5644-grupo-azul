@@ -1,0 +1,28 @@
+.container {
+    width: 80vw;
+    max-width: 950px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    color: white;
+}
+
+.containerH1 {
+    text-align: center;
+}
+
+.progressBar {
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+
+.albumCards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    row-gap: 50px;
+    padding: 20px;
+    justify-items: center;
+    max-width: 980px;
+    margin: auto auto 50px;
+}
