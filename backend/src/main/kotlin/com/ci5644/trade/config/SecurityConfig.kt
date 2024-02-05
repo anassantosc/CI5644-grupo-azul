@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 class SecurityConfig {
-    @Value("\${okta.oauth2.client-id}")
+    @Value("\${okta.oauth2.audience}")
     private lateinit var audience: String
     
     @Value("\${okta.oauth2.issuer}")
