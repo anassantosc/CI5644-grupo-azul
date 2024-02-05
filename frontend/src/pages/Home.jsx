@@ -1,13 +1,15 @@
-import { Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import {Button} from "@mui/material";
+import {styled} from "@mui/material/styles";
 import Image from "next/image";
-import { Card } from "../components/Card";
+import {Card} from "../components/Card";
+import {useMundialProgress} from "../hooks/UseMundialProgress";
+import TopMundial from "../components/TopMundial";
 
 import styles from "./../../styles/Home.module.css";
 import albumImage from "./../assets/album.png";
 import packImage from "./../assets/pack.png";
 
-const ColorButton = styled(Button)(({ theme, margintop }) => ({
+const ColorButton = styled(Button)(({theme, margintop}) => ({
     color: "#581E3D",
     fontWeight: "600",
     backgroundColor: "#FFF",
@@ -20,6 +22,7 @@ const ColorButton = styled(Button)(({ theme, margintop }) => ({
 }));
 
 export const Home = () => {
+    const mundialProgress = useMundialProgress();
     return (
         <div className={styles.home}>
             <div className={styles.homeTop}>
@@ -53,6 +56,15 @@ export const Home = () => {
                         />
                     </div>
                 </div>
+
+
+                {
+                    mundialProgress &&
+                <TopMundial
+                    firstPlace={mundialProgress[0]}
+                    secondPlace={mundialProgress[1]}
+                    thirdPlace={mundialProgress[2]} />
+                }
                 <ColorButton margintop="70px">Comienza ahora</ColorButton>
             </div>
 

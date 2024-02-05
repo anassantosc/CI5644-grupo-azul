@@ -8,12 +8,12 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-
 /**
  * Controller that contains all the endpoints related to ownership management.
  */
 @RestController
 @RequestMapping("/api/ownership")
+@CrossOrigin(origins = ["http://localhost:3000"], allowCredentials = "true")
 class OwnershipController {
 
     @Autowired
