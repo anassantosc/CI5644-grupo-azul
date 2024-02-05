@@ -23,6 +23,10 @@ class CardEntity (
 
     @NotNull
     @Column(nullable = false)
+    var shirtNumber: Int,
+
+    @NotNull
+    @Column(nullable = false)
     var position: String,
 
     @NotNull
