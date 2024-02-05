@@ -1,0 +1,63 @@
+.card {
+    background-color: rgb(175, 175, 175);
+    border-radius: 15px;
+    width: 200px;
+    height: 300px;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    overflow: hidden;
+}
+
+.card__img {
+    background-color: rgb(116, 116, 116);
+    border-top-right-radius: 15px;
+}
+
+.card__info {
+    display: grid;
+    grid-template-columns: 0.25fr 1fr;
+}
+
+.card__attr {
+    background-color: #731530;
+    border-radius: 15px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.card__attr__item {
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card__attr__itemReverse {
+    color: white;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.card__text {
+    font-size: 14px;
+    margin: 0;
+}
+
+.card__heading {
+    font-size: 20px;
+    margin: 0;
+}
+
+.card__playerName {
+    background-color: #731530;
+    border-radius: 0 0 15px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
