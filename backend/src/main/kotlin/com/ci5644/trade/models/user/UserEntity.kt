@@ -11,5 +11,7 @@ class UserEntity (
         val id: Long,
         var username: String,
         var password: String,
+        var name: String,
+        var email: String,
+        var gender: String?,
 )
-//psql -U azulito - azulito-pg

@@ -1,7 +1,7 @@
-package com.ci5644.trade.services.user
+// package com.ci5644.trade.services.user
 
-import com.ci5644.trade.dto.UserDto
+// import com.ci5644.trade.dto.UserDto
 
-interface UserService {
-    fun createUser(userDto: UserDto): UserDto
-}
+// interface UserService {
+//     fun createUser(userDto: UserDto): UserDto
+// }

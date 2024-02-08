@@ -1,7 +1,10 @@
 CREATE TABLE USUARIO (
     id       BIGINT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
-    password    VARCHAR(50) NOT NULL
+    password    VARCHAR(50) NOT NULL,
+    name    VARCHAR(50) NOT NULL,
+    email    VARCHAR(50) NOT NULL,
+    gender    VARCHAR(50) 
 );
 
 CREATE TABLE BARAJITA (
