@@ -43,9 +43,10 @@ dependencies {
     implementation("org.hibernate.validator:hibernate-validator:7.0.2.Final")
     implementation("org.projectlombok:lombok:1.18.22")
     implementation("org.flywaydb:flyway-core")
-    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
-    implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
-    implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
+    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+    implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
+    implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
+    implementation("org.springframework.boot:spring-boot-starter-data-rest")
 }
 
 buildscript {

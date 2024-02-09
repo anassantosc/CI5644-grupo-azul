@@ -5,22 +5,16 @@ import com.ci5644.trade.dto.auth.LoginDTO
 import com.ci5644.trade.dto.auth.RegisterDTO
 import com.ci5644.trade.services.AuthorizationService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseCookie
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.CookieValue
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.*
 import javax.naming.AuthenticationException
 import jakarta.validation.Valid
+import org.springframework.web.bind.annotation.*
 
 /**
  * API que contiene todos los puntos finales de autorización y autenticación
  */
 @RestController
+@RequestMapping("auth")
 class AuthenticationController {
 
     @Autowired
@@ -33,7 +27,7 @@ class AuthenticationController {
      * @return Si el inicio de sesión tiene éxito, envía la cookie de autorización JWT.
      * De lo contrario, devuelve 401
      */
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     fun loginReq(@RequestBody @Valid log: LoginDTO): ResponseEntity<String> {
         return try {
             val jwtCookie = authService.loginUser(log.username, log.password)
@@ -54,7 +48,7 @@ class AuthenticationController {
      * @return Si el usuario está registrado, envía una respuesta con una cookie de autorización JWT.
      * Si el usuario ya existe, envía una respuesta de BAD_REQUEST.
      */
-    @PostMapping("/auth/register")
+    @PostMapping("/register")
     fun regisReq(@RequestBody @Valid reg: RegisterDTO): ResponseEntity<String> {
         val trimmedUsername = reg.username!!.trim() 
         val trimmedReg = reg.copy(username = trimmedUsername)
@@ -68,7 +62,7 @@ class AuthenticationController {
      * @param authCookie Cookie de autorización JWT del usuario
      * @return Respuesta que actualiza la edad máxima de la cookie de autorización JWT a 0
      */
-    @GetMapping("/auth/logout")
+    @GetMapping("/logout")
     fun logOut(@CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String): ResponseEntity<String> {
         val expiredCookie = ResponseCookie.from(SecurityConstants.AUTH_COOKIE_NAME, "")
             .httpOnly(false)

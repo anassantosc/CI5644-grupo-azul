@@ -25,9 +25,7 @@ object JWTSecurityUtils {
      */
     fun validateToken(token: String, key: String): Boolean {
         return try {
-            Jwts.parser()
-                .setSigningKey(key)
-                .parseClaimsJws(token)
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
             true
         } catch (e: JwtException) {
             false
@@ -47,8 +45,9 @@ object JWTSecurityUtils {
      */
     @Throws(JwtException::class, IllegalArgumentException::class)
     private fun getJWTClaim(token: String, key: String): Claims {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
             .setSigningKey(key)
+            .build()
             .parseClaimsJws(token)
             .body
     }
@@ -63,20 +62,6 @@ object JWTSecurityUtils {
         return Jwts.builder()
             .setSubject(auth.name)
             .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + SecurityConstants.AUTH_JWT_TOKEN_EXPIRE_TIME))
-            .signWith(SignatureAlgorithm.HS256, SecurityConstants.JWT_AUTH_SECRET)
-            .compact()
-    }
-
-    /**
-     * Genera un token JWT de usuario utilizando una entidad de usuario
-     *
-     * @param user Usuario de la aplicación
-     * @return Token JWT con roles de usuario y sujeto
-     */
-    fun generateJWTUserAuthToken(user: UserEntity): String {
-        return Jwts.builder()
-            .setSubject(user.username)
             .setExpiration(Date(System.currentTimeMillis() + SecurityConstants.AUTH_JWT_TOKEN_EXPIRE_TIME))
             .signWith(SignatureAlgorithm.HS256, SecurityConstants.JWT_AUTH_SECRET)
             .compact()

@@ -1,6 +1,6 @@
 package com.ci5644.trade.config.JWT
 
-import com.ci5644.trade.config.JPAUsersDetailsService
+import com.ci5644.trade.services.user.UserService
 import com.ci5644.trade.config.SecurityConstants
 import io.jsonwebtoken.JwtException
 import java.io.IOException
@@ -27,9 +27,10 @@ import jakarta.servlet.http.HttpServletResponse
 @Component
 class JWTFilter : OncePerRequestFilter() {
 
-    @Autowired
-    private lateinit var usersDetailsService: JPAUsersDetailsService
     //private val logger: Logger = LogManager.getLogger()
+
+    @Autowired
+    private lateinit var userService: UserService
 
     @Throws(ServletException::class, IOException::class)
     override fun doFilterInternal(
@@ -90,12 +91,11 @@ class JWTFilter : OncePerRequestFilter() {
      * @param request Solicitud realizada al sistema.
      */
     private fun setUserAuth(request: HttpServletRequest, username: String) {
-        val userDetails: UserDetails = usersDetailsService.loadUserByUsername(username)
+        val userDetails: UserDetails = userService.loadUserByUsername(username)
 
         val auth = UsernamePasswordAuthenticationToken(
             userDetails.username,
-            userDetails.password,
-            userDetails.authorities
+            userDetails.password
         )
 
         auth.details = WebAuthenticationDetailsSource().buildDetails(request)

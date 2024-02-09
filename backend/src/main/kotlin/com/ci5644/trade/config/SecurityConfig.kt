@@ -2,12 +2,14 @@ package com.ci5644.trade.config
 
 import com.ci5644.trade.config.JWT.EntryPointJWT
 import com.ci5644.trade.config.JWT.JWTFilter
+import com.ci5644.trade.services.user.UserService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -18,20 +20,53 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
 import java.util.*
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
+import java.lang.Exception
+import org.springframework.security.config.annotation.web.builders.WebSecurity
+
+
+
 
 @Configuration
-@EnableWebSecurity(debug = true)
-class SecurityConfig(private val usersDetailsService: JPAUsersDetailsService,
-                     private val authEntryPointJWT: EntryPointJWT,
-                     private val jwtFilter: JWTFilter) {
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+class SecurityConfig {
 
     @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
+    fun passwordEncoder() = BCryptPasswordEncoder()
+
+    @Autowired
+    lateinit var userDetailsService: UserService
+
+    @Autowired
+    private val unauthorizedHandler: EntryPointJWT? = null
+
+    @Bean
+    fun authenticationJwtTokenFilter(): JWTFilter? {
+        return JWTFilter()
+    }
+
+    fun configure(auth: AuthenticationManagerBuilder) {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())
     }
 
     @Bean
-    fun filterChain(http: HttpSecurity): SecurityFilterChain {
+    fun authProvider(): DaoAuthenticationProvider {
+        val authProvider = DaoAuthenticationProvider()
+        authProvider.setPasswordEncoder(passwordEncoder())
+        authProvider.setUserDetailsService(userDetailsService)
+        return authProvider
+    }
+
+    @Bean
+    @Throws(Exception::class)
+    fun authenticationManagerBean(http: HttpSecurity) : AuthenticationManager {
+        return http.getSharedObject(AuthenticationManagerBuilder::class.java)
+                .authenticationProvider(authProvider())
+                .build()
+    }
+
+    fun configure(http: HttpSecurity) {
         http
             .headers()
             .xssProtection()
@@ -42,12 +77,12 @@ class SecurityConfig(private val usersDetailsService: JPAUsersDetailsService,
             .cors()
             .and()
             .exceptionHandling()
-            .authenticationEntryPoint(authEntryPointJWT)
+            .authenticationEntryPoint(unauthorizedHandler)
             .and()
             .authorizeHttpRequests { auth ->
                 auth
                     .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/api/a**").authenticated()
+                    .requestMatchers("/api/**").authenticated()
                     .anyRequest().authenticated()
             }
             .httpBasic()
@@ -55,41 +90,8 @@ class SecurityConfig(private val usersDetailsService: JPAUsersDetailsService,
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter::class.java)
 
-        return http.build()
     }
 
-    @Bean
-    fun authProvider(): DaoAuthenticationProvider {
-        val authProvider = DaoAuthenticationProvider()
-        authProvider.setPasswordEncoder(passwordEncoder())
-        authProvider.setUserDetailsService(usersDetailsService)
-        return authProvider
-    }
-
-    @Bean
-    @Throws(Exception::class)
-    fun authManager(http: HttpSecurity): AuthenticationManager {
-        return http.getSharedObject(AuthenticationManagerBuilder::class.java)
-            .authenticationProvider(authProvider())
-            .build()
-    }
-
-    /**
-     * Cors configuration
-     */
-    @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        val conf = CorsConfiguration()
-        conf.allowedOrigins = listOf("http://localhost:8080", "http://localhost:3000")
-        conf.allowedMethods = listOf("*")
-        conf.allowedHeaders = listOf("*")
-        conf.allowCredentials = true
-
-        val source = org.springframework.web.cors.UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", conf)
-
-        return source
-    }
 }
