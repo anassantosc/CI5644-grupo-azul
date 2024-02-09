@@ -34,16 +34,16 @@ class SecurityConfig(private val usersDetailsService: JPAUsersDetailsService,
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .headers()
-                .xssProtection()
-                .and()
-                .contentSecurityPolicy("script-src")
-                .and().and()
+            .xssProtection()
+            .and()
+            .contentSecurityPolicy("script-src")
+            .and().and()
             .csrf().disable()
             .cors()
             .and()
             .exceptionHandling()
-                .authenticationEntryPoint(authEntryPointJWT)
-                .and()
+            .authenticationEntryPoint(authEntryPointJWT)
+            .and()
             .authorizeHttpRequests { auth ->
                 auth
                     .requestMatchers("/auth/**").permitAll()
@@ -51,9 +51,9 @@ class SecurityConfig(private val usersDetailsService: JPAUsersDetailsService,
                     .anyRequest().authenticated()
             }
             .httpBasic()
-                .and()
+            .and()
             .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
 
@@ -87,9 +87,9 @@ class SecurityConfig(private val usersDetailsService: JPAUsersDetailsService,
         conf.allowedHeaders = listOf("*")
         conf.allowCredentials = true
 
-        val source = UrlBasedCorsConfigurationSource()
+        val source = org.springframework.web.cors.UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", conf)
 
-        return source as CorsConfigurationSource
+        return source
     }
 }
