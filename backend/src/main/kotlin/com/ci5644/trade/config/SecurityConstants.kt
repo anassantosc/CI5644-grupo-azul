@@ -12,5 +12,6 @@ object SecurityConstants {
     const val AUTH_JWT_TOKEN_EXPIRE_TIME: Int = 86400000
 
     /** Palabras y signos secretos de los tokens */
-    const val JWT_AUTH_SECRET = "BANANA"
+    const val JWT_AUTH_SECRET = "ONOMATOPEYA"
+    const val USER_PSSWD_SECRET = "CAMPESINO"
 }
