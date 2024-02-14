@@ -7,13 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.http.HttpHeaders;
+
+
+import org.springframework.web.server.ResponseStatusException
 
 /**
  * Controller that contains all the endpoints related to ownership management.
  */
+
 @RestController
 @RequestMapping("/api/ownership")
-@CrossOrigin(origins = ["http://localhost:3000"], allowCredentials = "true")
+//@CrossOrigin(origins = ["http://localhost:3000"], allowCredentials = "true")
 class OwnershipController {
 
     @Autowired
@@ -23,18 +28,29 @@ class OwnershipController {
      * Retrieves a paginated list of card entities owned by a user.
      *
      * @param requestBody A map containing the request body with keys 'id' for the user ID and 'page' for the page number.
-     * @return A response entity containing the list of card entities for the specified page.
+     * @return A response entity containing a json with the list of card entities for the specified page.
      */
-    @GetMapping("/GetPageableCard")
+
+    @GetMapping("/get-cards/{userId}/{pageable}")
+    //@ResponseBody
     fun getCardsPerPage(
-        @RequestParam("id") userId: Long,
-        @RequestParam("page") pageable: Int
+            @PathVariable userId : Long,
+            @PathVariable pageable : Int
+
     ): ResponseEntity<*> {
-        return try {
+        try {
             val pageOfOwnedCards = ownershipService.getCardsPerPage(userId, pageable)
-            ResponseEntity.ok(pageOfOwnedCards)
+            val data = LinkedHashMap<String, Any>()
+            data["cards"] = pageOfOwnedCards
+            data["user id"] = userId
+            if (pageOfOwnedCards.size != 0){
+                return ResponseEntity<LinkedHashMap<String,Any>>(data,null,HttpStatus.OK)
+            }
+            else{
+                return ResponseEntity<LinkedHashMap<String,Any>>(data,null,HttpStatus.NOT_FOUND)
+            }
         } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
     }
 
@@ -42,13 +58,16 @@ class OwnershipController {
      * Retrieves the progress of a user in owning cards.
      *
      * @param requestBody A map containing the request body with the key 'id' for the user ID.
-     * @return A response entity containing the progress of the user.
+     * @return A response entity containing a json with the progress of the user.
      */
-    @GetMapping("/getProgress")
-    fun getProgress(@RequestParam("id") userId: Long): ResponseEntity<*> {
+    @GetMapping("/get-progress/{userId}")
+    fun getProgress(@PathVariable userId: Long): ResponseEntity<*> {
         return try {
             val progress = ownershipService.getUserProgress(userId)
-            ResponseEntity.ok(progress)
+            val data = LinkedHashMap<String, Any>()
+            data["progress"] = progress
+            data["user id"] = userId
+            ResponseEntity<LinkedHashMap<String,Any>>(data,null,HttpStatus.OK);
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
@@ -58,13 +77,16 @@ class OwnershipController {
      * Retrieves the progress of users in owning cards worldwide.
      *
      * @param limit The maximum number of users to return the progress for.
-     * @return A response entity containing a list of pairs representing the progress of users.
+     * @return A response entity containing a json with a list of pairs representing the progress of users.
      */
-    @GetMapping("/getMundialProgress")
+    @GetMapping("/get-mundial-progress/limit")
     fun getMundialProgress(@RequestParam(required = false, defaultValue = "3") limit: Int): ResponseEntity<*> {
         return try {
             val mundialProgress = ownershipService.getMostPossessions(limit)
-            ResponseEntity.ok(mundialProgress)
+            val data = LinkedHashMap<String, Any>()
+            data["mundial progress"] = mundialProgress
+            data["limit"] = limit
+            ResponseEntity<LinkedHashMap<String,Any>>(data,null,HttpStatus.OK);
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }

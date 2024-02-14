@@ -31,7 +31,7 @@ class OwnershipEntity (
     var quantity: Int = 1,                      // Quantity of cards own
 
     @NotNull
-    var visibility: Boolean = true              // User preferrence visibility
+    var visibility: Boolean = false              // User preferrence visibility
 ) {
 
     /**
