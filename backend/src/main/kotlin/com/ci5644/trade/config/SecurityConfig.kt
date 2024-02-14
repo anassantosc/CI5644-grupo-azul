@@ -25,11 +25,7 @@ import java.lang.Exception
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 
 
-
-
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig {
 
     @Bean

@@ -27,7 +27,7 @@ import jakarta.servlet.http.HttpServletResponse
 @Component
 class JWTFilter : OncePerRequestFilter() {
 
-    //private val logger: Logger = LogManager.getLogger()
+    private val logger = LoggerFactory.getLogger(JWTFilter::class.java)
 
     @Autowired
     private lateinit var userService: UserService
@@ -38,11 +38,11 @@ class JWTFilter : OncePerRequestFilter() {
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
+        println("1")
         logger.info("Starting JWT filter")
-        var jwtCookie: Cookie?
         // Buscamos en las cookies.
         if (request.cookies != null) {
-            jwtCookie = findJWTCookie(request)
+            val jwtCookie = findJWTCookie(request)
 
             // Si encontramos una cookie JWT, intentamos autenticar al usuario
             if (jwtCookie != null) {
@@ -66,7 +66,9 @@ class JWTFilter : OncePerRequestFilter() {
 
     @Throws(ServletException::class)
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
-        return request.requestURL.toString().contains("/admin/") ||
+        println("2")
+        logger.info("2")
+        return request.requestURL.toString().contains("/auth/") ||
                 !request.requestURL.toString().contains("/api/")
     }
 
@@ -78,6 +80,8 @@ class JWTFilter : OncePerRequestFilter() {
      * @return La cookie JWT en caso de que la solicitud la contenga/Null en caso contrario.
      */
     private fun findJWTCookie(request: HttpServletRequest): Cookie? {
+        println("3")
+        logger.info("3")
         for (cookie: Cookie in request.cookies) {
             if (cookie.name != SecurityConstants.AUTH_COOKIE_NAME) continue
             return cookie
@@ -91,6 +95,8 @@ class JWTFilter : OncePerRequestFilter() {
      * @param request Solicitud realizada al sistema.
      */
     private fun setUserAuth(request: HttpServletRequest, username: String) {
+        println("4")
+        logger.info("4")
         val userDetails: UserDetails = userService.loadUserByUsername(username)
 
         val auth = UsernamePasswordAuthenticationToken(

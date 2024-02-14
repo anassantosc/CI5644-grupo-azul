@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
  * API que contiene todos los puntos finales de autorización y autenticación
  */
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/auth")
 class AuthenticationController {
 
     @Autowired
@@ -50,6 +50,7 @@ class AuthenticationController {
      */
     @PostMapping("/register")
     fun regisReq(@RequestBody @Valid reg: RegisterDTO): ResponseEntity<String> {
+        println("yeyyyy")
         val trimmedUsername = reg.username!!.trim() 
         val trimmedReg = reg.copy(username = trimmedUsername)
         authService.registerUser(trimmedReg)
