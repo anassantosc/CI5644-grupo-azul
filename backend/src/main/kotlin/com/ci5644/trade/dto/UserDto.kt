@@ -3,7 +3,7 @@ package com.ci5644.trade.dto
 import com.ci5644.trade.models.user.UserEntity
 
 data class UserDto(
-    val id: Long,
+    val id: Int,
     var password: String,
     var username: String,
     var name: String,

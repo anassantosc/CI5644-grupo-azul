@@ -26,8 +26,7 @@ class EntryPointJWT : AuthenticationEntryPoint {
         response: HttpServletResponse,
         authException: AuthenticationException
     ) {
-        println("10")
-        logger.info("10")
+        logger.error("Authentication exception: ${authException.message}")
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.message)
     }
 }

@@ -10,14 +10,14 @@ import org.springframework.stereotype.Repository
 @Repository
 interface OwnershipRepository: JpaRepository<OwnershipEntity, Long> {
     fun existsByCard(card: Int): Boolean
-    fun existsByUser(user: Long): Boolean
-    fun existsByUserAndCard(user: Long, card: Int): Boolean
+    fun existsByUser(user: Int): Boolean
+    fun existsByUserAndCard(user: Int, card: Int): Boolean
 
-    fun findByUserAndCard(user: Long, card: Int): OwnershipEntity
+    fun findByUserAndCard(user: Int, card: Int): OwnershipEntity
 
     fun findByCard(card: Int): List<OwnershipEntity>
-    fun findByUser(user: Long): List<OwnershipEntity>
-    fun findByUserAndVisibility(user: Long, visibility: Boolean, pageable: Pageable): Page<OwnershipEntity>
+    fun findByUser(user: Int): List<OwnershipEntity>
+    fun findByUserAndVisibility(user: Int, visibility: Boolean, pageable: Pageable): Page<OwnershipEntity>
     override fun findAll(pageable: Pageable): Page<OwnershipEntity>
 
     @Query("SELECT u.username, count(o) FROM OwnershipEntity o JOIN UserEntity u ON u.id = o.user GROUP BY u.id ORDER BY count(o) DESC")

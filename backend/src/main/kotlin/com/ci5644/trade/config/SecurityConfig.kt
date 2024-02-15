@@ -19,11 +19,12 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import java.util.*
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import java.lang.Exception
 import org.springframework.security.config.annotation.web.builders.WebSecurity
+import org.springframework.boot.web.servlet.FilterRegistrationBean
 
 
 @Configuration
@@ -82,8 +83,8 @@ class SecurityConfig {
             .authorizeHttpRequests { auth ->
                 auth
                     .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/api/**").permitAll()
-                    .anyRequest().permitAll()
+                    .requestMatchers("/api/**").authenticated()
+                    .anyRequest().authenticated()
             }
             .httpBasic()
             .and()
@@ -93,6 +94,17 @@ class SecurityConfig {
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
+    }
+    
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = listOf("*") // Permitir todos los orígenes
+        configuration.allowedMethods = listOf("*") // Permitir todos los métodos HTTP
+        configuration.allowedHeaders = listOf("*") // Permitir todos los encabezados
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
     }
 
 }

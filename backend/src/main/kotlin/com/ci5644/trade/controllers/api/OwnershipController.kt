@@ -3,10 +3,14 @@ package com.ci5644.trade.controllers.api
 import com.ci5644.trade.models.user.UserEntity
 import com.ci5644.trade.services.card.OwnershipService
 import com.ci5644.trade.models.card.CardEntity
+import com.ci5644.trade.config.SecurityConstants
+import com.ci5644.trade.config.JWT.JWTSecurityUtils
+import com.ci5644.trade.services.AuthorizationService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+
 
 /**
  * Controller that contains all the endpoints related to ownership management.
@@ -27,11 +31,11 @@ class OwnershipController {
      */
     @GetMapping("/GetPageableCard")
     fun getCardsPerPage(
-        @RequestParam("id") userId: Long,
+        @RequestParam("id") id: Int,
         @RequestParam("page") pageable: Int
     ): ResponseEntity<*> {
         return try {
-            val pageOfOwnedCards = ownershipService.getCardsPerPage(userId, pageable)
+            val pageOfOwnedCards = ownershipService.getCardsPerPage(id, pageable)
             ResponseEntity.ok(pageOfOwnedCards)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
@@ -45,7 +49,7 @@ class OwnershipController {
      * @return A response entity containing the progress of the user.
      */
     @GetMapping("/getProgress")
-    fun getProgress(@RequestParam("id") userId: Long): ResponseEntity<*> {
+    fun getProgress(@RequestParam("id") userId: Int): ResponseEntity<*> {
         return try {
             val progress = ownershipService.getUserProgress(userId)
             ResponseEntity.ok(progress)

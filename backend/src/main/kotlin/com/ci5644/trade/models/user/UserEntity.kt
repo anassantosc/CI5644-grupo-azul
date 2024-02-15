@@ -8,7 +8,7 @@ import org.hibernate.annotations.GenericGenerator
 class UserEntity (
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long,
+        val id: Int = 0,
         var username: String,
         var password: String,
         var name: String,

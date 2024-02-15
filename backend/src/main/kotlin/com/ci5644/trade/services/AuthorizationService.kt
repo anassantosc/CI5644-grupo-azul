@@ -47,12 +47,11 @@ class AuthorizationService {
         }
 
         val newUser = UserEntity(
-            0,
-            reg.username.trim(),
-            encrypt(reg.password),
-            reg.name,
-            reg.email,
-            reg.gender
+            username=reg.username.trim(),
+            password=encrypt(reg.password),
+            name=reg.name,
+            email=reg.email,
+            gender=reg.gender
         )
 
         return userRepository.save(newUser)

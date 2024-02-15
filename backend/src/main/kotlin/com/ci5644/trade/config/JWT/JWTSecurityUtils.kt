@@ -24,7 +24,6 @@ object JWTSecurityUtils {
      * @return True si el token es válido/False en caso contrario
      */
     fun validateToken(token: String, key: String): Boolean {
-        println("5")
         return try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
             true
@@ -46,7 +45,6 @@ object JWTSecurityUtils {
      */
     @Throws(JwtException::class, IllegalArgumentException::class)
     private fun getJWTClaim(token: String, key: String): Claims {
-        println("6")
         return Jwts.parserBuilder()
             .setSigningKey(key)
             .build()
@@ -61,7 +59,6 @@ object JWTSecurityUtils {
      * @return Token JWT con roles de usuario y sujeto
      */
     fun generateJWTUserAuthToken(auth: Authentication): String {
-        println("7")
         return Jwts.builder()
             .setSubject(auth.name)
             .setIssuedAt(Date())
@@ -78,7 +75,6 @@ object JWTSecurityUtils {
      */
     @Throws(JwtException::class)
     fun getAuthUserFromJWT(token: String): String {
-        println("8")
         return getJWTClaim(token, SecurityConstants.JWT_AUTH_SECRET).subject
     }
 
@@ -90,7 +86,6 @@ object JWTSecurityUtils {
      * @return Cookie resultante
      */
     fun createJWTUserAuthCookie(name: String, token: String): HttpCookie {
-        println("9")
         return ResponseCookie.from(name, token)
             .httpOnly(false)
             .maxAge(SecurityConstants.AUTH_COOKIE_EXPIRE_TIME)

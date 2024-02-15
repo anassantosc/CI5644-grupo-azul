@@ -17,16 +17,23 @@ class PasswordConfig {
     fun passwordEncoder(): PasswordEncoder {
         return object : PasswordEncoder {
             override fun encode(rawPassword: CharSequence?): String {
+                println(rawPassword)
                 return encrypt(rawPassword?.toString() ?: "")
             }
 
             override fun matches(rawPassword: CharSequence?, encodedPassword: String?): Boolean {
+                println(rawPassword)
+                println(encodedPassword)
+                println("1")
                 return comparePasswords(rawPassword?.toString() ?: "", encodedPassword ?: "")
             }
         }
     }
 
     private fun comparePasswords(rawPassword: String, encodedPassword: String): Boolean {
+        println(rawPassword)
+        println(encodedPassword)
+        println("2")
         val decryptedPassword = decrypt(encodedPassword)
         return rawPassword == decryptedPassword
     }

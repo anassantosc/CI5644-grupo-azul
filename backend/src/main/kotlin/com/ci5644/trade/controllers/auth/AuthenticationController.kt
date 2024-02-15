@@ -50,7 +50,6 @@ class AuthenticationController {
      */
     @PostMapping("/register")
     fun regisReq(@RequestBody reg: RegisterDTO): ResponseEntity<String> {
-        println("yeyyyy")
         val trimmedUsername = reg.username!!.trim() 
         val trimmedReg = reg.copy(username = trimmedUsername)
         authService.registerUser(trimmedReg)
