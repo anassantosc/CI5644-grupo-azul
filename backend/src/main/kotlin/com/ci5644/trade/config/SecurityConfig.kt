@@ -2,6 +2,7 @@ package com.ci5644.trade.config
 
 import com.ci5644.trade.config.JWT.EntryPointJWT
 import com.ci5644.trade.config.JWT.JWTFilter
+import com.ci5644.trade.config.PasswordConfig
 import com.ci5644.trade.services.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -28,9 +29,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity
 @Configuration
 class SecurityConfig {
 
-    @Bean
-    fun passwordEncoder() = BCryptPasswordEncoder()
-
     @Autowired
     lateinit var userDetailsService: UserService
 
@@ -38,18 +36,23 @@ class SecurityConfig {
     private val unauthorizedHandler: EntryPointJWT? = null
 
     @Bean
+    fun securityPasswordEncoder(): PasswordEncoder {
+        return PasswordConfig().passwordEncoder()
+    }
+
+    @Bean
     fun authenticationJwtTokenFilter(): JWTFilter? {
         return JWTFilter()
     }
 
     fun configure(auth: AuthenticationManagerBuilder) {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())
+        auth.userDetailsService(userDetailsService).passwordEncoder(securityPasswordEncoder())
     }
 
     @Bean
     fun authProvider(): DaoAuthenticationProvider {
         val authProvider = DaoAuthenticationProvider()
-        authProvider.setPasswordEncoder(passwordEncoder())
+        authProvider.setPasswordEncoder(securityPasswordEncoder())
         authProvider.setUserDetailsService(userDetailsService)
         return authProvider
     }
@@ -62,7 +65,8 @@ class SecurityConfig {
                 .build()
     }
 
-    fun configure(http: HttpSecurity) {
+    @Bean
+    fun filterChain(http: HttpSecurity) : SecurityFilterChain {
         http
             .headers()
             .xssProtection()
@@ -78,8 +82,8 @@ class SecurityConfig {
             .authorizeHttpRequests { auth ->
                 auth
                     .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/api/**").authenticated()
-                    .anyRequest().authenticated()
+                    .requestMatchers("/api/**").permitAll()
+                    .anyRequest().permitAll()
             }
             .httpBasic()
             .and()
@@ -88,6 +92,7 @@ class SecurityConfig {
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter::class.java)
 
+        return http.build()
     }
 
 }

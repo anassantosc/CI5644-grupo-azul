@@ -28,7 +28,7 @@ class AuthenticationController {
      * De lo contrario, devuelve 401
      */
     @PostMapping("/login")
-    fun loginReq(@RequestBody @Valid log: LoginDTO): ResponseEntity<String> {
+    fun loginReq(@RequestBody log: LoginDTO): ResponseEntity<String> {
         return try {
             val jwtCookie = authService.loginUser(log.username, log.password)
             ResponseEntity
@@ -49,7 +49,7 @@ class AuthenticationController {
      * Si el usuario ya existe, envía una respuesta de BAD_REQUEST.
      */
     @PostMapping("/register")
-    fun regisReq(@RequestBody @Valid reg: RegisterDTO): ResponseEntity<String> {
+    fun regisReq(@RequestBody reg: RegisterDTO): ResponseEntity<String> {
         println("yeyyyy")
         val trimmedUsername = reg.username!!.trim() 
         val trimmedReg = reg.copy(username = trimmedUsername)

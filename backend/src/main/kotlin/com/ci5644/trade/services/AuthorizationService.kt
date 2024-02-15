@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import javax.naming.AuthenticationException
+import com.ci5644.trade.config.encrypt
 
 /**
  * Servicio que contiene la lógica y funcionalidades para autorizar a
@@ -28,9 +29,6 @@ class AuthorizationService {
 
     @Autowired
     private lateinit var userRepository: UserRepository
-
-    @Autowired
-    private lateinit var passwordEncoder: PasswordEncoder
 
     @Throws(NonExistentUserException::class)
     fun retrieveUser(username: String): UserEntity {
@@ -51,7 +49,7 @@ class AuthorizationService {
         val newUser = UserEntity(
             0,
             reg.username.trim(),
-            passwordEncoder.encode(reg.password.trim()),
+            encrypt(reg.password),
             reg.name,
             reg.email,
             reg.gender
