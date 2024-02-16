@@ -18,8 +18,7 @@ import javax.naming.AuthenticationException
 import com.ci5644.trade.config.encrypt
 
 /**
- * Servicio que contiene la lógica y funcionalidades para autorizar a
- * usuarios en el sistema.
+ * Service class for handling authorization-related operations.
  */
 @Service
 class AuthorizationService {
@@ -30,20 +29,36 @@ class AuthorizationService {
     @Autowired
     private lateinit var userRepository: UserRepository
 
+    /**
+     * Retrieves user entity by username.
+     * @param username String - The username of the user.
+     * @return UserEntity - The user entity.
+     * @throws NonExistentUserException if the user with the specified username does not exist.
+     */
     @Throws(NonExistentUserException::class)
     fun retrieveUser(username: String): UserEntity {
-        val user = userRepository.findByUsername(username)
-        return requireNotNull(user) { "User not found for username: $username" }
+        if (!userRepository.existsByUsername(username)) {
+            throw NonExistentUserException()
+        }
+        return userRepository.findByUsername(username)
     }
 
     /**
-     * Registra un usuario
-     *
-     * @param reg Datos del usuario a registrar
+     * Registers a new user.
+     * @param reg RegisterDTO - The registration details of the new user.
+     * @return UserEntity - The newly registered user entity.
+     * @throws UsernameTakenException if the specified username is already taken.
      */
+    @Throws(UsernameTakenException::class, IllegalArgumentException::class)
     fun registerUser(reg: RegisterDTO): UserEntity {
         if (userRepository.existsByUsername(reg.username.trim())) {
             throw UsernameTakenException()
+        }
+        if (reg.username.length <= 5) {
+            throw IllegalArgumentException("Username must be longer than 5 characters")
+        }
+        if (reg.password.length <= 8) {
+            throw IllegalArgumentException("Password must be longer than 8 characters")
         }
 
         val newUser = UserEntity(
@@ -58,24 +73,29 @@ class AuthorizationService {
     }
 
     /**
-     * Inicia sesión de un usuario en el sistema y genera la cookie de autenticación JWT
-     *
-     * @param username Nombre de usuario del usuario
-     * @param password Contraseña del usuario
-     * @return Cookie de autenticación JWT
-     * @throws AuthenticationException En caso de que las credenciales no sean válidas
+     * Logs in a user.
+     * @param username String - The username of the user.
+     * @param password String - The password of the user.
+     * @return HttpCookie - The JWT authentication cookie.
+     * @throws AuthenticationException if authentication fails.
      */
-    @Throws(AuthenticationException::class)
+    @Throws(NonExistentUserException::class, AuthenticationException::class)
     fun loginUser(username: String, password: String): HttpCookie {
-        val appUser = retrieveUser(username.trim())
-        val auth = authenticationManager.authenticate(
-            UsernamePasswordAuthenticationToken(appUser.username, password)
-        )
-        SecurityContextHolder.getContext().authentication = auth
+        try {
+            val appUser = retrieveUser(username.trim())
+            val auth = authenticationManager.authenticate(
+                UsernamePasswordAuthenticationToken(appUser.username, password)
+            )
+            SecurityContextHolder.getContext().authentication = auth
 
-        return JWTSecurityUtils.createJWTUserAuthCookie(
-            SecurityConstants.AUTH_COOKIE_NAME,
-            JWTSecurityUtils.generateJWTUserAuthToken(auth)
-        )
+            return JWTSecurityUtils.createJWTUserAuthCookie(
+                SecurityConstants.AUTH_COOKIE_NAME,
+                JWTSecurityUtils.generateJWTUserAuthToken(auth)
+            )
+        } catch (e: NonExistentUserException) {
+            throw NonExistentUserException("User not found: $username")
+        } catch (e: AuthenticationException) {
+            throw AuthenticationException(e.message)
+        }
     }
 }
