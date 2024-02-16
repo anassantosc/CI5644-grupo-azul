@@ -27,7 +27,7 @@ class OwnershipService() {
      * @param user    The id of the user
      * @param card    The id of the card
      */
-    fun addOwnership(user: Long, card: Int) {
+    fun addOwnership(user: Int, card: Int) {
         val ownership: OwnershipEntity? = ownershipRepository.findByUserAndCard(user, card)
         if (ownership != null) {
             ownership.increaseQuantity()
@@ -42,7 +42,7 @@ class OwnershipService() {
      * @param user        The id of the user
      * @param card        The id of the card
      */
-    fun removeOwnership(user: Long, card: Int) {
+    fun removeOwnership(user: Int, card: Int) {
         val ownership: OwnershipEntity? = ownershipRepository.findByUserAndCard(user, card)
 
         if (ownership != null) {
@@ -64,7 +64,7 @@ class OwnershipService() {
      * @param visibility    The new visibility status
      * @throws NonOwnershipException if the ownership doesn't exist
      */
-    fun changeOwnershipVisibility(user: Long, card: Int, visibility: Boolean) {
+    fun changeOwnershipVisibility(user: Int, card: Int, visibility: Boolean) {
         val ownership: OwnershipEntity? = ownershipRepository.findByUserAndCard(user, card)
 
         if (ownership != null) {
@@ -80,7 +80,7 @@ class OwnershipService() {
      * @param user        The ID of the user
      * @param visibility    The new visibility status
      */
-    fun changeAllOwnershipVisibility(user: Long, visibility: Boolean) {
+    fun changeAllOwnershipVisibility(user: Int, visibility: Boolean) {
         val ownershipList: List<OwnershipEntity> = ownershipRepository.findByUser(user)
         ownershipList.forEach { it.setVisiblity(visibility) }
     }
@@ -94,7 +94,7 @@ class OwnershipService() {
      * @param receiveCard The ID of the card being received
      * @throws NonOwnershipException if either user does not own the respective cards
      */
-    fun tradeOwnership(offerUser: Long, offerCard: Int, recieveUser: Long, recieveCard: Int) {
+    fun tradeOwnership(offerUser: Int, offerCard: Int, recieveUser: Int, recieveCard: Int) {
         val offerOwnership: OwnershipEntity? = ownershipRepository.findByUserAndCard(offerUser, offerCard)
         val recieveOwnership: OwnershipEntity? = ownershipRepository.findByUserAndCard(recieveUser, recieveCard)
 
@@ -115,7 +115,7 @@ class OwnershipService() {
      * @param pageable      Pagination information
      * @return              A page of ownership records
      */
-    fun getOwnedCards(userId: Long, pageable: Pageable): Page<OwnershipEntity> {
+    fun getOwnedCards(userId: Int, pageable: Pageable): Page<OwnershipEntity> {
         val allOwnedCards = ownershipRepository.findByUser(userId)
 
         val startIndex = pageable.pageNumber * pageable.pageSize
@@ -132,7 +132,7 @@ class OwnershipService() {
      * @param page     The page number (starts from 0)
      * @return         A list of card entities within the specified page
      */
-    fun getCardsPerPage(userId: Long, page: Int): List<CardEntity> {
+    fun getCardsPerPage(userId: Int, page: Int): List<CardEntity> {
         val startIndex = page * 20 
         val endIndex = startIndex + 21
         val ownedCards = ownershipRepository.findByUser(userId)
@@ -155,7 +155,7 @@ class OwnershipService() {
         return usersWithPossessions
     }
 
-    fun getUserProgress(userId: Long): Float {
+    fun getUserProgress(userId: Int): Float {
         val allOwnedCards: List<OwnershipEntity> = ownershipRepository.findByUser(userId)
         val totalPossibleCards = 640
         val ownedCardsCount = allOwnedCards.size

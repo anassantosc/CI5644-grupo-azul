@@ -1,11 +1,14 @@
 CREATE TABLE USUARIO (
-    id       BIGINT PRIMARY KEY,
+    id       SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
-    password    VARCHAR(50) NOT NULL
+    password    VARCHAR(128) NOT NULL,
+    name    VARCHAR(55) NOT NULL,
+    email    VARCHAR(64) NOT NULL,
+    gender    VARCHAR(16) 
 );
 
 CREATE TABLE BARAJITA (
-    id          INT         NOT NULL PRIMARY KEY,
+    id          INT         PRIMARY KEY,
     player_name VARCHAR(50) NOT NULL,
     height      FLOAT,
     weight      FLOAT,
@@ -15,8 +18,8 @@ CREATE TABLE BARAJITA (
 );
 
 CREATE TABLE PERTENENCIA (
-    id          BIGINT          PRIMARY KEY,
-    "user" BIGINT     NOT NULL REFERENCES USUARIO (id),
+    id          SERIAL          PRIMARY KEY,
+    "user" INT     NOT NULL REFERENCES USUARIO (id),
     card INT     NOT NULL REFERENCES BARAJITA (id),
     visibility BOOLEAN,
     quantity    INT,

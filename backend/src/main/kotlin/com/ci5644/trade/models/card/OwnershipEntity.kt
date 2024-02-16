@@ -17,11 +17,11 @@ import jakarta.validation.constraints.NotNull
 class OwnershipEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,                           // Ownership id
+    val id: Int = 0,                           // Ownership id
 
     @Column(name = "user", nullable = false)
     @NotNull
-    var user: Long,                           // User id
+    var user: Int,                           // User id
 
     @Column(name = "card", nullable = false)
     @NotNull
@@ -58,7 +58,7 @@ class OwnershipEntity (
      * 
      * @param newUser the id of the user to be set
      */
-    fun setUsr(newUser: Long) {
+    fun setUsr(newUser: Int) {
         user = newUser
     }
 
@@ -89,7 +89,7 @@ class OwnershipEntity (
         return quantity
     }
 
-    fun getUsr(): Long {
+    fun getUsr(): Int {
         return user
     }
 
