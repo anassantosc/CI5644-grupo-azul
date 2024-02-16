@@ -1,56 +1,143 @@
 package com.ci5644.trade.config
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.beans.factory.annotation.Value;
+import com.ci5644.trade.config.JWT.EntryPointJWT
+import com.ci5644.trade.config.JWT.JWTFilter
+import com.ci5644.trade.config.PasswordConfig
+import com.ci5644.trade.services.user.UserService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import java.util.*
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
+import java.lang.Exception
+import org.springframework.security.config.annotation.web.builders.WebSecurity
+import org.springframework.boot.web.servlet.FilterRegistrationBean
+import org.springframework.security.authentication.BadCredentialsException
+import jakarta.servlet.http.HttpServletResponse
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
 
-import org.springframework.security.oauth2.jwt.Jwt
-import org.springframework.security.oauth2.jwt.JwtDecoder
-import org.springframework.security.oauth2.jwt.JwtDecoders
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
-import org.springframework.security.oauth2.jwt.JwtValidators
-import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator
-import org.springframework.security.oauth2.core.OAuth2TokenValidator
-
-import lombok.RequiredArgsConstructor;
-
+/**
+ * Configuration class for security settings.
+ */
 @Configuration
-@EnableMethodSecurity
-@RequiredArgsConstructor
 class SecurityConfig {
-    @Value("\${okta.oauth2.audience}")
-    private lateinit var audience: String
-    
-    @Value("\${okta.oauth2.issuer}")
-    private lateinit var issuer: String
 
+    @Autowired
+    lateinit var userDetailsService: UserService
+
+    @Autowired
+    private val unauthorizedHandler: EntryPointJWT? = null
+
+    /**
+     * Provides a custom PasswordEncoder bean.
+     * @return PasswordEncoder - Custom PasswordEncoder bean.
+     */
     @Bean
-    fun jwtDecoder(): JwtDecoder {
-        val jwtDecoder = JwtDecoders.fromOidcIssuerLocation(issuer) as NimbusJwtDecoder
-        val audienceValidator = AudienceValidator(audience)
-        val withIssuer = JwtValidators.createDefaultWithIssuer(issuer)
-        val withAudience = DelegatingOAuth2TokenValidator<Jwt>(withIssuer, audienceValidator)
-        jwtDecoder.setJwtValidator(withAudience)
-        return jwtDecoder
+    fun securityPasswordEncoder(): PasswordEncoder {
+        return PasswordConfig().passwordEncoder()
     }
 
+    /**
+     * Provides a custom JWT token filter bean.
+     * @return JWTFilter - Custom JWTFilter bean.
+     */
     @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        http
-            .authorizeRequests { auth ->
-                auth
-                    .requestMatchers("/api/admin/**").authenticated()
-                    .anyRequest().permitAll()
-            }
-        
-        http.oauth2ResourceServer().jwt()
+    fun authenticationJwtTokenFilter(): JWTFilter? {
+        return JWTFilter()
+    }
 
-        http.csrf().disable()
+    /**
+     * Configures authentication manager to use custom user details service and password encoder.
+     */
+    fun configure(auth: AuthenticationManagerBuilder) {
+        auth.userDetailsService(userDetailsService).passwordEncoder(securityPasswordEncoder())
+    }
+
+    /**
+     * Configures the DaoAuthenticationProvider with custom user details service and password encoder.
+     * @return DaoAuthenticationProvider - Configured authentication provider.
+     */
+    @Bean
+    fun authProvider(): DaoAuthenticationProvider {
+        val authProvider = DaoAuthenticationProvider()
+        authProvider.setPasswordEncoder(securityPasswordEncoder())
+        authProvider.setUserDetailsService(userDetailsService)
+        return authProvider
+    }
+
+    /**
+     * Configures the authentication manager bean.
+     * @param http HttpSecurity - HttpSecurity object for configuring HTTP security.
+     * @return AuthenticationManager - Configured authentication manager.
+     */
+    @Bean
+    @Throws(Exception::class)
+    fun authenticationManagerBean(http: HttpSecurity) : AuthenticationManager {
+        return http.getSharedObject(AuthenticationManagerBuilder::class.java)
+                .authenticationProvider(authProvider())
+                .build()
+    }
+
+    /**
+     * Configures security filters and authorization rules.
+     * @param http HttpSecurity - HttpSecurity object for configuring HTTP security.
+     * @return SecurityFilterChain - Configured security filter chain.
+     */
+    @Bean
+    fun filterChain(http: HttpSecurity) : SecurityFilterChain {
+        http
+            .headers()
+            .xssProtection()
+            .and()
+            .contentSecurityPolicy("script-src")
+            .and().and()
+            .csrf().disable()
+            .cors()
+            .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(unauthorizedHandler)
+            .and()
+            .authorizeHttpRequests { auth ->
+                auth
+                    .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers("/api/**").authenticated()
+                    .anyRequest().authenticated()
+            }
+            .httpBasic()
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter::class.java)
+
         return http.build()
+    }
+    
+    /**
+     * Provides a custom CorsConfigurationSource bean for CORS configuration.
+     * @return CorsConfigurationSource - Custom CorsConfigurationSource bean.
+     */
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = listOf("*") // Permitir todos los orígenes
+        configuration.allowedMethods = listOf("*") // Permitir todos los métodos HTTP
+        configuration.allowedHeaders = listOf("*") // Permitir todos los encabezados
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
     }
 }
