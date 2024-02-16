@@ -1,4 +1,4 @@
-package com.ci5644.trade.exceptions.runtime
+// package com.ci5644.trade.exceptions.runtime
 
-class NonExistentUserException(message: String = "") : RuntimeException(message) {
-}
+// class NonExistentUserException(message: String = "") : RuntimeException(message) {
+// }

@@ -1,9 +1,9 @@
-package com.ci5644.trade.services
+package com.ci5644.trade.services.auth
 
 import com.ci5644.trade.config.SecurityConstants
 import com.ci5644.trade.config.JWT.JWTSecurityUtils
 import com.ci5644.trade.dto.auth.RegisterDTO
-import com.ci5644.trade.exceptions.runtime.NonExistentUserException
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import com.ci5644.trade.exceptions.runtime.UsernameTakenException
 import com.ci5644.trade.models.user.UserEntity
 import com.ci5644.trade.repositories.UserRepository
@@ -32,12 +32,12 @@ class AuthorizationService {
      * Retrieves user entity by username.
      * @param username String - The username of the user.
      * @return UserEntity - The user entity.
-     * @throws NonExistentUserException if the user with the specified username does not exist.
+     * @throws UsernameNotFoundException if the user with the specified username does not exist.
      */
-    @Throws(NonExistentUserException::class)
+    @Throws(UsernameNotFoundException::class)
     fun retrieveUser(username: String): UserEntity {
         if (!userRepository.existsByUsername(username)) {
-            throw NonExistentUserException()
+            throw UsernameNotFoundException("Username not found: ${username}")
         }
         return userRepository.findByUsername(username)
     }
@@ -53,11 +53,11 @@ class AuthorizationService {
         if (userRepository.existsByUsername(reg.username.trim())) {
             throw UsernameTakenException()
         }
-        if (reg.username.length <= 5) {
-            throw IllegalArgumentException("Username must be longer than 5 characters")
+        if (reg.username.length < 5) {
+            throw IllegalArgumentException("Username must be longer or equal than 5 characters")
         }
-        if (reg.password.length <= 8) {
-            throw IllegalArgumentException("Password must be longer than 8 characters")
+        if (reg.password.length < 8) {
+            throw IllegalArgumentException("Password must be longer or equal than 8 characters")
         }
 
         val newUser = UserEntity(
@@ -76,9 +76,9 @@ class AuthorizationService {
      * @param username String - The username of the user.
      * @param password String - The password of the user.
      * @return HttpCookie - The JWT authentication cookie.
-     * @throws AuthenticationException if authentication fails.
+     * @throws UsernameNotFoundException if authentication fails.
      */
-    @Throws(NonExistentUserException::class, AuthenticationException::class)
+    @Throws(UsernameNotFoundException::class, AuthenticationException::class)
     fun loginUser(username: String, password: String): HttpCookie {
         try {
             val appUser = retrieveUser(username.trim())
@@ -91,8 +91,8 @@ class AuthorizationService {
                 SecurityConstants.AUTH_COOKIE_NAME,
                 JWTSecurityUtils.generateJWTUserAuthToken(auth)
             )
-        } catch (e: NonExistentUserException) {
-            throw NonExistentUserException("User not found: $username")
+        } catch (e: UsernameNotFoundException) {
+            throw UsernameNotFoundException("User not found: $username")
         } catch (e: AuthenticationException) {
             throw AuthenticationException(e.message)
         }

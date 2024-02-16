@@ -3,7 +3,6 @@ package com.ci5644.trade.services.user
 import com.ci5644.trade.repositories.UserRepository
 import com.ci5644.trade.models.user.UserEntity
 import com.ci5644.trade.dto.UserDto
-import com.ci5644.trade.exceptions.runtime.NonExistentUserException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.security.core.userdetails.User
@@ -40,11 +39,12 @@ class UserService : UserDetailsService {
     /**
      * Edits user details.
      * @param details UserDto - The details of the user to be edited.
-     * @throws NonExistentUserException if the user with the specified username does not exist.
+     * @throws UsernameNotFoundException if the user with the specified username does not exist.
      */
     fun editUser(details: UserDto) {
+        if (!userRepository.existsByUsername(details.username))
+            throw UsernameNotFoundException("Not found: $details.username")
         val user = userRepository.findByUsername(details.username)
-                ?: throw NonExistentUserException()
         user.name = details.name
         user.email = details.email
         user.gender = details.gender
