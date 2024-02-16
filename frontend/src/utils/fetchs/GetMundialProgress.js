@@ -1,7 +1,8 @@
-import secureFetch from './SecureFetch';
+import secureFetch from "./SecureFetch";
 
 export const GetMundialProgress = async () => {
-    const url = `http://localhost:8080/api/ownership/getMundialProgress`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/ownership/getMundialProgress`;
+    console.log(process.env.NEXT_PUBLIC_API_URL)
     const method = "GET";
     const data = null;
     const headers = {};
@@ -14,4 +15,4 @@ export const GetMundialProgress = async () => {
 
     const mundialProgress = await response.json();
     return mundialProgress;
-}
+};
