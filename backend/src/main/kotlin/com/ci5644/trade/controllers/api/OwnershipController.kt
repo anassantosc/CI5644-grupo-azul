@@ -42,7 +42,7 @@ class OwnershipController(private val authorizationService: AuthorizationService
                 return ResponseEntity.ok(pageOfOwnedCards)
             }
             else{
-                return ResponseEntity.NOT_FOUND(pageOfOwnedCards)
+                return ResponseEntity.notFound().build<Any>()
             }
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)

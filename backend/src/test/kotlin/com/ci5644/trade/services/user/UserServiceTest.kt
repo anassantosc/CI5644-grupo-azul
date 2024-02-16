@@ -24,9 +24,9 @@ class UserServiceTest {
     @Autowired
     private lateinit var mvc: MockMvc
 
-    @Test
-    fun testPage() {
+    // @Test
+    // fun testPage() {
 
-    }
+    // }
 }
 

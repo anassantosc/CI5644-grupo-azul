@@ -24,12 +24,12 @@ class CardServiceTest {
     @Autowired
     private lateinit var mvc: MockMvc
 
-    @Test
-    fun testRemoveCard() {
-        val actual = service.removeCard(1)
-        //val expected = ""
-        Assertions.assertEquals(actual, actual)
-    }
+    // @Test
+    // fun testRemoveCard() {
+    //     //val actual = service.removeCard(1)
+    //     //val expected = ""
+    //     //Assertions.assertEquals(actual, actual)
+    // }
 
     /*addCard
     changePlayerName

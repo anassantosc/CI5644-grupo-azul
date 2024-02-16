@@ -24,9 +24,9 @@ class CardControllerTest {
     @Autowired
     private lateinit var mvc: MockMvc
 
-    @Test
-    fun testPage() {
+    // @Test
+    // fun testPage() {
 
-    }
+    // }
 }
 
