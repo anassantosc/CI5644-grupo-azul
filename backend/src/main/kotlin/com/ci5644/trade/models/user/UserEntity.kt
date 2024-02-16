@@ -1,7 +1,6 @@
 package com.ci5644.trade.models.user
 
 import jakarta.persistence.*
-import org.hibernate.annotations.GenericGenerator
 
 @Entity
 @Table(name = "USUARIO")

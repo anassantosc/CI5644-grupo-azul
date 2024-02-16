@@ -1,7 +1,6 @@
 package com.ci5644.trade.config.JWT
 
 import com.ci5644.trade.config.SecurityConstants
-import com.ci5644.trade.models.user.UserEntity
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts

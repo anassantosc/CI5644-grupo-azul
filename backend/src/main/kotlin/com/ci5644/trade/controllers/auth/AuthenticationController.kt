@@ -7,7 +7,6 @@ import com.ci5644.trade.services.AuthorizationService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.*
 import javax.naming.AuthenticationException
-import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 import com.ci5644.trade.exceptions.runtime.UsernameTakenException
 import com.ci5644.trade.exceptions.runtime.NonExistentUserException

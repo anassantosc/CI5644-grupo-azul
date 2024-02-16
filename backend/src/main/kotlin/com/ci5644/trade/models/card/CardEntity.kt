@@ -1,7 +1,6 @@
 package com.ci5644.trade.models.card
 
 import jakarta.persistence.*
-import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 
 /**

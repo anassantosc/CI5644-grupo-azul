@@ -6,7 +6,6 @@ import com.ci5644.trade.dto.UserDto
 import com.ci5644.trade.exceptions.runtime.NonExistentUserException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -37,16 +36,6 @@ class UserService : UserDetailsService {
             .password(user.password)
             .build()
     }
-
-    /**
-     * Retrieves user entity by username.
-     * @param username String - The username of the user.
-     * @return UserEntity - The user entity.
-     * @throws NonExistentUserException if the user with the specified username does not exist.
-     */
-    fun getUserByUsername(username: String): UserEntity {
-        return userRepository.findByUsername(username) ?: throw NonExistentUserException()
-    }  
 
     /**
      * Edits user details.

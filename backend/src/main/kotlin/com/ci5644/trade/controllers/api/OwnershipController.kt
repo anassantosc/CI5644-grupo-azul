@@ -1,8 +1,6 @@
 package com.ci5644.trade.controllers.api
 
-import com.ci5644.trade.models.user.UserEntity
 import com.ci5644.trade.services.card.OwnershipService
-import com.ci5644.trade.models.card.CardEntity
 import com.ci5644.trade.config.SecurityConstants
 import com.ci5644.trade.config.JWT.JWTSecurityUtils
 import com.ci5644.trade.services.AuthorizationService

@@ -1,9 +1,6 @@
 package com.ci5644.trade.models.card
 
-import com.ci5644.trade.models.user.UserEntity
-import com.ci5644.trade.models.card.CardEntity
 import jakarta.persistence.*
-import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 
 /**
@@ -53,23 +50,6 @@ class OwnershipEntity (
         throw IllegalStateException("Quantity cannot be decreased below 0.")
     }
 
-    /**
-     * Set the ownership to another user
-     * 
-     * @param newUser the id of the user to be set
-     */
-    fun setUsr(newUser: Int) {
-        user = newUser
-    }
-
-    /**
-     * Set the quantity of this card owned
-     * 
-     * @param newQuantity the quantity to be set
-     */
-    fun setQuantty(newQuantity: Int) {
-        quantity = newQuantity
-    }
 
     /**
      * Set the visibility of the card owned
@@ -78,22 +58,5 @@ class OwnershipEntity (
      */
     fun setVisiblity(newVisibility: Boolean) {
         visibility = newVisibility
-    }
-
-    // #region GETTERS
-    fun getVisiblity(): Boolean {
-        return visibility
-    }
-
-    fun getQuantty(): Int {
-        return quantity
-    }
-
-    fun getUsr(): Int {
-        return user
-    }
-
-    fun getCrd(): Int {
-        return card
     }
 }

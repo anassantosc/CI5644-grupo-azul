@@ -1,6 +1,5 @@
 package com.ci5644.trade.controllers.api
 
-import com.ci5644.trade.models.user.UserEntity
 import com.ci5644.trade.services.user.UserService
 import com.ci5644.trade.dto.UserDto
 import com.ci5644.trade.config.SecurityConstants
