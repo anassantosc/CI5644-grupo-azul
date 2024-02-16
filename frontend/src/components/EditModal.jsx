@@ -1,12 +1,11 @@
-import React, { use } from "react";
-import { Background } from "./Background";
-import { Modal, IconButton, Typography, Box, TextField, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import { Box, Button, FormControl, IconButton, InputLabel, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
+import Image from "next/image";
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import Image from "next/image"; 
-
-
-
+import { useUser } from "../hooks/UseUser";
+import { Background } from "./Background";
 
 const EditModal = ({show, onClose, id}) => {
     const {user, error} = useUser(id);
@@ -136,3 +135,10 @@ const EditModal = ({show, onClose, id}) => {
 }
 
 export default EditModal;
+
+
+EditModal.propTypes = {
+    show: PropTypes.bool,
+    onClose: PropTypes.func, 
+    id: PropTypes.string
+}
