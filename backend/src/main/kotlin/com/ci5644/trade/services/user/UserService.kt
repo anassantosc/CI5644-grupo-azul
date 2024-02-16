@@ -13,27 +13,46 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import com.ci5644.trade.config.encrypt
 
-
+/**
+ * Service class for managing user-related operations.
+ */
 @Service
 class UserService : UserDetailsService {
 
     @Autowired
     lateinit var userRepository: UserRepository
 
+    /**
+     * Loads user details by username.
+     * @param username String - The username of the user.
+     * @return UserDetails - User details.
+     * @throws UsernameNotFoundException if the user with the specified username is not found.
+     */
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
-        val user = userRepository.findByUsername(username)
-        if (user == null)
+        if (!userRepository.existsByUsername(username))
             throw UsernameNotFoundException("Not found: $username")
+        val user = userRepository.findByUsername(username)
         return User.withUsername(user.username)
             .password(user.password)
             .build()
     }
 
+    /**
+     * Retrieves user entity by username.
+     * @param username String - The username of the user.
+     * @return UserEntity - The user entity.
+     * @throws NonExistentUserException if the user with the specified username does not exist.
+     */
     fun getUserByUsername(username: String): UserEntity {
         return userRepository.findByUsername(username) ?: throw NonExistentUserException()
     }  
 
+    /**
+     * Edits user details.
+     * @param details UserDto - The details of the user to be edited.
+     * @throws NonExistentUserException if the user with the specified username does not exist.
+     */
     fun editUser(details: UserDto) {
         val user = userRepository.findByUsername(details.username)
                 ?: throw NonExistentUserException()

@@ -1,4 +1,4 @@
-INSERT INTO usuario (id, name, username, password, email) VALUES
-('1', 'Simon', 'simonpuyosa', 'alluhakbar', 'simonpuyosa@gmail.com'),
-('2', 'Ana', 'anasantos', 'imabarbiegirl', 'anasantos@gmail.com'),
-('3', 'Cesar','cesar', 'mAEf7KWZk9N1j1H9xDl+Tg==', 'cesar@gmail.com');
+INSERT INTO usuario (name, username, password, email) VALUES
+('Simon', 'simonpuyosa', 'RMtptvXzRbhjK0+aePxOSg==', 'simonpuyosa@gmail.com'),  -- alluhakbar
+('Ana', 'anasantos', 'z6VOsvN0w5P86vp0ltz5Qw==', 'anasantos@gmail.com'),     -- imabarbiegirl
+('Cesar','cesar', 'mAEf7KWZk9N1j1H9xDl+Tg==', 'cesar@gmail.com'); -- 12345678

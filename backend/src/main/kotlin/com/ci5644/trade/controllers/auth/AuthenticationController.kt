@@ -9,9 +9,11 @@ import org.springframework.http.*
 import javax.naming.AuthenticationException
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
+import com.ci5644.trade.exceptions.runtime.UsernameTakenException
+import com.ci5644.trade.exceptions.runtime.NonExistentUserException
 
 /**
- * API que contiene todos los puntos finales de autorización y autenticación
+ * Controller handling authentication-related endpoints.
  */
 @RestController
 @RequestMapping("/auth")
@@ -21,46 +23,47 @@ class AuthenticationController {
     private lateinit var authService: AuthorizationService
 
     /**
-     * Inicia sesión del usuario
-     *
-     * @param log Información de inicio de sesión del usuario que intenta autenticarse
-     * @return Si el inicio de sesión tiene éxito, envía la cookie de autorización JWT.
-     * De lo contrario, devuelve 401
+     * Handles login requests.
+     * @param log LoginDTO - The login credentials.
+     * @return ResponseEntity<Any> - Response entity indicating success or failure of the login attempt.
      */
     @PostMapping("/login")
-    fun loginReq(@RequestBody log: LoginDTO): ResponseEntity<String> {
+    fun loginReq(@RequestBody log: LoginDTO): ResponseEntity<Any> {
         return try {
             val jwtCookie = authService.loginUser(log.username, log.password)
-            ResponseEntity
-                .ok()
-                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .build()
-
+            ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).build()
+        } catch (e: NonExistentUserException) {
+            ResponseEntity.status(HttpStatus.CONFLICT).body(e.message)
         } catch (e: AuthenticationException) {
-            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: ${e.message}")
         }
     }
 
     /**
-     * Registra un usuario
-     *
-     * @param reg Datos de usuario para registrar
-     * @return Si el usuario está registrado, envía una respuesta con una cookie de autorización JWT.
-     * Si el usuario ya existe, envía una respuesta de BAD_REQUEST.
+     * Handles registration requests.
+     * @param reg RegisterDTO - The user registration details.
+     * @return ResponseEntity<Any> - Response entity indicating success or failure of the registration attempt.
      */
     @PostMapping("/register")
-    fun regisReq(@RequestBody reg: RegisterDTO): ResponseEntity<String> {
+    fun regisReq(@RequestBody reg: RegisterDTO): ResponseEntity<Any> {
         val trimmedUsername = reg.username!!.trim() 
         val trimmedReg = reg.copy(username = trimmedUsername)
-        authService.registerUser(trimmedReg)
-        return ResponseEntity.ok().build()
+        return try {
+            authService.registerUser(trimmedReg)
+            ResponseEntity.ok().build()
+        } catch (e: UsernameTakenException) {
+            ResponseEntity.status(HttpStatus.CONFLICT).body("Username already taken")
+        } catch (e: IllegalArgumentException) {
+            ResponseEntity.status(HttpStatus.CONFLICT).body(e.message)
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error")
+        }
     }
 
     /**
-     * Cierra la sesión de un usuario
-     *
-     * @param authCookie Cookie de autorización JWT del usuario
-     * @return Respuesta que actualiza la edad máxima de la cookie de autorización JWT a 0
+     * Handles logout requests.
+     * @param authCookie String - The JWT authentication cookie.
+     * @return ResponseEntity<String> - Response entity indicating success or failure of the logout attempt.
      */
     @GetMapping("/logout")
     fun logOut(@CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String): ResponseEntity<String> {

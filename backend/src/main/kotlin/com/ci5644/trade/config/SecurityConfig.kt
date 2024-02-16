@@ -25,8 +25,13 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import java.lang.Exception
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.boot.web.servlet.FilterRegistrationBean
+import org.springframework.security.authentication.BadCredentialsException
+import jakarta.servlet.http.HttpServletResponse
 
 
+/**
+ * Configuration class for security settings.
+ */
 @Configuration
 class SecurityConfig {
 
@@ -36,20 +41,35 @@ class SecurityConfig {
     @Autowired
     private val unauthorizedHandler: EntryPointJWT? = null
 
+    /**
+     * Provides a custom PasswordEncoder bean.
+     * @return PasswordEncoder - Custom PasswordEncoder bean.
+     */
     @Bean
     fun securityPasswordEncoder(): PasswordEncoder {
         return PasswordConfig().passwordEncoder()
     }
 
+    /**
+     * Provides a custom JWT token filter bean.
+     * @return JWTFilter - Custom JWTFilter bean.
+     */
     @Bean
     fun authenticationJwtTokenFilter(): JWTFilter? {
         return JWTFilter()
     }
 
+    /**
+     * Configures authentication manager to use custom user details service and password encoder.
+     */
     fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(userDetailsService).passwordEncoder(securityPasswordEncoder())
     }
 
+    /**
+     * Configures the DaoAuthenticationProvider with custom user details service and password encoder.
+     * @return DaoAuthenticationProvider - Configured authentication provider.
+     */
     @Bean
     fun authProvider(): DaoAuthenticationProvider {
         val authProvider = DaoAuthenticationProvider()
@@ -58,6 +78,11 @@ class SecurityConfig {
         return authProvider
     }
 
+    /**
+     * Configures the authentication manager bean.
+     * @param http HttpSecurity - HttpSecurity object for configuring HTTP security.
+     * @return AuthenticationManager - Configured authentication manager.
+     */
     @Bean
     @Throws(Exception::class)
     fun authenticationManagerBean(http: HttpSecurity) : AuthenticationManager {
@@ -66,6 +91,11 @@ class SecurityConfig {
                 .build()
     }
 
+    /**
+     * Configures security filters and authorization rules.
+     * @param http HttpSecurity - HttpSecurity object for configuring HTTP security.
+     * @return SecurityFilterChain - Configured security filter chain.
+     */
     @Bean
     fun filterChain(http: HttpSecurity) : SecurityFilterChain {
         http
@@ -96,6 +126,10 @@ class SecurityConfig {
         return http.build()
     }
     
+    /**
+     * Provides a custom CorsConfigurationSource bean for CORS configuration.
+     * @return CorsConfigurationSource - Custom CorsConfigurationSource bean.
+     */
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
@@ -106,5 +140,4 @@ class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration)
         return source
     }
-
 }
