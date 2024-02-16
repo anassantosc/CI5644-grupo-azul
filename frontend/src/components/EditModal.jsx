@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import { Background } from "./Background";
 import { Modal, IconButton, Typography, Box, TextField, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
@@ -8,7 +8,30 @@ import Image from "next/image";
 
 
 
-const EditModal = ({show, onClose}) => {
+const EditModal = ({show, onClose, id}) => {
+    const {user, error} = useUser(id);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [gender, setGender] = useState('');
+
+    useEffect(() => {
+        if (user) {
+            setName(user.name);
+            setEmail(user.email);
+            setPassword(user.password);
+            setGender(user.gender);
+        }
+    }, [user]);
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    if (!user) {
+        return <div>Loading...</div>;
+    }
+    
     return (
         
         <Modal open={show} onClose={onClose}>
@@ -57,36 +80,26 @@ const EditModal = ({show, onClose}) => {
                 justifyContent: 'center',
                 alignItems: 'center' }}>
                     <form noValidate autoComplete="off">
-                        <TextField label="Nombre" variant="outlined" fullWidth style={{ 
+                        <TextField label="Nombre" variant="outlined" value={name} onChange={(e) => setName(e.target.value)} fullWidth style={{ 
                             margin: 'normal',
                             backgroundColor: 'gray',
                             marginBottom: '10px',
                             borderRadius: '10px' 
                         }} />
-                        <TextField label="Nombre de Usuario" variant="outlined" fullWidth style={{ 
+
+                        <TextField label="Correo Electrónico" variant="outlined" value={email} onChange={(e) => setEmail(e.target.value)} fullWidth style={{ 
                             margin: 'normal',
                             backgroundColor: 'gray',
                             marginBottom: '10px',
                             borderRadius: '10px' 
                         }} />
-                        <TextField label="Correo Electrónico" variant="outlined" fullWidth style={{ 
-                            margin: 'normal',
-                            backgroundColor: 'gray',
-                            marginBottom: '10px',
-                            borderRadius: '10px' 
-                        }} />
-                        <TextField label="Contraseña" variant="outlined" fullWidth style={{ 
+                        <TextField label="Contraseña" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} fullWidth style={{ 
                             margin: 'normal',
                             backgroundColor: 'gray',
                             marginBottom: '10px',
                             borderRadius: '10px' 
                         }} />  
-                        <TextField label="Confirmar Contraseña" variant="outlined" fullWidth style={{ 
-                            margin: 'normal',
-                            backgroundColor: 'gray',
-                            marginBottom: '10px',
-                            borderRadius: '10px' 
-                        }} />
+
                         <FormControl variant="outlined" fullWidth style={{ 
                             margin: 'normal',
                             backgroundColor: 'gray',
@@ -98,6 +111,8 @@ const EditModal = ({show, onClose}) => {
                                 labelId="gender-label"
                                 id="gender"
                                 label="Género"
+                                value={gender}
+                                onChange={(e) => setGender(e.target.value)}
                             >
                                 <MenuItem value={"hombre"}>Hombre</MenuItem>
                                 <MenuItem value={"mujer"}>Mujer</MenuItem>
