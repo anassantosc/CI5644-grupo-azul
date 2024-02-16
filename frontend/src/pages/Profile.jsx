@@ -17,7 +17,7 @@ export default function Profile() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const {id, username, password, name, email, gender} = useUser();
+    const {id, username, password, name, email, gender} = useUser() || {};
     const progress = useProgress(id);
     
     return (
