@@ -1,14 +1,13 @@
-import React from "react";
-import Layout from "../layout/Layout";
-import { Box, Grid, Avatar, Typography, Button } from '@mui/material';
 import BadgeIcon from '@mui/icons-material/Badge';
 import EmailIcon from '@mui/icons-material/Email';
 import WcIcon from '@mui/icons-material/Wc';
-import ProgressCircle from "../components/ProgressCircle";
-import { useState } from "react";
+import { Avatar, Box, Button, Grid, Typography } from '@mui/material';
+import React, { useState } from "react";
 import EditModal from "../components/EditModal";
+import ProgressCircle from "../components/ProgressCircle";
 import { useProgress } from "../hooks/UseProgress";
 import { useUser } from "../hooks/UseUser";
+import Layout from "../layout/Layout";
 
 
 
@@ -84,7 +83,7 @@ export default function Profile() {
                         </Typography>
                     </Grid>
                     <Grid item xs={8} container direction="column" justifyContent="center">                        
-                        {progress && <ProgressCircle value={progress}/>}
+                        {progress && <ProgressCircle value={progress.toFixed(2)}/>}
                     </Grid>
                 </Grid>
             </Box>
