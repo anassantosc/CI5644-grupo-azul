@@ -5,7 +5,7 @@ import AuthForm from "../components/AuthForm";
 import { Background } from "../components/Background";
 import styles from "./../../styles/Login.module.css";
 import { Authenticate } from "../utils/fetchs/Authenticate";
-import { useRouter } from "next/navigation";}
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
     const [values, setValues] = useState({ username: "", password: "" });
