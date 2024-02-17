@@ -21,10 +21,7 @@ const LoginPage = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(
-            `Intentando iniciar sesión con ${values.username} y ${values.password}`
-        );
-        const token = await Authenticate(
+        const response = await Authenticate(
             {
                 username: values.username,
                 password: values.password,
@@ -32,8 +29,10 @@ const LoginPage = () => {
             "login"
         );
 
-        if (token) {
-            router.push("/");
+        console.log(response);
+
+        if (response) {
+            router.push("/Profile");
         }
     };
 

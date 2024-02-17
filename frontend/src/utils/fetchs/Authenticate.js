@@ -6,28 +6,38 @@ export const Authenticate = async (userData, authType) => {
     const data = JSON.stringify(userData);
     const headers = {};
 
-    const response = await secureFetch(url, method, data, headers);
+    try {
+        const response = await secureFetch(url, method, data, headers);
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
+        if (!response.ok) {
+            throw new Error(
+                `Failed to authenticate. HTTP error! status: ${response.status}`
+            );
+        }
 
-    if (authType === "login") {
-        return await response.json();
+        return response;
+    } catch (error) {
+        console.error("Error occurred during authentication:", error);
     }
 };
 
 export const Logout = async () => {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/url/auth/logout`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`;
     const method = "GET";
     const data = "";
     const headers = {};
 
-    const response = await secureFetch(url, method, data, headers);
+    try {
+        const response = await secureFetch(url, method, data, headers);
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(
+                `Failed to logout. HTTP error! status: ${response.status}`
+            );
+        }
+
+        return await response;
+    } catch (error) {
+        console.error("Error occurred during logout:", error);
     }
-
-    return await response.json();
 };

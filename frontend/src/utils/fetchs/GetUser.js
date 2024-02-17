@@ -6,12 +6,15 @@ export const GetUser = async () => {
     const data = null;
     const headers = {};
 
-    const response = await secureFetch(url, method, data, headers);
+    try {
+        const response = await secureFetch(url, method, data, headers);
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error(error);
     }
 
-    const user = await response.json();
-    return user;
+    return await response.json();
 };

@@ -6,6 +6,7 @@ import styles from "./../../styles/Home.module.css";
 import albumImage from "./../assets/album.png";
 import packImage from "./../assets/pack.png";
 import { useMundialProgress } from "../hooks/UseMundialProgress";
+import TopMundial from "../components/TopMundial";
 
 const ColorButton = styled(Button)(({ theme, margintop }) => ({
     color: "#581E3D",
