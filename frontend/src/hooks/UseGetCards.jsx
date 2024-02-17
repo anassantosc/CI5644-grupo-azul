@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { getPageableCard } from './../utils/fetchs/getPageableCard';
+import { useState, useEffect } from "react";
+import { getCardsByPage } from "../utils/fetchs/getCardsByPage";
 
-export const usePageableCards = (id) => {
+export const useGetCards = (id) => {
     const [cards, setCards] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -13,9 +13,9 @@ export const usePageableCards = (id) => {
                 let hasNextPage = true;
 
                 while (hasNextPage) {
-                    const data = await getPageableCard(id, page);
+                    const data = await getCardsByPage(page);
                     if (data.length > 0) {
-                        setCards(prevCards => [...prevCards, ...data]);
+                        setCards((prevCards) => [...prevCards, ...data]);
                         page++;
                     } else {
                         hasNextPage = false;
