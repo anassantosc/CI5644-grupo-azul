@@ -12,10 +12,10 @@ export default function Layout({ children }) {
 
     const routes = {
         Inicio: "/",
-        Perfil: "/Profile",
-        Album: "/Album",
-        Comprar: "/Store",
-        "Mi Álbum": "/Album",
+        Perfil: "/profile",
+        Album: "/album",
+        Comprar: "/store",
+        "Mi Álbum": "/album",
         Salir: "/",
     };
 

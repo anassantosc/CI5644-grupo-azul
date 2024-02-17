@@ -32,7 +32,9 @@ const LoginPage = () => {
         console.log(response);
 
         if (response) {
-            router.push("/Profile");
+            router.push("/profile");
+        } else {
+            router.push("/dashboard");
         }
     };
 
