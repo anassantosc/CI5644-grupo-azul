@@ -83,17 +83,6 @@ const AuthForm = ({ onSubmit, onChange, values, errors, isLogin }) => {
                 <ArrowForwardIcon />
             </ColorButton>
 
-            <ColorButton
-                textcolor="#fff"
-                bgcolor="#EA5323"
-                sx={{ height: "29px", marginBottom: "1rem" }}
-            >
-                <LocalPoliceIcon />
-                <Box sx={{ paddingLeft: "7px" }}>
-                    {" "}
-                    {isLogin ? "Iniciar" : "Registrate"} con Auth0{" "}
-                </Box>
-            </ColorButton>
             {isLogin ? (
                 <Box>
                     ¿No tienes una cuenta?{" "}
