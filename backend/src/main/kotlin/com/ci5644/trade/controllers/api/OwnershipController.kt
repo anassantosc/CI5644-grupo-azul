@@ -36,12 +36,7 @@ class OwnershipController(private val authorizationService: AuthorizationService
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie);
             val user = authorizationService.retrieveUser(username)
             val pageOfOwnedCards = ownershipService.getCardsPerPage(user.id, pageable)
-            if (pageOfOwnedCards.size != 0){
-                return ResponseEntity.ok(pageOfOwnedCards)
-            }
-            else{
-                return ResponseEntity.notFound().build<Any>()
-            }
+            return ResponseEntity.ok(pageOfOwnedCards)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
