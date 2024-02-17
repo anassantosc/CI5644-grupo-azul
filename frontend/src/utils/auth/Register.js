@@ -1,7 +1,7 @@
 import secureFetch from "../fetchs/SecureFetch";
 
-export const Login = async (userData, showAlert) => {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/login`;
+export const Register = async (userData, showAlert) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/register`;
     const method = "POST";
     const data = JSON.stringify(userData);
     const headers = {};
@@ -10,16 +10,17 @@ export const Login = async (userData, showAlert) => {
         const response = await secureFetch(url, method, data, headers);
 
         if (response.ok) {
-            showAlert("Inicio de sesión exitoso", "success");
+            showAlert("Registro exitoso", "success");
         } else if (response.status === 409) {
-            showAlert("Usuario no encontrado", "warning");
-        } else if (response.status === 401) {
-            showAlert("Credenciales inválidas", "warning");
+            showAlert(
+                "Usuario existente, intente con uno diferente",
+                "warning"
+            );
         } else {
             showAlert("Ocurrió un error desconocido", "error");
         }
         return response;
     } catch (error) {
-        console.error("Contexto de error ocurrido durante inicio de sesión:", error);
+        console.error("Contexto de error ocurrido durante registro:", error);
     }
 };

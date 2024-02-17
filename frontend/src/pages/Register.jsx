@@ -1,13 +1,19 @@
-import React, {useState} from 'react';
-import logo from '../assets/logo.png';
 import Image from "next/image";
-import AuthForm from '../components/AuthForm';
-import {Background} from "../components/Background";
+import React, { useState } from "react";
+import logo from "../assets/logo.png";
+import AuthForm from "../components/AuthForm";
+import { Background } from "../components/Background";
+import { useAlert } from "../context/AlertContext";
+import { Register } from "../utils/auth/Register";
 import styles from "./../../styles/Login.module.css";
 
 const RegisterPage = () => {
-    const [values, setValues] = useState({username: '', password: '', confirmPassword: ''});
-    const [errors, setErrors] = useState({});
+    const [values, setValues] = useState({
+        username: "",
+        password: "",
+        confirmPassword: "",
+    });
+    const showAlert = useAlert();
 
     const handleChange = (event) => {
         setValues({
@@ -19,30 +25,31 @@ const RegisterPage = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // Verificar si password y confirmPassword son iguales
         if (values.password !== values.confirmPassword) {
-            // Si no son iguales, actualizar el estado de los errores
-            setErrors({
-                ...errors,
-                confirmPassword: 'La contraseña y la confirmación de la contraseña no coinciden',
-            });
+            showAlert(
+                "La contraseña y la confirmación de la contraseña no coinciden",
+                "warning"
+            );
         } else {
-            console.log(`Intentando registrarse con ${values.username} y ${values.password}`);
-            // Si el ingreso es exitoso, restablecer el estado de los errores a un objeto vacío
-            setErrors({});
+            Register(
+                {
+                    username: values.username,
+                    password: values.password,
+                    name: "",
+                    email: "",
+                    gender: "",
+                },
+                showAlert
+            );
         }
     };
 
     return (
         <div className={styles.login}>
-            <Background/>
+            <Background />
 
             <div className={styles.logoContainer}>
-                <Image
-                    className={styles.loginLogo}
-                    src={logo}
-                    alt="logo"
-                />
+                <Image className={styles.loginLogo} src={logo} alt="logo" />
                 <h1 className={styles.loginH1}>Marmota Salvaje</h1>
             </div>
 
