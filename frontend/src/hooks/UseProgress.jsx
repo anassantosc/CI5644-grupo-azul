@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import { GetProgress } from '../utils/fetchs/GetProgress';
+import { useState, useEffect } from "react";
+import { GetProgress } from "../utils/fetchs/GetProgress";
 
-export const useProgress = (id) => {
+export const useProgress = () => {
     const [progress, setProgress] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            const progressData = await GetProgress(id);
+            const progressData = await GetProgress();
             setProgress(progressData);
         };
 
@@ -14,5 +14,4 @@ export const useProgress = (id) => {
     }, []);
 
     return progress;
-}
-
+};

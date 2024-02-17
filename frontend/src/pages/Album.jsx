@@ -10,7 +10,7 @@ import { useGetCards } from "../hooks/UseGetCards";
 function Album() {
     const [page, setPage] = useState(0);
     const { cards, loading, error } = useGetCards(page);
-    const progress = useProgress(1);
+    const progress = useProgress();
 
     const nextPage = () => {
         setPage(page + 1);

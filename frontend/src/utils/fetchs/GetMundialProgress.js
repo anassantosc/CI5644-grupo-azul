@@ -1,11 +1,11 @@
 import secureFetch from "./SecureFetch";
 
 export const GetMundialProgress = async () => {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/ownership/getMundialProgress`;
-    console.log(process.env.NEXT_PUBLIC_API_URL)
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/ownership/get-mundial-progress`;
     const method = "GET";
     const data = null;
-    const headers = {};
+    const headers = {
+    };
 
     const response = await secureFetch(url, method, data, headers);
 
