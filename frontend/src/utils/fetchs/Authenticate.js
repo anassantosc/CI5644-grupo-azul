@@ -1,7 +1,7 @@
 import secureFetch from "./SecureFetch";
 
 export const Authenticate = async (userData, authType) => {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/url/auth/${authType}`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/${authType}`;
     const method = "POST";
     const data = JSON.stringify(userData);
     const headers = {};

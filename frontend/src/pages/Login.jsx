@@ -12,7 +12,6 @@ const LoginPage = () => {
     const [errors, setErrors] = useState({});
     const router = useRouter();
 
-
     const handleChange = (event) => {
         setValues({
             ...values,
@@ -31,9 +30,10 @@ const LoginPage = () => {
                 password: values.password,
             },
             "login"
-        ).;
+        );
+
         if (token) {
-            router.push('/');
+            router.push("/");
         }
     };
 
