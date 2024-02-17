@@ -61,18 +61,6 @@ const AuthForm = ({ onSubmit, onChange, values, errors, isLogin }) => {
                     name="confirmPassword"
                 />
             )}
-            {isLogin && (
-                <Box sx={{ marginTop: "7px", alignSelf: "end" }}>
-                    <Link
-                        href="/RecoverPassword"
-                        underline="hover"
-                        color="white"
-                    >
-                        ¿Olvidaste tu contraseña?
-                    </Link>
-                </Box>
-            )}
-
             <ColorButton
                 textcolor="#fff"
                 bgcolor="#731530"
@@ -110,12 +98,12 @@ AuthForm.propTypes = {
     values: PropTypes.shape({
         username: PropTypes.string,
         password: PropTypes.string,
-        confirmPassword: PropTypes.string
+        confirmPassword: PropTypes.string,
     }),
     errors: PropTypes.shape({
         username: PropTypes.string,
         password: PropTypes.string,
-        confirmPassword: PropTypes.string
+        confirmPassword: PropTypes.string,
     }),
     isLogin: PropTypes.bool,
 };
