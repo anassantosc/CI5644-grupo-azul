@@ -37,17 +37,16 @@ function Album() {
             </div>
 
             <div className={styles.albumCards}>
-                {cards &&
-                    cards.map((card) => (
-                        <Card
-                            key={card.id}
-                            name={card.playerName}
-                            number={card.id}
-                            position={card.position}
-                            height={card.height}
-                            weight={card.weight}
-                        />
-                    ))}
+                {cards?.map((card) => (
+                    <Card
+                        key={card.id}
+                        name={card.playerName}
+                        number={card.id}
+                        position={card.position}
+                        height={card.height}
+                        weight={card.weight}
+                    />
+                ))}
             </div>
             <div>
                 <button onClick={previousPage}>Página Anterior</button>

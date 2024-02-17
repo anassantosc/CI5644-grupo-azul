@@ -1,7 +1,7 @@
 import secureFetch from "./SecureFetch";
 
-export const EditUser = async (id) => {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/user/edit?id=${id}`;
+export const EditUser = async () => {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/user/edit`;
   const method = "POST";
   const data = null;
   const headers = {};

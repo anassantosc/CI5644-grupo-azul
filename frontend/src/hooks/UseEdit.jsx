@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import { EditUser } from '../utils/fetchs/EditUser';
 
-export const useEdit = (id) => {
+export const useEdit = () => {
     const [user, setUser] = useState({
         id: null,
         username: null,
@@ -13,7 +13,7 @@ export const useEdit = (id) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const userData = await EditUser(id);
+            const userData = await EditUser();
             setUser(userData);
         };
 
