@@ -12,9 +12,9 @@ export const GetUser = async () => {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+        const user = await response.json();
+        return user;
     } catch (error) {
         console.error(error);
     }
-
-    return await response.json();
 };

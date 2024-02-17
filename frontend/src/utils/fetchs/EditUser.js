@@ -11,9 +11,8 @@ export const EditUser = async () => {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+        return await response.json();
     } catch (error) {
         console.error("Error occurred during edition:", error);
     }
-
-    return await response.json();
 };
