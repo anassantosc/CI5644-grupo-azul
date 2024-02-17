@@ -4,7 +4,7 @@ import Image from "next/image";
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import { useUser } from "../hooks/UseUser";
+import { useUser } from "../hooks/useUser";
 import { Background } from "./Background";
 
 const EditModal = ({show, onClose, id}) => {

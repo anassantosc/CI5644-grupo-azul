@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Layout from "../layout/Layout";
-import { SearchBar } from "../components/SearchBar";
-import { useProgress } from "../hooks/UseProgress";
 import { Card } from "../components/Card";
-import styles from "./../../styles/Album.module.css";
 import ProgressBar from "../components/ProgressBar";
-import { useGetCards } from "../hooks/UseGetCards";
+import { SearchBar } from "../components/SearchBar";
+import { useProgress } from "../hooks/useProgress";
+import { useGetCards } from "../hooks/useGetCards";
+import Layout from "../layout/Layout";
+import styles from "./../../styles/Album.module.css";
 
 function Album() {
     const [page, setPage] = useState(0);

@@ -5,7 +5,7 @@ import { Card } from "../components/Card";
 import styles from "./../../styles/Home.module.css";
 import albumImage from "./../assets/album.png";
 import packImage from "./../assets/pack.png";
-import { useMundialProgress } from "../hooks/UseMundialProgress";
+import { useMundialProgress } from "../hooks/useMundialProgress";
 import TopMundial from "../components/TopMundial";
 
 const ColorButton = styled(Button)(({ theme, margintop }) => ({
