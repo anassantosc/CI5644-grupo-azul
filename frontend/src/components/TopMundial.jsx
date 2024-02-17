@@ -12,7 +12,12 @@ import PropTypes from "prop-types";
 
 export default function TopMundial({ firstPlace, secondPlace, thirdPlace }) {
     return (
-        <Timeline position="alternate">
+        <Timeline
+            position="alternate"
+            sx={{
+                width: "100%",
+            }}
+        >
             <TimelineItem>
                 <TimelineOppositeContent
                     sx={{ m: "auto 0" }}
@@ -33,7 +38,9 @@ export default function TopMundial({ firstPlace, secondPlace, thirdPlace }) {
                     <Typography variant="h6" component="span">
                         {firstPlace.first}
                     </Typography>
-                    <Typography>Progreso: {firstPlace.second} %</Typography>
+                    <Typography>
+                        Progreso: {firstPlace.second.toFixed(2)} %
+                    </Typography>
                 </TimelineContent>
             </TimelineItem>
             <TimelineItem>
@@ -55,7 +62,9 @@ export default function TopMundial({ firstPlace, secondPlace, thirdPlace }) {
                     <Typography variant="h6" component="span">
                         {secondPlace.first}
                     </Typography>
-                    <Typography>Progreso: {secondPlace.second} % </Typography>
+                    <Typography>
+                        Progreso: {secondPlace.second.toFixed(2)} %{" "}
+                    </Typography>
                 </TimelineContent>
             </TimelineItem>
             <TimelineItem>
@@ -77,7 +86,9 @@ export default function TopMundial({ firstPlace, secondPlace, thirdPlace }) {
                     <Typography variant="h6" component="span">
                         {thirdPlace.first}
                     </Typography>
-                    <Typography>Progreso: {thirdPlace.second} %</Typography>
+                    <Typography>
+                        Progreso: {thirdPlace.second.toFixed(2)} %
+                    </Typography>
                 </TimelineContent>
             </TimelineItem>
         </Timeline>
