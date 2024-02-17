@@ -32,10 +32,6 @@ docker-compose.yml
 # Ignorar snapshots de tests unitarios
 *.test.jsx.snap
 
-# Ignorar archivos de configuración específicos
-.env
-.env.local
-
 # Ignorar archivos de configuración de Next.js
 .next/
 out/
