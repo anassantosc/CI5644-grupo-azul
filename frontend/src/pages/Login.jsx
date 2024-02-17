@@ -4,12 +4,14 @@ import React, { useState } from "react";
 import logo from "../assets/logo.png";
 import AuthForm from "../components/AuthForm";
 import { Background } from "../components/Background";
-import { Authenticate } from "../utils/fetchs/Authenticate";
+import { useAlert } from "../context/AlertContext";
+import { Login } from "../utils/auth/Login";
 import styles from "./../../styles/Login.module.css";
 
 const LoginPage = () => {
     const [values, setValues] = useState({ username: "", password: "" });
     const [errors, setErrors] = useState({});
+    const showAlert = useAlert();
     const router = useRouter();
 
     const handleChange = (event) => {
@@ -21,20 +23,16 @@ const LoginPage = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const response = await Authenticate(
+        const response = await Login(
             {
                 username: values.username,
                 password: values.password,
             },
-            "login"
+            showAlert
         );
 
-        console.log(response);
-
-        if (response) {
+        if (response?.ok) {
             router.push("/profile");
-        } else {
-            router.push("/dashboard");
         }
     };
 
