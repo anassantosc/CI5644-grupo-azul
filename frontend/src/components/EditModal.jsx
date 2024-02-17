@@ -140,5 +140,5 @@ export default EditModal;
 EditModal.propTypes = {
     show: PropTypes.bool,
     onClose: PropTypes.func, 
-    id: PropTypes.string
+    id: PropTypes.number
 }

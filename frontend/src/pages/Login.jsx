@@ -1,11 +1,11 @@
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import logo from "../assets/logo.png";
-import Image from "next/image";
 import AuthForm from "../components/AuthForm";
 import { Background } from "../components/Background";
-import styles from "./../../styles/Login.module.css";
 import { Authenticate } from "../utils/fetchs/Authenticate";
-import { useRouter } from "next/navigation";
+import styles from "./../../styles/Login.module.css";
 
 const LoginPage = () => {
     const [values, setValues] = useState({ username: "", password: "" });
