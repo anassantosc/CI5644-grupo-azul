@@ -4,15 +4,16 @@ import Image from "next/image";
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import { useUser } from "../hooks/useUser";
+import { useEdit} from "../hooks/UseEdit";
 import { Background } from "./Background";
 
-const EditModal = ({show, onClose, id}) => {
-    const {user, error} = useUser(id);
-    const [name, setName] = useState('');
+const EditModal = ({show, onClose}) => {
+    const user = useEdit();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [gender, setGender] = useState('');
+
+    const [name, setName] = useState('');
 
     useEffect(() => {
         if (user) {
@@ -22,7 +23,7 @@ const EditModal = ({show, onClose, id}) => {
             setGender(user.gender);
         }
     }, [user]);
-
+    /*
     if (error) {
         return <div>Error: {error.message}</div>;
     }
@@ -31,6 +32,8 @@ const EditModal = ({show, onClose, id}) => {
         return <div>Loading...</div>;
     }
     
+    */
+
     return (
         
         <Modal open={show} onClose={onClose}>

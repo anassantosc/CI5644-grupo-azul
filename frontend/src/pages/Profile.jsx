@@ -104,7 +104,7 @@ export default function Profile() {
                         >
                             Editar
                         </Button>
-                        <EditModal show={show} onClose={handleClose} id={id} />
+                        <EditModal show={show} onClose={handleClose} />
                     </Grid>
                 </Grid>
             </Box>
