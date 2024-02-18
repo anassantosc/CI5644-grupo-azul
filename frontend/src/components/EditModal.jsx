@@ -4,16 +4,18 @@ import Image from "next/image";
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import { useEdit} from "../hooks/UseEdit";
+import { useEdit } from "../hooks/UseEdit";
 import { Background } from "./Background";
+
+
 
 const EditModal = ({show, onClose}) => {
     const user = useEdit();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [gender, setGender] = useState('');
-
     const [name, setName] = useState('');
+
 
     useEffect(() => {
         if (user) {
@@ -23,16 +25,6 @@ const EditModal = ({show, onClose}) => {
             setGender(user.gender);
         }
     }, [user]);
-    /*
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-
-    if (!user) {
-        return <div>Loading...</div>;
-    }
-    
-    */
 
     return (
         
@@ -82,27 +74,28 @@ const EditModal = ({show, onClose}) => {
                 justifyContent: 'center',
                 alignItems: 'center' }}>
                     <form noValidate autoComplete="off">
-                        <TextField label="Nombre" variant="outlined" value={name} onChange={(e) => setName(e.target.value)} fullWidth style={{ 
+                        
+                        <TextField label="Nombre" variant="outlined" color="secondary" value={name} onChange={(e) => setName(e.target.value)} fullWidth style={{ 
                             margin: 'normal',
                             backgroundColor: 'gray',
                             marginBottom: '10px',
-                            borderRadius: '10px' 
+                            borderRadius: '10px'
                         }} />
 
-                        <TextField label="Correo Electrónico" variant="outlined" value={email} onChange={(e) => setEmail(e.target.value)} fullWidth style={{ 
+                        <TextField label="Correo Electrónico" variant="outlined" color="secondary" value={email} onChange={(e) => setEmail(e.target.value)} fullWidth style={{ 
                             margin: 'normal',
                             backgroundColor: 'gray',
                             marginBottom: '10px',
                             borderRadius: '10px' 
                         }} />
-                        <TextField label="Contraseña" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} fullWidth style={{ 
+                        <TextField label="Contraseña" variant="outlined" color="secondary" value={password} onChange={(e) => setPassword(e.target.value)} fullWidth style={{ 
                             margin: 'normal',
                             backgroundColor: 'gray',
                             marginBottom: '10px',
                             borderRadius: '10px' 
                         }} />  
 
-                        <FormControl variant="outlined" fullWidth style={{ 
+                        <FormControl variant="outlined" color="secondary" fullWidth style={{ 
                             margin: 'normal',
                             backgroundColor: 'gray',
                             marginBottom: '10px',
@@ -116,9 +109,9 @@ const EditModal = ({show, onClose}) => {
                                 value={gender}
                                 onChange={(e) => setGender(e.target.value)}
                             >
-                                <MenuItem value={"hombre"}>Hombre</MenuItem>
-                                <MenuItem value={"mujer"}>Mujer</MenuItem>
-                                <MenuItem value={"otro"}>Otro</MenuItem>
+                                <MenuItem value={"Masculino"}>Hombre</MenuItem>
+                                <MenuItem value={"Femenino"}>Mujer</MenuItem>
+                                <MenuItem value={"Otro"}>Otro</MenuItem>
                             </Select>
                         </FormControl>
                         <Button variant="contained" size="medium" style={{ 
