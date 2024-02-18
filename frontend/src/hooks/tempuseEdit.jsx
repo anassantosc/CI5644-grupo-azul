@@ -3,12 +3,12 @@ import { EditUser } from '../utils/fetchs/EditUser';
 
 export const useEdit = () => {
     const [user, setUser] = useState({
-        id: null,
-        username: null,
-        password: null,
-        name: null,
-        email: null,
-        gender: null
+        id: '',
+        username: '',
+        password: '',
+        name: '',
+        email: '',
+        gender: ''
     });
 
     useEffect(() => {
