@@ -5,10 +5,13 @@ import styles from "./../../styles/Layout.module.css";
 import { Background } from "./../components/Background";
 import { Footer } from "./../components/Footer";
 import PropTypes from "prop-types";
+import { Logout } from "../utils/auth/Logout";
+import { useAlert } from "../context/AlertContext";
 
 export default function Layout({ children }) {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const router = useRouter();
+    const showAlert = useAlert();
 
     const routes = {
         Inicio: "/",
@@ -21,7 +24,9 @@ export default function Layout({ children }) {
 
     const handleClick = (key) => {
         const route = routes[key];
-        if (route) {
+        if (key === "Salir") {
+            handleLogout();
+        } else if (route) {
             router.push(route, { scroll: false });
         }
     };
@@ -32,6 +37,13 @@ export default function Layout({ children }) {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleLogout = async () => {
+        const response = await Logout(showAlert);
+        if (response.ok) {
+            router.push("/", { scroll: false });
+        }
     };
 
     const handlers = {

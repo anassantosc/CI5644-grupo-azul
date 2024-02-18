@@ -18,8 +18,13 @@ export const Login = async (userData, showAlert) => {
         } else {
             showAlert("Ocurrió un error desconocido", "error");
         }
+
+        console.log(document.cookie);
         return response;
     } catch (error) {
-        console.error("Contexto de error ocurrido durante inicio de sesión:", error);
+        console.error(
+            "Contexto de error ocurrido durante inicio de sesión:",
+            error
+        );
     }
 };

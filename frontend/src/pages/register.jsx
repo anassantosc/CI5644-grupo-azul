@@ -14,6 +14,7 @@ const RegisterPage = () => {
         confirmPassword: "",
     });
     const showAlert = useAlert();
+    const [errors, setErrors] = useState(null);
 
     const handleChange = (event) => {
         setValues({
@@ -49,7 +50,12 @@ const RegisterPage = () => {
             <Background />
 
             <div className={styles.logoContainer}>
-                <Image className={styles.loginLogo} src={logo} alt="logo" />
+                <Image
+                    priority
+                    className={styles.loginLogo}
+                    src={logo}
+                    alt="logo"
+                />
                 <h1 className={styles.loginH1}>Marmota Salvaje</h1>
             </div>
 
