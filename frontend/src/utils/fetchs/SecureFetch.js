@@ -8,12 +8,12 @@ const secureFetch = (url, method, data, headers) => {
     return fetch(url, {
         method: method.toUpperCase(),
         body: data,
-        credentials: "same-origin", // changed from "include" 
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-            ...headers
-        }
+            ...headers,
+        },
     });
-}
+};
 
 export default secureFetch;
