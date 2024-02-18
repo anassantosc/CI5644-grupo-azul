@@ -1,9 +1,7 @@
-import { useLocation, Navigate, Outlet } from "react-router-dom";
-import catchJWTCookie from "../../utils/CatchJWTCookie";
-import useAuth from "../../hooks/useAuth";
 import jwtDecode from "jwt-decode";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import catchJWTCookie from "../../utils/CatchJWTCookie";
 const RequireAuth = ({ authRole }) => {
-    const { auth } = useAuth();
     const location = useLocation();
 
     const jwtTok = catchJWTCookie(document.cookie);
