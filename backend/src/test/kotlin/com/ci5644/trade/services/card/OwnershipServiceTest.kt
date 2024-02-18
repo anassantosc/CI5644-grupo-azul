@@ -1,6 +1,6 @@
 package com.ci5644.trade
 import com.ci5644.trade.services.card.OwnershipService
-
+import com.ci5644.trade.services.user.UserService
 
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -23,29 +23,32 @@ class OwnershipServiceTest {
     @MockBean
     private lateinit var service: OwnershipService
 
+    @MockBean
+    private lateinit var userService: UserService
+
     @Autowired
     private lateinit var mvc: MockMvc
 
-    // @Test
-    // @DisplayName("Getting cards from user 1")
-    // fun testGetCards() {
-    //     var list = service.getCardsPerPage(1,1)
-    //     //Assertions.assertNotNull(list)
-    //     //Assertions.assertEquals(3,list.size)
-    // }
-    // @Test
-    // @DisplayName("Getting most possessions")
-    // fun testGetMostPossessions() {
-    //     var list = service.getMostPossessions(2)
-    //     //Assertions.assertNotNull(list)
-    //     //Assertions.assertEquals(2,list.size)
-    // }
-    // @Test
-    // @DisplayName("Getting progress of user 1")
-    // fun testGetProgress() {
-    //     var value = service.getUserProgress(1)
-    //     //Assertions.assertNotNull(value)
-    //     //Assertions.assertEquals(1.09375,value)
-    // }
+    @Test
+    @DisplayName("Getting cards from user 1")
+    fun testGetCards() {
+         var list = service.getCardsPerPage(1,1)
+         Assertions.assertNotNull(list)
+         //Assertions.assertEquals(3,list.size)
+     }
+     @Test
+     @DisplayName("Getting most possessions")
+     fun testGetMostPossessions() {
+         var list = service.getMostPossessions(2)
+         Assertions.assertNotNull(list)
+         //Assertions.assertEquals(2,list.size)
+     }
+     @Test
+     @DisplayName("Getting progress of user 1")
+     fun testGetProgress() {
+         var value = service.getUserProgress(1)
+         Assertions.assertNotNull(value)
+         //Assertions.assertEquals(1.09375,value)
+     }
 }
 

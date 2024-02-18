@@ -1,6 +1,6 @@
 package com.ci5644.trade
 import com.ci5644.trade.services.user.UserService
-
+import com.ci5644.trade.dto.UserDto
 
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -24,9 +24,16 @@ class UserServiceTest {
     @Autowired
     private lateinit var mvc: MockMvc
 
-    // @Test
-    // fun testPage() {
-
-    // }
+    @Test
+    fun testLoadUserByUsername() {
+        val res = service.loadUserByUsername("cesar")
+        Assertions.assertNull(res)
+    }
+    @Test
+    fun testEditUser(){
+        val details : UserDto = UserDto(1,"cesar","cesar","cesar","cesar","cesar")
+        val res = service.editUser(details)
+        Assertions.assertNotNull(res)
+    }
 }
 
