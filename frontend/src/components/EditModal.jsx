@@ -16,7 +16,6 @@ const EditModal = ({show, onClose}) => {
     const [gender, setGender] = useState('');
     const [name, setName] = useState('');
 
-
     useEffect(() => {
         if (user) {
             setName(user.name);
@@ -25,6 +24,16 @@ const EditModal = ({show, onClose}) => {
             setGender(user.gender);
         }
     }, [user]);
+
+    const handleConfirm = () => {
+        if (!name || !email || !password) {
+            alert('Por favor, complete todos los campos');
+            return
+        }
+
+        onClose();
+    }
+
 
     return (
         
@@ -88,7 +97,7 @@ const EditModal = ({show, onClose}) => {
                             marginBottom: '10px',
                             borderRadius: '10px' 
                         }} />
-                        <TextField label="Contraseña" variant="outlined" color="secondary" value={password} onChange={(e) => setPassword(e.target.value)} fullWidth style={{ 
+                        <TextField label="Contraseña" variant="outlined" type="password" color="secondary" value={password} onChange={(e) => setPassword(e.target.value)} fullWidth style={{ 
                             margin: 'normal',
                             backgroundColor: 'gray',
                             marginBottom: '10px',
@@ -114,7 +123,7 @@ const EditModal = ({show, onClose}) => {
                                 <MenuItem value={"Otro"}>Otro</MenuItem>
                             </Select>
                         </FormControl>
-                        <Button variant="contained" size="medium" style={{ 
+                        <Button variant="contained" size="medium" onClick={handleConfirm} style={{ 
                             backgroundColor: '#731530', 
                             color: 'white', 
                             alignSelf: 'flex-center' }}>Confirmar

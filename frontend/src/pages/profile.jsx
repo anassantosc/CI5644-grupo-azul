@@ -1,6 +1,7 @@
 import BadgeIcon from "@mui/icons-material/Badge";
 import EmailIcon from "@mui/icons-material/Email";
 import WcIcon from "@mui/icons-material/Wc";
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
 import EditModal from "../components/EditModal";
@@ -31,8 +32,8 @@ export default function Profile() {
                         <Avatar
                             alt="User Avatar"
                             style={{
-                                width: "180px",
-                                height: "180px",
+                                width: "300px",
+                                height: "300px",
                                 backgroundColor: "black",
                             }}
                         />
@@ -45,52 +46,53 @@ export default function Profile() {
                         justifyContent="center"
                     >
                         <Typography
-                            variant="h5"
                             style={{
                                 fontWeight: "bold",
+                                fontSize: "30px",
                                 color: "white",
                                 margin: "10px",
                                 padding: "10px",
                             }}
                         >
-                            <BadgeIcon style={{ marginRight: "8px" }} />
-                            {name}
+                            <BadgeIcon style={{ marginRight: "8px", height: "50px", width: "65px" }} />
+                            {name || "Nombre no disponible"}
                         </Typography>
                         <Typography
-                            variant="h6"
                             style={{
                                 fontWeight: 100,
                                 fontStyle: "italic",
+                                fontSize: "30px",
                                 color: "white",
                                 margin: "10px",
                                 padding: "10px",
                             }}
                         >
-                            {username}
+                            <AlternateEmailIcon style={{ marginRight: "8px", height: "50px", width: "50px" }} />
+                            {username || "Nombre de Usuario no disponible"}
                         </Typography>
                         <Typography
-                            variant="h6"
                             style={{
                                 fontWeight: "light",
+                                fontSize: "30px",
                                 color: "white",
                                 margin: "10px",
                                 padding: "10px",
                             }}
                         >
-                            <EmailIcon style={{ marginRight: "8px" }} />
-                            {email}
+                            <EmailIcon style={{ marginRight: "8px", height: "50px", width: "65px" }} />
+                            {email || "Correo Electrónico no disponible"}
                         </Typography>
                         <Typography
-                            variant="h6"
                             style={{
                                 fontWeight: "light",
+                                fontSize: "30px",
                                 color: "white",
                                 margin: "10px",
                                 padding: "10px",
                             }}
                         >
-                            <WcIcon style={{ marginRight: "8px" }} />
-                            {gender}
+                            <WcIcon style={{ marginRight: "8px", height: "65px", width: "50px" }} />
+                            {gender || "Género del Usuario no disponible"}
                         </Typography>
                         <Button
                             variant="contained"

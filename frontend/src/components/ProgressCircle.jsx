@@ -15,7 +15,7 @@ const StyledCircularProgress = styled(CircularProgress)(({ theme }) => ({
     },
 }));
 
-const ProgressBar = ({ value }) => {
+const ProgressCircle = ({ value }) => {
     return (
         <div
             style={{
@@ -58,8 +58,8 @@ const ProgressBar = ({ value }) => {
     );
 };
 
-ProgressBar.propTypes = {
+ProgressCircle.propTypes = {
     value: PropTypes.string.isRequired,
 };
 
-export default ProgressBar;
+export default ProgressCircle;
