@@ -4,7 +4,7 @@ import Image from "next/image";
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import { useEdit } from "../hooks/UseEdit";
+import { useEdit } from "../hooks/useEdit";
 import { Background } from "./Background";
 
 
