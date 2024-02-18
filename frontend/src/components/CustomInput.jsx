@@ -2,10 +2,10 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 
-const CustomInput = ({ type, label, onChange, error, name }) => {
+const CustomInput = ({ type, label, onChange, error, name, required }) => {
     return (
         <TextField
-            required
+            required={required}
             name={name}
             style={{
                 width: "100%",
