@@ -20,6 +20,8 @@ export default function Layout({ children }) {
         Comprar: "/store",
         "Mi Álbum": "/album",
         Salir: "/",
+        Login: "/login",
+        Registro: "/register"
     };
 
     const handleClick = (key) => {

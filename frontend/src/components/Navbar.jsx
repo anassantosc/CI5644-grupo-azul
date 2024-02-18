@@ -13,9 +13,11 @@ import PropTypes from "prop-types";
 import Image from "next/image";
 import React from "react";
 import logo from "./../assets/logo.png";
+import Cookies from "js-cookie"
 
 const pages = ["Inicio", "Album", "Comprar"];
-const settings = ["Perfil", "Mi Álbum", "Salir"];
+const adminSettings = ["Perfil", "Mi Álbum", "Salir"];
+const settings = ["Login", "Registro"]
 
 export const Navbar = ({
     handleClick,
@@ -23,6 +25,8 @@ export const Navbar = ({
     handleCloseUserMenu,
     anchorElUser,
 }) => {
+    const isLogin = Cookies.get("JWT");
+
     return (
         <Toolbar
             disableGutters
@@ -115,7 +119,7 @@ export const Navbar = ({
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                 >
-                    {settings.map((setting) => (
+                    {(isLogin ? adminSettings : settings).map((setting) => (
                         <MenuItem
                             key={setting}
                             onClick={() => handleClick(setting)}
