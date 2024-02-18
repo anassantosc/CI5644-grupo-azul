@@ -1,14 +1,13 @@
-import React from "react";
-import CustomInput from "./CustomInput";
-import ColorButton from "./ColorButton";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import LocalPoliceIcon from "@mui/icons-material/LocalPolice";
 import PropTypes from "prop-types";
+import React from "react";
+import ColorButton from "./ColorButton";
+import CustomInput from "./CustomInput";
 
-import Box from "@mui/material/Box";
 import { Link } from "@mui/material";
+import Box from "@mui/material/Box";
 
-const AuthForm = ({ onSubmit, onChange, values, errors, isLogin }) => {
+const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
     const style = {
         height: "auto",
         width: "100%",
@@ -40,7 +39,6 @@ const AuthForm = ({ onSubmit, onChange, values, errors, isLogin }) => {
                 label="Usuario"
                 onChange={onChange}
                 value={values.username}
-                error={errors.username}
                 name="username"
             />
             <CustomInput
@@ -48,7 +46,6 @@ const AuthForm = ({ onSubmit, onChange, values, errors, isLogin }) => {
                 label="Contraseña"
                 onChange={onChange}
                 value={values.password}
-                error={errors.password}
                 name="password"
             />
             {!isLogin && (
@@ -57,7 +54,6 @@ const AuthForm = ({ onSubmit, onChange, values, errors, isLogin }) => {
                     label="Confirmar contraseña"
                     onChange={onChange}
                     value={values.confirmPassword}
-                    error={errors.confirmPassword}
                     name="confirmPassword"
                 />
             )}
@@ -96,11 +92,6 @@ AuthForm.propTypes = {
     onSubmit: PropTypes.func,
     onChange: PropTypes.func,
     values: PropTypes.shape({
-        username: PropTypes.string,
-        password: PropTypes.string,
-        confirmPassword: PropTypes.string,
-    }),
-    errors: PropTypes.shape({
         username: PropTypes.string,
         password: PropTypes.string,
         confirmPassword: PropTypes.string,
