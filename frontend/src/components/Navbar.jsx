@@ -20,8 +20,8 @@ const settings = ["Perfil", "Mi Álbum", "Salir"];
 export const Navbar = ({
     handleClick,
     handleOpenUserMenu,
-    anchorElUser,
     handleCloseUserMenu,
+    anchorElUser,
 }) => {
     return (
         <Toolbar
@@ -48,7 +48,7 @@ export const Navbar = ({
                     <Image
                         src={logo}
                         sizes="100vw"
-                        style={{ width: "100%", height: "100%"}}
+                        style={{ width: "100%", height: "100%" }}
                         alt="logo"
                     />
                 </Button>
@@ -134,6 +134,6 @@ export const Navbar = ({
 Navbar.propTypes = {
     handleClick: PropTypes.func,
     handleOpenUserMenu: PropTypes.func,
-    anchorElUser: PropTypes.func,
+    anchorElUser: PropTypes.object,
     handleCloseUserMenu: PropTypes.func,
 };
