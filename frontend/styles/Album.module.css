@@ -26,3 +26,20 @@
     max-width: 980px;
     margin: auto auto 50px;
 }
+
+.paginator {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.arrow {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    gap: 5px;
+}

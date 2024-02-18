@@ -15,5 +15,6 @@ export const getCardsByPage = async (page) => {
         return await response.json();
     } catch (error) {
         console.error(error);
+        return [];
     }
 };

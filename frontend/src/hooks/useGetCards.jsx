@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getCardsByPage } from "../utils/fetchs/getCardsByPage";
 
-export const useGetCards = (id) => {
+export const useGetCards = (page) => {
     const [cards, setCards] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -9,19 +9,11 @@ export const useGetCards = (id) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let page = 0;
-                let hasNextPage = true;
-
-                while (hasNextPage) {
-                    const data = await getCardsByPage(page);
-                    if (data.length > 0) {
-                        setCards((prevCards) => [...prevCards, ...data]);
-                        page++;
-                    } else {
-                        hasNextPage = false;
-                    }
+                const data = await getCardsByPage(page);
+                if (data.length > 0) {
+                    setCards(data);
+                    page++;
                 }
-
                 setLoading(false);
             } catch (error) {
                 setError(error);
@@ -30,7 +22,7 @@ export const useGetCards = (id) => {
         };
 
         fetchData();
-    }, [id]);
+    }, [page]);
 
     return { cards, loading, error };
 };
