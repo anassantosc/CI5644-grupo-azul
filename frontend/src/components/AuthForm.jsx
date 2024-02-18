@@ -40,6 +40,7 @@ const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
                 onChange={onChange}
                 value={values.username}
                 name="username"
+                required
             />
             <CustomInput
                 type="password"
@@ -47,15 +48,40 @@ const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
                 onChange={onChange}
                 value={values.password}
                 name="password"
+                required
             />
             {!isLogin && (
-                <CustomInput
-                    type="password"
-                    label="Confirmar contraseña"
-                    onChange={onChange}
-                    value={values.confirmPassword}
-                    name="confirmPassword"
-                />
+                <React.Fragment>
+                    <CustomInput
+                        type="password"
+                        label="Confirmar contraseña"
+                        onChange={onChange}
+                        value={values.confirmPassword}
+                        name="confirmPassword"
+                        required
+                    />
+                    <CustomInput
+                        label="Nombre"
+                        onChange={onChange}
+                        value={values.name}
+                        name="name"
+                        required
+                    />
+                    <CustomInput
+                        type="email"
+                        label="Direccion de correo electronico"
+                        onChange={onChange}
+                        value={values.email}
+                        name="email"
+                        required
+                    />
+                    <CustomInput
+                        label="Genero"
+                        onChange={onChange}
+                        value={values.gender}
+                        name="gender"
+                    />
+                </React.Fragment>
             )}
             <ColorButton
                 textcolor="#fff"

@@ -12,6 +12,9 @@ const RegisterPage = () => {
         username: "",
         password: "",
         confirmPassword: "",
+        name: "",
+        email: "",
+        gender: ""
     });
     const showAlert = useAlert();
     const [errors, setErrors] = useState(null);
@@ -23,7 +26,7 @@ const RegisterPage = () => {
         });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (values.password !== values.confirmPassword) {
@@ -32,16 +35,20 @@ const RegisterPage = () => {
                 "warning"
             );
         } else {
-            Register(
+            const response = await Register(
                 {
                     username: values.username,
                     password: values.password,
-                    name: "",
-                    email: "",
-                    gender: "",
+                    name: values.name,
+                    email: values.email,
+                    gender: values.gender,
                 },
                 showAlert
             );
+
+            if (response?.ok) {
+                router.push("/profile");
+            }
         }
     };
 
