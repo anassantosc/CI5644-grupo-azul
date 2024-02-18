@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getCardsByPage } from "../utils/fetchs/getCardsByPage";
+import { getCardsByPage } from "../utils/fetchs/GetCardsByPage";
 
 export const useGetCards = (page) => {
     const [cards, setCards] = useState([]);
