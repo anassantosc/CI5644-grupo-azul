@@ -1,11 +1,9 @@
 package com.ci5644.trade.dto.auth
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
-import java.time.LocalDate
 
 data class RegisterDTO(
     @NotNull

@@ -5,7 +5,6 @@ import javax.crypto.spec.SecretKeySpec
 import java.security.Key
 import java.util.Base64
 import java.util.Arrays
-import com.ci5644.trade.config.SecurityConstants
 
 /**
  * Utility class for encryption and decryption using AES algorithm.

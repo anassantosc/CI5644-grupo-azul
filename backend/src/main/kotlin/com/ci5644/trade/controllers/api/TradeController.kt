@@ -8,6 +8,4 @@ class TradeController {
     @GetMapping("/")
     fun helloDeck(): String = "Hello world"
 
-    @GetMapping("/api/admin/test")
-    fun helloAdmin(): String = "Hello admin"
 }

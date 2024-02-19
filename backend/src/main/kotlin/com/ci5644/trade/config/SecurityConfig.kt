@@ -2,7 +2,6 @@ package com.ci5644.trade.config
 
 import com.ci5644.trade.config.JWT.EntryPointJWT
 import com.ci5644.trade.config.JWT.JWTFilter
-import com.ci5644.trade.config.PasswordConfig
 import com.ci5644.trade.services.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -11,9 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
@@ -21,12 +18,7 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import java.util.*
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import java.lang.Exception
-import org.springframework.security.config.annotation.web.builders.WebSecurity
-import org.springframework.boot.web.servlet.FilterRegistrationBean
-import org.springframework.security.authentication.BadCredentialsException
-import jakarta.servlet.http.HttpServletResponse
 
 
 /**
@@ -135,7 +127,7 @@ class SecurityConfig {
         val configuration = CorsConfiguration()
         configuration.allowedOrigins = listOf("http://localhost:8080", "http://localhost:3000")
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE")
-        configuration.allowedHeaders = listOf("*") // Permitir todos los encabezados
+        configuration.allowedHeaders = listOf("*") // Accept all headers
         configuration.allowCredentials = true
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)

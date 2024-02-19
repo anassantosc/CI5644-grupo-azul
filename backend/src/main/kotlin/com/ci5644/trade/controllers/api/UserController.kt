@@ -1,10 +1,9 @@
 package com.ci5644.trade.controllers.api
 
-import com.ci5644.trade.models.user.UserEntity
 import com.ci5644.trade.services.user.UserService
 import com.ci5644.trade.dto.UserDto
 import com.ci5644.trade.config.SecurityConstants
-import com.ci5644.trade.services.AuthorizationService
+import com.ci5644.trade.services.auth.AuthorizationService
 import com.ci5644.trade.config.JWT.JWTSecurityUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -53,11 +52,24 @@ class UserController(private val authorizationService: AuthorizationService) {
             @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
             @RequestBody details: UserDto
         ): ResponseEntity<*> {
-        val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie);
-        if (username != details.username) {
+        
+        try {
+            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
+        
+            if (username != details.username || details.username.length < 5 || details.password.length < 8) {
+                val errorMessage = StringBuilder("User details invalid: ")
+                if (username != details.username) {
+                    errorMessage.append("Username cannot be changed.")
+                } else if (details.password.length < 8) {
+                    errorMessage.append("Password must be longer or equal than 8 characters.")
+                }
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage.toString())
+            }
+            
+            userService.editUser(details)
+            return ResponseEntity.ok("User successfully edited")
+        } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
-        userService.editUser(details)
-        return ResponseEntity.ok("User uccessfully edited")
     }
 }

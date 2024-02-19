@@ -4,7 +4,6 @@ import com.ci5644.trade.services.user.UserService
 import com.ci5644.trade.config.SecurityConstants
 import io.jsonwebtoken.JwtException
 import java.io.IOException
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -18,7 +17,6 @@ import jakarta.servlet.ServletException
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.security.core.GrantedAuthority
 
 /**
  * Custom JWT filter for handling JWT authentication.

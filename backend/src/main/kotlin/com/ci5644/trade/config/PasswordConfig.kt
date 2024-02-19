@@ -3,12 +3,7 @@ package com.ci5644.trade.config
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.crypto.password.PasswordEncoder
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
-import java.util.Base64
-import com.ci5644.trade.config.SecurityConstants
-import com.ci5644.trade.config.decrypt  
-import com.ci5644.trade.config.encrypt
+
 
 /**
  * Configuration class for password encoding and decoding.

@@ -3,14 +3,13 @@ package com.ci5644.trade.controllers.auth
 import com.ci5644.trade.config.SecurityConstants
 import com.ci5644.trade.dto.auth.LoginDTO
 import com.ci5644.trade.dto.auth.RegisterDTO
-import com.ci5644.trade.services.AuthorizationService
+import com.ci5644.trade.services.auth.AuthorizationService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.*
 import javax.naming.AuthenticationException
-import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 import com.ci5644.trade.exceptions.runtime.UsernameTakenException
-import com.ci5644.trade.exceptions.runtime.NonExistentUserException
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 /**
  * Controller handling authentication-related endpoints.
@@ -32,7 +31,7 @@ class AuthenticationController {
         return try {
             val jwtCookie = authService.loginUser(log.username, log.password)
             ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).build()
-        } catch (e: NonExistentUserException) {
+        } catch (e: UsernameNotFoundException) {
             ResponseEntity.status(HttpStatus.CONFLICT).body(e.message)
         } catch (e: AuthenticationException) {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: ${e.message}")
@@ -46,7 +45,7 @@ class AuthenticationController {
      */
     @PostMapping("/register")
     fun regisReq(@RequestBody reg: RegisterDTO): ResponseEntity<Any> {
-        val trimmedUsername = reg.username!!.trim() 
+        val trimmedUsername = reg.username.trim() 
         val trimmedReg = reg.copy(username = trimmedUsername)
         return try {
             authService.registerUser(trimmedReg)

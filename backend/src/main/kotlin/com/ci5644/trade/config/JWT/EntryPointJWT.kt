@@ -8,10 +8,8 @@ import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import java.io.IOException
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.web.server.ResponseStatusException
-import org.springframework.http.HttpStatus
+
 
 /**
  * Custom authentication entry point for JWT authentication.
@@ -38,7 +36,7 @@ class EntryPointJWT : AuthenticationEntryPoint {
         authException: AuthenticationException
     ) {
         val errorMessage = authException.message
-        if (errorMessage != null && errorMessage.toLowerCase().contains("bad credentials")) {
+        if (errorMessage != null && errorMessage.lowercase().contains("bad credentials")) {
             response.sendError(HttpServletResponse.SC_CONFLICT, errorMessage)
         } else {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, errorMessage)
