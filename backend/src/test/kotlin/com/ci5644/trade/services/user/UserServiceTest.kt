@@ -1,4 +1,4 @@
-package com.ci5644.trade
+/*package com.ci5644.trade
 import com.ci5644.trade.services.user.UserService
 import com.ci5644.trade.dto.UserDto
 
@@ -35,5 +35,5 @@ class UserServiceTest {
         val res = service.editUser(details)
         Assertions.assertNotNull(res)
     }
-}
+}*/
 

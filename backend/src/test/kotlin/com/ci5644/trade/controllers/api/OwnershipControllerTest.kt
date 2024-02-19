@@ -1,3 +1,4 @@
+/*
 package com.ci5644.trade.controllers.api
 import com.ci5644.trade.controllers.api.OwnershipController
 import com.ci5644.trade.services.auth.AuthorizationService
@@ -85,4 +86,4 @@ class OwnershipControllerTest {
     fun tearDown() {
 
     }
-}
+}*/

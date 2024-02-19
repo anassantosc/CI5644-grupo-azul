@@ -4,6 +4,7 @@ COPY ./backend /backend
 WORKDIR /backend
 
 RUN chmod +x ./gradlew
+RUN ./gradlew test --info > test_results.txt
 RUN ./gradlew build
 
 EXPOSE 8080
