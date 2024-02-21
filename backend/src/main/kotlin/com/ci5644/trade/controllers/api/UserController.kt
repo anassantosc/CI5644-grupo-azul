@@ -2,6 +2,7 @@ package com.ci5644.trade.controllers.api
 
 import com.ci5644.trade.services.user.UserService
 import com.ci5644.trade.dto.UserDto
+import com.ci5644.trade.dto.UserDetailsDto
 import com.ci5644.trade.config.SecurityConstants
 import com.ci5644.trade.services.auth.AuthorizationService
 import com.ci5644.trade.config.JWT.JWTSecurityUtils
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import com.ci5644.trade.config.decrypt
 
 /**
  * Controller class to handle user-related HTTP requests.
@@ -33,9 +33,8 @@ class UserController(private val authorizationService: AuthorizationService) {
         return try {
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie);
             val user = authorizationService.retrieveUser(username)
-            val userDto = UserDto.fromEntity(user)
-            userDto.password = decrypt(userDto.password)
-            ResponseEntity.ok(userDto)
+            val UserDetailsDto = UserDetailsDto.fromEntity(user)
+            ResponseEntity.ok(UserDetailsDto)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
@@ -50,18 +49,16 @@ class UserController(private val authorizationService: AuthorizationService) {
     @PostMapping("/edit")
     fun editUser(
             @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
-            @RequestBody details: UserDto
+            @RequestBody details: UserDetailsDto
         ): ResponseEntity<*> {
         
         try {
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
         
-            if (username != details.username || details.username.length < 5 || details.password.length < 8) {
+            if (username != details.username || details.username.length < 5) {
                 val errorMessage = StringBuilder("User details invalid: ")
-                if (username != details.username) {
-                    errorMessage.append("Username cannot be changed.")
-                } else if (details.password.length < 8) {
-                    errorMessage.append("Password must be longer or equal than 8 characters.")
+                if (details.username.length < 5) {
+                    errorMessage.append("Username cannot less than 5 characters.")
                 }
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage.toString())
             }

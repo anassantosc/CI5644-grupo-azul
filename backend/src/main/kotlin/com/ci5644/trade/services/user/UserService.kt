@@ -2,14 +2,13 @@ package com.ci5644.trade.services.user
 
 import com.ci5644.trade.repositories.UserRepository
 import com.ci5644.trade.models.user.UserEntity
-import com.ci5644.trade.dto.UserDto
+import com.ci5644.trade.dto.UserDetailsDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-import com.ci5644.trade.config.encrypt
 
 /**
  * Service class for managing user-related operations.
@@ -38,17 +37,17 @@ class UserService : UserDetailsService {
 
     /**
      * Edits user details.
-     * @param details UserDto - The details of the user to be edited.
+     * @param details UserDetailsDto - The details of the user to be edited.
      * @throws UsernameNotFoundException if the user with the specified username does not exist.
      */
-    fun editUser(details: UserDto) {
+    fun editUser(details: UserDetailsDto) {
         if (!userRepository.existsByUsername(details.username))
             throw UsernameNotFoundException("Not found: $details.username")
         val user = userRepository.findByUsername(details.username)
         user.name = details.name
+        user.username = details.username
         user.email = details.email
         user.gender = details.gender
-        user.password = encrypt(details.password)
         userRepository.save(user)
     }
 }

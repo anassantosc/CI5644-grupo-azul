@@ -60,6 +60,7 @@ class OwnershipController(private val authorizationService: AuthorizationService
         }
     }
 
+
     /**
      * Retrieves the progress of users in owning cards worldwide.
      *
