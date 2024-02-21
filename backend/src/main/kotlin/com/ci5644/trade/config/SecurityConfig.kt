@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
@@ -39,7 +40,7 @@ class SecurityConfig {
      */
     @Bean
     fun securityPasswordEncoder(): PasswordEncoder {
-        return PasswordConfig().passwordEncoder()
+        return BCryptPasswordEncoder()
     }
 
     /**
@@ -47,7 +48,7 @@ class SecurityConfig {
      * @return JWTFilter - Custom JWTFilter bean.
      */
     @Bean
-    fun authenticationJwtTokenFilter(): JWTFilter? {
+    fun authenticationJwtTokenFilter(): JWTFilter {
         return JWTFilter()
     }
 
@@ -125,9 +126,10 @@ class SecurityConfig {
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080"));
-        configuration.allowedMethods = listOf("*")
-        configuration.allowedHeaders = listOf("*")
+        configuration.allowedOrigins = listOf("http://localhost:8080", "http://localhost:3000")
+        configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE")
+        configuration.allowedHeaders = listOf("*") // Accept all headers
+        configuration.allowCredentials = true
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source

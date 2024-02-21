@@ -49,14 +49,4 @@ class OwnershipEntity (
         }
         throw IllegalStateException("Quantity cannot be decreased below 0.")
     }
-
-
-    /**
-     * Set the visibility of the card owned
-     * 
-     * @param newVisibility the visibility to be set
-     */
-    fun setVisiblity(newVisibility: Boolean) {
-        visibility = newVisibility
-    }
 }
