@@ -83,6 +83,9 @@ function Album() {
                     <FontAwesomeIcon icon={faArrowRight} />
                 </button>
             </div>
+            <div className={styles.pageCount}> 
+                <h3>Página {page+1} de 32</h3>
+            </div>
         </Layout>
     );
 }

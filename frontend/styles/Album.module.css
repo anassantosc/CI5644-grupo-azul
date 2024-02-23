@@ -18,20 +18,18 @@
 
 .albumCards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    row-gap: 50px;
-    padding: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    row-gap: 5%;
+    padding: 2%;
     justify-items: center;
-    max-width: 980px;
-    margin: auto auto 50px;
+    max-width: 90%;
+    margin: auto auto 10%;
 }
 
 .paginator {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 10px;
 }
 
 .arrow {
@@ -42,4 +40,16 @@
     font-weight: bold;
     display: flex;
     gap: 5px;
+}
+
+.pageCount {
+    width: 80vw;
+    max-width: 950px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    color: white;
+    margin-top: 0%;
+    margin-bottom: 0.5%;
 }

@@ -1,7 +1,4 @@
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
+import { Box, Button, Divider, Grid } from '@mui/material';
 import styles from "./../../styles/Footer.module.css";
 import {
     faFacebook,
@@ -13,9 +10,9 @@ import PropTypes from "prop-types";
 
 export const FooterText = ({ first, second }) => {
     return (
-        <Box sx={{ textAlign: "left", marginBottom: "40px", fontSize: "20px" }}>
+        <Box sx={{ textAlign: "left", marginBottom: "7%", fontSize: "20px" }}>
             <Box>
-                <Divider sx={{ bgcolor: "white", marginBottom: "10px" }} />
+                <Divider sx={{ bgcolor: "white", marginBottom: "2%" }} />
             </Box>
             <Box>{first}</Box>
             <Box>{second}</Box>
@@ -25,7 +22,7 @@ export const FooterText = ({ first, second }) => {
 
 export const FooterSocial = () => {
     return (
-        <Box sx={{ marginBottom: "15px" }}>
+        <Box sx={{ marginBottom: "3%" }}>
             <Box
                 fontWeight="bold"
                 sx={{ typography: "h4", letterSpacing: "4px" }}
@@ -33,7 +30,7 @@ export const FooterSocial = () => {
                 Marmota{" "}
             </Box>
             <Box sx={{ typography: "h7" }}> Salvaje </Box>
-            <Box sx={{ marginTop: "10px" }}>
+            <Box sx={{ marginTop: "2%" }}>
                 <Button sx={{ color: "white" }}>
                     <FontAwesomeIcon icon={faFacebook} />
                 </Button>
@@ -66,16 +63,13 @@ export const Footer = () => {
                     color: "white",
                 }}
             >
-                <Grid item xs={4}>
-                    <FooterText
-                        first="Copyright 2024 marmotasalvaje.com"
-                        second="Derechos reservados"
-                    />
+                <Grid item xs={12} md={4} sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <FooterText first="Copyright 2024 marmotasalvaje.com" second="Derechos reservados" />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
                     <FooterSocial />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} md={4} sx={{ display: { xs: 'none', md: 'flex' } }}>
                     <FooterText first="Acerca de " second="Contáctanos" />
                 </Grid>
             </Grid>
