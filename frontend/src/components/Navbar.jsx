@@ -12,7 +12,7 @@ import {
 import PropTypes from "prop-types";
 import Image from "next/image";
 import React from "react";
-import logo from "./../assets/logo.png";
+import images from "../utils/constants/images";
 import Cookies from "js-cookie"
 
 const pages = ["Inicio", "Album", "Comprar"];
@@ -50,7 +50,9 @@ export const Navbar = ({
             >
                 <Button onClick={() => handleClick("Inicio")}>
                     <Image
-                        src={logo}
+                        src={images.logo}
+                        width={0}
+                        height={0}
                         sizes="100vw"
                         style={{ width: "100%", height: "100%" }}
                         alt="logo"

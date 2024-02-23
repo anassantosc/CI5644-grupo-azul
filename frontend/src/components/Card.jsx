@@ -8,9 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import PropTypes from "prop-types";
 import React from "react";
-import styles from "./../../styles/Card.module.css";
-import playerImage from "./../assets/player-background.png";
-import unknownPlayer from "./../assets/unknown-player.png";
+import styles from "../../styles/Card.module.css";
+import images from "../utils/constants/images";
 
 export const Card = ({ name, number, position, height, weight }) => {
 
@@ -39,7 +38,7 @@ export const Card = ({ name, number, position, height, weight }) => {
                 </div>
                 <div className={styles.card__img}>
                     <Image
-                        src={playerImage}
+                        src={images.playerBackground}
                         width={0}
                         height={0}
                         sizes="100vw"
@@ -55,7 +54,7 @@ export const Card = ({ name, number, position, height, weight }) => {
         <div className={styles.card}>
             <div className={styles.card__img}>
                 <Image
-                    src={unknownPlayer}
+                    src={images.unknownPlayer}
                     width={0}
                     height={0}
                     sizes="100vw"

@@ -3,7 +3,7 @@ import { Box, Button, FormControl, IconButton, InputLabel, MenuItem, Modal, Sele
 import Image from "next/image";
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from "react";
-import logo from "../assets/logo.png";
+import images from '../utils/constants/images';
 import { useEdit } from "../hooks/useEdit";
 import { Background } from "./Background";
 
@@ -41,7 +41,7 @@ const EditModal = ({show, onClose}) => {
             <div style={{ overflow: "auto"}}>
                     
 
-                    <Image src={logo} alt="Logo" width={150} height={150} style={{
+                    <Image src={images.logo} alt="Logo" width={150} height={150} style={{
                         position: 'absolute', 
                         left: '10px', 
                         top: '10px' 
