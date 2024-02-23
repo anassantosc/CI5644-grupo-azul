@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "../components/Card";
 import ProgressBar from "../components/ProgressBar";
-import { SearchBar } from "../components/SearchBar";
 import { useGetCards } from "../hooks/useGetCards";
 import { useProgress } from "../hooks/useProgress";
 import Layout from "../layout/Layout";
@@ -44,11 +43,15 @@ function Album() {
                 <div className={styles.containerH1}>
                     <h1>Album</h1>
                 </div>
-                <SearchBar />
-                <div className={styles.progressBar}>
-                    <h2>Progreso Actual</h2>
-                    {progress && <ProgressBar value={progress} />}
-                </div>
+                {progress && (
+                    <div className={styles.progressBar}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between',  padding: '1%' }}>
+                            <h2 style={{ margin: '0' }}>Progreso Actual</h2>
+                            <h2 style={{ margin: '0' }}>{progress.toFixed(2)}%</h2>
+                        </div>
+                        <ProgressBar value={progress} />
+                    </div>
+                )}
             </div>
 
             <div className={styles.albumCards}>
