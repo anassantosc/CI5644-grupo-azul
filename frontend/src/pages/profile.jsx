@@ -3,19 +3,41 @@ import EmailIcon from "@mui/icons-material/Email";
 import WcIcon from "@mui/icons-material/Wc";
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditModal from "../components/EditModal";
 import ProgressCircle from "../components/ProgressCircle";
-import { useUser } from "../hooks/useUser";
 import { useProgress } from "../hooks/useProgress";
 import Layout from "../layout/Layout";
+import { GetUser } from "../utils/fetchs/GetUser";
+
 
 export default function Profile() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const { id, username, password, name, email, gender } = useUser() || {};
-    const progress = useProgress(id);
+    const [user, setUser] = useState({
+        id: null,
+        username: null,
+        password: null,
+        name: null,
+        email: null,
+        gender: null,
+    });
+    const progress = useProgress(user.id);
+
+    useEffect(() => {
+        const updateUser = async () => {
+            const userData = await GetUser();
+            setUser(userData);
+        };
+
+        updateUser();
+    }, []);
+
+    const handleChange = async () => {
+        const userData = await GetUser();
+        setUser(userData);
+    };
 
     return (
         <Layout>
@@ -25,6 +47,7 @@ export default function Profile() {
                     margin: "50px",
                     borderRadius: "10px",
                     padding: "20px",
+                    overflow: "hidden",
                 }}
             >
                 <Grid container spacing={2} alignItems="center">
@@ -32,8 +55,8 @@ export default function Profile() {
                         <Avatar
                             alt="User Avatar"
                             style={{
-                                width: "300px",
-                                height: "300px",
+                                width: "150px",
+                                height: "150px",
                                 backgroundColor: "black",
                             }}
                         />
@@ -48,14 +71,14 @@ export default function Profile() {
                         <Typography
                             style={{
                                 fontWeight: "bold",
-                                fontSize: "30px",
+                                fontSize: "40px",
                                 color: "white",
-                                margin: "10px",
-                                padding: "10px",
+                                margin: "4px",
+                                padding: "4px",
                             }}
                         >
-                            <BadgeIcon style={{ marginRight: "8px", height: "50px", width: "65px" }} />
-                            {name || "Nombre no disponible"}
+                            <AlternateEmailIcon style={{ marginRight: "8px", height: "30px", width: "50px" }} />
+                            {user.username || "Nombre de Usuario no disponible"}
                         </Typography>
                         <Typography
                             style={{
@@ -63,36 +86,36 @@ export default function Profile() {
                                 fontStyle: "italic",
                                 fontSize: "30px",
                                 color: "white",
-                                margin: "10px",
-                                padding: "10px",
+                                margin: "4px",
+                                padding: "4px",
                             }}
                         >
-                            <AlternateEmailIcon style={{ marginRight: "8px", height: "50px", width: "50px" }} />
-                            {username || "Nombre de Usuario no disponible"}
+                            <BadgeIcon style={{ marginRight: "8px", height: "25px" }} />
+                            {user.name || "Nombre no disponible"}
                         </Typography>
                         <Typography
                             style={{
                                 fontWeight: "light",
                                 fontSize: "30px",
                                 color: "white",
-                                margin: "10px",
-                                padding: "10px",
+                                margin: "4px",
+                                padding: "4px",
                             }}
                         >
-                            <EmailIcon style={{ marginRight: "8px", height: "50px", width: "65px" }} />
-                            {email || "Correo Electrónico no disponible"}
+                            <EmailIcon style={{ marginRight: "8px", height: "25px" }} />
+                            {user.email || "Correo Electrónico no disponible"}
                         </Typography>
                         <Typography
                             style={{
                                 fontWeight: "light",
                                 fontSize: "30px",
                                 color: "white",
-                                margin: "10px",
-                                padding: "10px",
+                                margin: "4px",
+                                padding: "4px",
                             }}
                         >
-                            <WcIcon style={{ marginRight: "8px", height: "65px", width: "50px" }} />
-                            {gender || "Género del Usuario no disponible"}
+                            <WcIcon style={{ marginRight: "8px", height: "25px" }} />
+                            {user.gender || "Género del Usuario no disponible"}
                         </Typography>
                         <Button
                             variant="contained"
@@ -101,12 +124,14 @@ export default function Profile() {
                             style={{
                                 backgroundColor: "#731530",
                                 color: "white",
+                                marginTop: "-50px",
                                 alignSelf: "flex-end",
                             }}
                         >
                             Editar
                         </Button>
-                        <EditModal show={show} onClose={handleClose} />
+                        {user.username !== null &&
+                            <EditModal show={show} onClose={handleClose} user={user} onChange={handleChange} />}
                     </Grid>
                 </Grid>
             </Box>
@@ -117,6 +142,7 @@ export default function Profile() {
                     margin: "50px",
                     borderRadius: "10px",
                     padding: "20px",
+                    overflow: "hidden",
                 }}
             >
                 <Grid container spacing={2} alignItems="center">
