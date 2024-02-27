@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 import Image from "next/image";
 import React from "react";
 import images from "../utils/constants/images";
-import Cookies from "js-cookie"
+import { useAuthentication } from "../hooks/useAuthentication";
 
 const pages = ["Inicio", "Album", "Comprar"];
 const adminSettings = ["Perfil", "Mi Álbum", "Salir"];
@@ -25,7 +25,7 @@ export const Navbar = ({
     handleCloseUserMenu,
     anchorElUser,
 }) => {
-    const isLogin = Cookies.get("JWT");
+    const isLogin = useAuthentication();
 
     return (
         <Toolbar

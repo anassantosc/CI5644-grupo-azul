@@ -1,24 +1,21 @@
 import { NextResponse } from 'next/server';
 
 const middleware = (req) => {
-  const token = req.cookies.get('JWT');
-  const { pathname } = req.nextUrl;
+    const token = req.cookies.get('JWT');
+    const tokenExist = token?.name === "JWT" && token?.value
+    const { pathname } = req.nextUrl;
 
-  //console.log("token ->", token);
+    if (!tokenExist && (pathname === "/profile" || pathname === "/album" || pathname === "/store")) {
+        return NextResponse.redirect('/');
+    }
 
-  const isLoggedIn = !!token;
-
-  if (!isLoggedIn && (pathname === "/profile" || pathname === "/album" || pathname === "/album")) {
-    return NextResponse.redirect('/');
-  }
-
-  if (isLoggedIn && (pathname === "/login" || pathname === "/signup")) {
-    return NextResponse.redirect('/');
-  }
+    if (tokenExist && (pathname === "/login" || pathname === "/signup")) {
+        return NextResponse.redirect('/');
+    }
 };
 
 export const config = {
-  matcher: '/((?!api|static|.*\\..*|_next).*)',
+    matcher: '/((?!api|static|.*\\..*|_next).*)',
 };
 
 export default middleware;

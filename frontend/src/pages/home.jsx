@@ -7,7 +7,7 @@ import images from "../utils/constants/images";
 import { useMundialProgress } from "../hooks/useMundialProgress";
 import TopMundial from "../components/TopMundial";
 import { useRouter } from 'next/router';
-import Cookies from 'js-cookie';
+import { useAuthentication } from "../hooks/useAuthentication";
 
 const ColorButton = styled(Button)(({ theme, margintop }) => ({
     color: "#581E3D",
@@ -23,7 +23,7 @@ const ColorButton = styled(Button)(({ theme, margintop }) => ({
 
 export const Home = () => {
     const router = useRouter();
-    const isLogin = Cookies.get("JWT");
+    const isLogin = useAuthentication();
     const mundialProgress = isLogin ? useMundialProgress() : null;
 
     const handleClick = () => {

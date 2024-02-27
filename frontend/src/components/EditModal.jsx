@@ -10,36 +10,41 @@ import { useAlert } from "../context/AlertContext";
 
 const EditModal = ({ show, onClose, user, onChange }) => {
     const showAlert = useAlert();
-    const [email, setEmail] = useState(user.email || "");
-    const [gender, setGender] = useState(user.gender || "");
-    const [name, setName] = useState(user.name || "");
+    const [userData, setUserData] = useState({ email: user.email || "", gender: user.gender || "", name: user.name || "" })
+
+    const handleFieldChange = (key) => (e) => {
+        setUserData({ ...userData, [key]: e.target.value });
+    };
 
     const nameRegex = /^[a-zA-Z\s]{5,}$/
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    const handleConfirm = async () => {
-        if (!name || !email) {
+    const validateFields = () => {
+        if (!userData.name || !userData.email) {
             showAlert("Por favor, complete todos los campos", "warning");
-            return
+            return false
         }
-        if (!nameRegex.test(name)) {
+        if (!nameRegex.test(userData.name)) {
             showAlert("El nombre debe ser de al menos 5 caracteres y no debe contener caracteres especiales", "warning");
-            return
+            return false
         }
-        if (!emailRegex.test(email)) {
+        if (!emailRegex.test(userData.email)) {
             showAlert("El correo electronico no cumple las convenciones de correo electronico", "warning");
-            return
+            return false
         }
+        return true;
+    };
 
-        const userData = {
+    const handleConfirm = async () => {
+        if (!validateFields()) return;
+
+        const userChanges = {
             username: user.username,
-            name: name,
-            email: email,
-            gender: gender
+            ...userData
         };
 
         try {
-            const response = await EditUser(userData);
+            const response = await EditUser(userChanges);
 
             if (response.ok) {
                 showAlert("Usuario editado exitosamente", "success");
@@ -70,8 +75,8 @@ const EditModal = ({ show, onClose, user, onChange }) => {
                             label="Nombre"
                             variant="outlined"
                             color="secondary"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={userData.name}
+                            onChange={handleFieldChange("name")}
                             fullWidth
                             sx={{
                                 color: 'white', mb: 2
@@ -81,8 +86,8 @@ const EditModal = ({ show, onClose, user, onChange }) => {
                             label="Correo Electrónico"
                             variant="outlined"
                             color="secondary"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={userData.email}
+                            onChange={handleFieldChange("email")}
                             fullWidth
                             sx={{
                                 color: 'white', mb: 2
@@ -94,8 +99,8 @@ const EditModal = ({ show, onClose, user, onChange }) => {
                                 labelId="gender-label"
                                 id="gender"
                                 label="Género"
-                                value={gender}
-                                onChange={(e) => setGender(e.target.value)}
+                                value={userData.gender}
+                                onChange={handleFieldChange("gender")}
                             >
                                 <MenuItem value={"Masculino"}>Masculino</MenuItem>
                                 <MenuItem value={"Femenino"}>Femenino</MenuItem>
