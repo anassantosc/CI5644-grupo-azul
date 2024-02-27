@@ -70,7 +70,7 @@ const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
                 type="submit"
                 className={styles.colorButton}
             >
-                <Box className = {styles.boxPadding}> Continuar </Box>{" "}
+                <Box className={styles.boxPadding}> Continuar </Box>{" "}
                 <ArrowForwardIcon />
             </ColorButton>
 

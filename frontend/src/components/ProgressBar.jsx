@@ -8,7 +8,7 @@ const ProgressBar = ({ value }) => {
 };
 
 ProgressBar.propTypes = {
-    value: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
 };
 
 export default ProgressBar;

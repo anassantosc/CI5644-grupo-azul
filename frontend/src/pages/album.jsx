@@ -43,7 +43,7 @@ function Album() {
                 <div className={styles.containerH1}>
                     <h1>Album</h1>
                 </div>
-                {progress && (
+                {progress !== null && (
                     <div className={styles.progressBar}>
                         <div style={{ display: 'flex', justifyContent: 'space-between',  padding: '1%' }}>
                             <h2 style={{ margin: '0' }}>Progreso Actual</h2>
@@ -67,8 +67,8 @@ function Album() {
                                 name={card ? card.playerName : null}
                                 number={index}
                                 position={card ? card.position : null}
-                                height={card ? card.height : null}
-                                weight={card ? card.weight : null}
+                                height={card ? card.height : 0.0}
+                                weight={card ? card.weight : 0.0}
                             />
                         );
                     })}
