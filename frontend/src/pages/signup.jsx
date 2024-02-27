@@ -8,7 +8,7 @@ import { useAlert } from "../context/AlertContext";
 import { Register } from "../utils/auth/Register";
 import styles from "../../styles/Login.module.css";
 
-const RegisterPage = () => {
+const SignUpPage = () => {
     const router = useRouter();
 
     const [values, setValues] = useState({
@@ -83,4 +83,4 @@ const RegisterPage = () => {
     );
 };
 
-export default RegisterPage;
+export default SignUpPage;

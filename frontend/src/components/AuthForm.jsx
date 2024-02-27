@@ -96,7 +96,7 @@ const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
             {isLogin ? (
                 <Box>
                     ¿No tienes una cuenta?{" "}
-                    <Link href="/register" underline="hover" color="white">
+                    <Link href="/signup" underline="hover" color="white">
                         Registrate
                     </Link>
                 </Box>
