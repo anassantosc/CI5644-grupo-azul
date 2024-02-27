@@ -14,9 +14,20 @@ const EditModal = ({ show, onClose, user, onChange }) => {
     const [gender, setGender] = useState(user.gender || "");
     const [name, setName] = useState(user.name || "");
 
+    const nameRegex = /^[a-zA-Z\s]{5,}$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     const handleConfirm = async () => {
         if (!name || !email) {
             showAlert("Por favor, complete todos los campos", "warning");
+            return
+        }
+        if (!nameRegex.test(name)) {
+            showAlert("El nombre debe ser de al menos 5 caracteres y no debe contener caracteres especiales", "warning");
+            return
+        }
+        if (!emailRegex.test(email)) {
+            showAlert("El correo electronico no cumple las convenciones de correo electronico", "warning");
             return
         }
 
@@ -43,7 +54,6 @@ const EditModal = ({ show, onClose, user, onChange }) => {
 
         onClose();
     }
-
 
     return (
         <Dialog open={show} onClose={onClose} fullWidth maxWidth="sm" >
