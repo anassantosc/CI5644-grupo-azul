@@ -42,7 +42,7 @@ export const Card = ({ name, number, position, height, weight }) => {
                         width={0}
                         height={0}
                         sizes="100vw"
-                        style={{ width: "100%", height: "100%" }}
+                        className={styles.image__fullsize}
                         alt="Imagen de jugador"
                         priority={true}
                     />
@@ -58,7 +58,7 @@ export const Card = ({ name, number, position, height, weight }) => {
                     width={0}
                     height={0}
                     sizes="100vw"
-                    style={{ width: "100%", height: "100%" }}
+                    className={styles.image__fullsize}
                     alt="No tienes este jugador aún"
                     priority={true}
                 />
