@@ -6,31 +6,12 @@ import CustomInput from "./CustomInput";
 
 import { Link } from "@mui/material";
 import Box from "@mui/material/Box";
+import styles from "./../../styles/AuthForm.module.css";
 
 const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
-    const style = {
-        height: "auto",
-        width: "100%",
-        maxWidth: "22rem",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "left",
-        justifyContent: "space-around",
-        padding: "3rem 4rem",
-        backgroundColor: "#fff2",
-        borderRadius: "10px",
-        border: "1px solid #fffe",
-        color: "#fff",
-        fontSize: ".9rem",
-        "@media (max-width:600px)": {
-            padding: "1.5rem 2rem",
-            fontSize: "0.8rem",
-        },
-    };
-
     return (
-        <Box component="form" onSubmit={onSubmit} sx={style}>
-            <h1 style={{ margin: 0 }}>
+        <Box component="form" onSubmit={onSubmit} className={styles.authForm}>
+            <h1 className={styles.h1Style}>
                 {isLogin ? "Iniciar sesión." : "Registrate"}
             </h1>
 
@@ -87,9 +68,9 @@ const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
                 textcolor="#fff"
                 bgcolor="#731530"
                 type="submit"
-                sx={{ height: "29px", marginBottom: "1rem", marginTop: "1rem" }}
+                className={styles.colorButton}
             >
-                <Box sx={{ paddingRight: "7px" }}> Continuar </Box>{" "}
+                <Box className = {styles.boxPadding}> Continuar </Box>{" "}
                 <ArrowForwardIcon />
             </ColorButton>
 
