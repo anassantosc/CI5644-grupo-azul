@@ -72,6 +72,6 @@ Card.propTypes = {
     name: PropTypes.string,
     number: PropTypes.number.isRequired,
     position: PropTypes.string,
-    height: PropTypes.number,
-    weight: PropTypes.number,
+    height: PropTypes.string,
+    weight: PropTypes.string,
 };

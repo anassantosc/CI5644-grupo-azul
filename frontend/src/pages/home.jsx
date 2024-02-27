@@ -6,6 +6,8 @@ import styles from "../../styles/Home.module.css";
 import images from "../utils/constants/images";
 import { useMundialProgress } from "../hooks/useMundialProgress";
 import TopMundial from "../components/TopMundial";
+import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
 
 const ColorButton = styled(Button)(({ theme, margintop }) => ({
     color: "#581E3D",
@@ -20,7 +22,14 @@ const ColorButton = styled(Button)(({ theme, margintop }) => ({
 }));
 
 export const Home = () => {
-    const mundialProgress = useMundialProgress();
+    const router = useRouter();
+    const isLogin = Cookies.get("JWT");
+    const mundialProgress = isLogin ? useMundialProgress() : null;
+
+    const handleClick = () => {
+        router.push("/store");
+    };
+
     return (
         <div className={styles.home}>
             <div className={styles.homeTop}>
@@ -62,7 +71,7 @@ export const Home = () => {
                         thirdPlace={mundialProgress[2]}
                     />
                 )}
-                <ColorButton margintop="70px">Comienza ahora</ColorButton>
+                <ColorButton onClick={handleClick} margintop="70px">Comienza ahora</ColorButton>
             </div>
 
             <div className={styles.homeMiddle}>

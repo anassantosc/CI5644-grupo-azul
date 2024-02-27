@@ -59,7 +59,7 @@ const EditModal = ({ show, onClose, user, onChange }) => {
         <Dialog open={show} onClose={onClose} fullWidth maxWidth="sm" >
             <DialogContent dividers sx={{ backgroundColor: '#581E3D' }}>
                 <Box display="flex" alignItems="center">
-                    <Image src={images.logo} alt="Logo" width={150} height={150} />
+                    <Image priority src={images.logo} alt="Logo" width={150} height={150} />
                     <Typography variant="h4" sx={{
                         color: 'white', ml: 2
                     }}>Editar Perfil</Typography>
