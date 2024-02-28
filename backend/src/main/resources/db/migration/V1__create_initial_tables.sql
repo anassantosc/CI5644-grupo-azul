@@ -26,12 +26,12 @@ CREATE TABLE PERTENENCIA (
     UNIQUE ("user", card)
 );
 
-CREATE TABLE TRADE (
+CREATE TABLE OFERTA (
     id                  SERIAL PRIMARY KEY,
     id_usuario_offer    INT         NOT NULL REFERENCES USUARIO (id),
-    id_usuario_recieve  INT         NOT NULL REFERENCES USUARIO (id),
+    id_usuario_receive  INT         NOT NULL REFERENCES USUARIO (id),
     id_barajita_offer   INT         NOT NULL,
-    id_barajita_recieve INT         NOT NULL,
+    id_barajita_receive INT         NOT NULL,
     status              VARCHAR(50) NOT NULL CHECK (status IN ('PENDING', 'ACEPTED', 'CANCELLED', 'COUNTEROFFER'))
 );
 

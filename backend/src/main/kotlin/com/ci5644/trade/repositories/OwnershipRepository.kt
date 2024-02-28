@@ -15,6 +15,9 @@ interface OwnershipRepository: JpaRepository<OwnershipEntity, Long> {
     fun findByUser(user: Int): List<OwnershipEntity>
     override fun findAll(pageable: Pageable): Page<OwnershipEntity>
 
+    @Query("SELECT o.user FROM OwnershipEntity o WHERE o.card = :card AND o.quantity > 2")
+    fun findUserByCard(card: Int): List<Int>
+
     @Query("SELECT u.username, count(o) FROM OwnershipEntity o JOIN UserEntity u ON u.id = o.user GROUP BY u.id ORDER BY count(o) DESC")
     fun findAllUsersWithPossessions(): List<List<Any>>
 }
