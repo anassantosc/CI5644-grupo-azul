@@ -4,8 +4,7 @@ import React from "react";
 import ColorButton from "./ColorButton";
 import CustomInput from "./CustomInput";
 
-import { Link } from "@mui/material";
-import Box from "@mui/material/Box";
+import {Link, FormControl, Box, InputLabel, MenuItem, Select } from "@mui/material";
 import styles from "./../../styles/AuthForm.module.css";
 
 const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
@@ -57,10 +56,17 @@ const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
                         required
                     />
                     <CustomInput
-                        label="Genero"
+                        type="select"
+                        label="Género"
                         onChange={onChange}
                         value={values.gender}
                         name="gender"
+                        required
+                        options={[
+                            { value: "Masculino", label: "Masculino" },
+                            { value: "Femenino", label: "Femenino" },
+                            { value: "Otro", label: "Otro" },
+                        ]}
                     />
                 </React.Fragment>
             )}

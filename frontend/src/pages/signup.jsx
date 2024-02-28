@@ -23,6 +23,7 @@ const SignUpPage = () => {
     const [errors, setErrors] = useState(null);
 
     const handleChange = (event) => {
+        console.log(event.target.name, event.target.value);
         setValues({
             ...values,
             [event.target.name]: event.target.value,
@@ -32,9 +33,25 @@ const SignUpPage = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        // Regex to validate username
+        const usernameRegex = /^[a-z]{5,}$/;
+        // Regex to validate password
+        const passwordRegex = /^[a-zA-Z\.\-\_]{8,}$/;
+
         if (values.password !== values.confirmPassword) {
             showAlert(
                 "La contraseña y la confirmación de la contraseña no coinciden",
+                "warning"
+            );
+        } else if (!usernameRegex.test(values.username)) {
+            showAlert(
+                "El nombre de usuario debe contener al menos 5 letras minúsculas",
+                "warning"
+            );
+        } else if (!passwordRegex.test(values.password)) {
+            showAlert(
+                "La contraseña debe contener al menos 8 caracteres y solo letras," +
+                "puntos, guiones y guiones bajos",
                 "warning"
             );
         } else {
