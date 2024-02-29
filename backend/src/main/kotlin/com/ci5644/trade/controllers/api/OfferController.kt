@@ -48,12 +48,14 @@ class OfferController(private val authorizationService: AuthorizationService) {
             if (cardOffer == null || cardReceive == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cardOffer and cardReceive must be provided")
             }
+
     
             val offer = offerService.createOffer(user.id, cardOffer, cardReceive)
+            if (offer.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No offers were created")
+            }
             ResponseEntity.ok(offer)
 
-        //} catch (e: AuthenticationException) {
-        //    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.message)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
         }
@@ -142,8 +144,8 @@ class OfferController(private val authorizationService: AuthorizationService) {
             }
 
 
-            offerService.updateOfferByStatus(offerId, OfferStatus.ACEPTED)
-            ResponseEntity.ok(offer)
+            val updatedOffer = offerService.updateOfferByStatus(offerId, OfferStatus.ACCEPTED)
+            ResponseEntity.ok(updatedOffer)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
         }

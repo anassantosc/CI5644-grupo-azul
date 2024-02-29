@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull
 
 enum class OfferStatus {
     PENDING,
-    ACEPTED,
+    ACCEPTED,
     CANCELLED,
     COUNTEROFFER
 }

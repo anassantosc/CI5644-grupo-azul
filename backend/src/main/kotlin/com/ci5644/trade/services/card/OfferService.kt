@@ -6,6 +6,7 @@ import com.ci5644.trade.repositories.OfferRepository
 import com.ci5644.trade.repositories.CardRepository
 import com.ci5644.trade.repositories.UserRepository
 import com.ci5644.trade.repositories.OwnershipRepository
+import com.ci5644.trade.models.card.OwnershipEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service 
 import com.ci5644.trade.models.card.OfferStatus  
@@ -40,6 +41,8 @@ class OfferService() {
         val offerList = mutableListOf<OfferEntity>()
         
         for (user in usersReceive) {
+            if (user != userOffer) {
+                
             val entity = OfferEntity(
                 userOffer = userOffer,
                 userReceive = user,
@@ -49,6 +52,7 @@ class OfferService() {
             )
             offerRepository.save(entity)
             offerList.add(entity)
+            }
             
         }
         return offerList
@@ -76,6 +80,44 @@ class OfferService() {
         val entity = offerRepository.findById(offerId.toLong()).get()
         entity.status = status
         val savedEntity = offerRepository.save(entity)
+        
+        /* 
+        if (status == OfferStatus.CANCELLED) {
+            offerRepository.deleteById(offerId.toLong())
+        }
+        */
+
+        if (status == OfferStatus.ACCEPTED) {
+            val ownerOffer = ownershipRepository.findByUserAndCard(entity.userOffer, entity.cardOffer)
+            val ownerReceive = ownershipRepository.findByUserAndCard(entity.userReceive, entity.cardReceive)
+            
+            //Se actualizan los datos de propiedad al aceptar la oferta
+            val newOwnerOffer = OwnershipEntity ( 
+               user = entity.userReceive,
+               card = entity.cardOffer,
+           )
+
+           val newOwnerReceive = OwnershipEntity ( 
+               user = entity.userOffer,
+               card = entity.cardReceive,
+            )
+            ownershipRepository.save(newOwnerOffer)
+            ownershipRepository.save(newOwnerReceive)
+
+            ownerOffer.quantity -= 1
+            ownerReceive.quantity -= 1
+
+            //Se cancelan las ofertas de los otros usuarios
+             val otherUsersReceives = offerRepository.findByUserOfferAndCardOfferAndCardReceive(entity.userOffer, entity.cardOffer, entity.cardReceive)
+            for (otherUser in otherUsersReceives) {
+                if (otherUser.id != entity.userReceive) {
+                    otherUser.status = OfferStatus.CANCELLED
+                    offerRepository.save(otherUser)
+                }
+            }
+            
+        }
+
         return OfferDto.fromEntity(savedEntity)
     }
 
