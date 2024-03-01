@@ -24,7 +24,7 @@ const ColorButton = styled(Button)(({ theme, margintop }) => ({
 export const Home = () => {
     const router = useRouter();
     const isLogin = useAuthentication();
-    const mundialProgress = isLogin ? useMundialProgress() : null;
+    const mundialProgress = useMundialProgress(isLogin);
 
     const handleClick = () => {
         router.push("/store");

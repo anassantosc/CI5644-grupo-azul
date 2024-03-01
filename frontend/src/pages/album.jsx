@@ -7,6 +7,7 @@ import Layout from "../layout/Layout";
 import styles from "./../../styles/Album.module.css";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from '@mui/material/Button';
 
 function Album() {
     const [page, setPage] = useState(0);
@@ -41,11 +42,22 @@ function Album() {
         <Layout>
             <div className={styles.container}>
                 <div className={styles.containerH1}>
-                    <h1>Album</h1>
+                    <h1 style={{ textAlign: 'center', marginBottom: "-10px", }}>Album</h1>
+                    <div style={{ flex: '1', textAlign: 'right', marginTop: "-40px" }}>
+                        <Button
+                            variant="contained"
+                            size="medium"
+                            style={{
+                                backgroundColor: "#731530",
+                                color: "white",
+                                textTransform: 'capitalize',
+                                fontSize: '1.2rem'
+                            }}>Ofertar</Button>
+                    </div>
                 </div>
                 {progress !== null && typeof progress === 'number' && (
                     <div className={styles.progressBar}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between',  padding: '1%' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '1%' }}>
                             <h2 style={{ margin: '0' }}>Progreso Actual</h2>
                             <h2 style={{ margin: '0' }}>{progress.toFixed(2)}%</h2>
                         </div>
@@ -83,8 +95,8 @@ function Album() {
                     <FontAwesomeIcon icon={faArrowRight} />
                 </button>
             </div>
-            <div className={styles.pageCount}> 
-                <h3>Página {page+1} de 32</h3>
+            <div className={styles.pageCount}>
+                <h3>Página {page + 1} de 32</h3>
             </div>
         </Layout>
     );

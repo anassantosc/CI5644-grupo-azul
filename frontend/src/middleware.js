@@ -6,11 +6,11 @@ const middleware = (req) => {
     const { pathname } = req.nextUrl;
 
     if (!tokenExist && (pathname === "/profile" || pathname === "/album" || pathname === "/store")) {
-        return NextResponse.redirect('/');
+        return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/login`);
     }
 
     if (tokenExist && (pathname === "/login" || pathname === "/signup")) {
-        return NextResponse.redirect('/');
+        return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/album`);
     }
 };
 

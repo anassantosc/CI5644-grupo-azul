@@ -19,7 +19,6 @@ export const Login = async (userData, showAlert) => {
             showAlert("Ocurrió un error desconocido", "error");
         }
 
-        console.log(document.cookie);
         return response;
     } catch (error) {
         console.error(
