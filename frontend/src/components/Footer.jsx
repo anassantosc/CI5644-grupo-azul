@@ -10,9 +10,9 @@ import PropTypes from "prop-types";
 
 export const FooterText = ({ first, second }) => {
     return (
-        <Box sx={{ textAlign: "left", marginBottom: "7%", fontSize: "20px" }}>
+        <Box className={styles.footerText}>
             <Box>
-                <Divider sx={{ bgcolor: "white", marginBottom: "2%" }} />
+                <Divider className={styles.footerDivider} />
             </Box>
             <Box>{first}</Box>
             <Box>{second}</Box>
@@ -22,7 +22,7 @@ export const FooterText = ({ first, second }) => {
 
 export const FooterSocial = () => {
     return (
-        <Box sx={{ marginBottom: "3%" }}>
+        <Box className={styles.footerSocial}>
             <Box
                 fontWeight="bold"
                 sx={{ typography: "h4", letterSpacing: "4px" }}
@@ -30,14 +30,14 @@ export const FooterSocial = () => {
                 Marmota{" "}
             </Box>
             <Box sx={{ typography: "h7" }}> Salvaje </Box>
-            <Box sx={{ marginTop: "2%" }}>
-                <Button sx={{ color: "white" }}>
+            <Box className={styles.footerSocialIcons}>
+                <Button className={styles.footerSocialButton}>
                     <FontAwesomeIcon icon={faFacebook} />
                 </Button>
-                <Button sx={{ color: "white" }}>
+                <Button className={styles.footerSocialButton}>
                     <FontAwesomeIcon icon={faInstagram} />
                 </Button>
-                <Button sx={{ color: "white" }}>
+                <Button className={styles.footerSocialButton}>
                     <FontAwesomeIcon icon={faTiktok} />
                 </Button>
             </Box>

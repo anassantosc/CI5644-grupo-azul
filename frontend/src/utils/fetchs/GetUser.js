@@ -1,7 +1,8 @@
 import secureFetch from "./SecureFetch";
+import { HTTPMethods, routes, alertMessages } from "../constants";
 
 export const GetUser = async () => {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/user/detail`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.user}${routes.detail}`;
     const method = "GET";
     const data = null;
     const headers = {};

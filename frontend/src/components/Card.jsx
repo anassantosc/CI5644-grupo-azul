@@ -11,6 +11,18 @@ import React from "react";
 import styles from "../../styles/Card.module.css";
 import images from "../utils/constants/images";
 
+const ALT_TEXTS = {
+    PLAYER_IMAGE: 'Imagen de jugador',
+    UNKNOWN_PLAYER: 'No tienes este jugador aún',
+};
+
+const IMAGES_PROPS = {
+    width: 0,
+    height: 0,
+    sizes: "100vw",
+    priority: true,
+};
+
 export const Card = ({ name, number, position, height, weight }) => {
 
     return name ? (
@@ -39,12 +51,12 @@ export const Card = ({ name, number, position, height, weight }) => {
                 <div className={styles.card__img}>
                     <Image
                         src={images.playerBackground}
-                        width={0}
-                        height={0}
-                        sizes="100vw"
+                        sizes={IMAGES_PROPS.sizes}
+                        width={IMAGES_PROPS.width}
+                        height={IMAGES_PROPS.height}
                         className={styles.image__fullsize}
-                        alt="Imagen de jugador"
-                        priority={true}
+                        alt={ALT_TEXTS.PLAYER_IMAGE}
+                        priority={IMAGES_PROPS.priority}
                     />
                 </div>
             </div>
@@ -55,12 +67,12 @@ export const Card = ({ name, number, position, height, weight }) => {
             <div className={styles.card__img}>
                 <Image
                     src={images.unknownPlayer}
-                    width={0}
-                    height={0}
-                    sizes="100vw"
+                    sizes={IMAGES_PROPS.sizes}
+                    width={IMAGES_PROPS.width}
+                    height={IMAGES_PROPS.height}
                     className={styles.image__fullsize}
-                    alt="No tienes este jugador aún"
-                    priority={true}
+                    alt={ALT_TEXTS.UNKNOWN_PLAYER}
+                    priority={IMAGES_PROPS.priority}
                 />
             </div>
             <div className={styles.card__playerName}>{number}</div>

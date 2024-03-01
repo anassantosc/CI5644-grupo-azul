@@ -1,3 +1,5 @@
+import {defaultFetchConfig} from '../constants';
+
 /**
  * Fetch that ensures that the cookies are sent and received
  * to and from the server.
@@ -8,9 +10,9 @@ const secureFetch = (url, method, data, headers) => {
     return fetch(url, {
         method: method.toUpperCase(),
         body: data,
-        credentials: "include",
+        credentials: defaultFetchConfig.credentials,
         headers: {
-            "Content-Type": "application/json",
+            ...defaultFetchConfig.headers,
             ...headers,
         },
     });

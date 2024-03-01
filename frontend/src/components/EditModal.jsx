@@ -2,32 +2,33 @@ import { Box, Button, Dialog, DialogContent, DialogActions, FormControl, InputLa
 import Image from "next/image";
 import PropTypes from 'prop-types';
 import React, { useState } from "react";
-import images from '../utils/constants/images';
 import { EditUser } from "../utils/fetchs/EditUser";
 import { useAlert } from "../context/AlertContext";
+import { alertMessages, alertTypes, regex, images, labels, genderOptions } from "../utils/constants";
 
 const EditModal = ({ show, onClose, user, onChange }) => {
     const showAlert = useAlert();
-    const [userData, setUserData] = useState({ email: user.email || "", gender: user.gender || "", name: user.name || "" })
+    const [userData, setUserData] = useState(
+        { email: user.email || "",
+        gender: user.gender || "",
+        name: user.name || "" })
 
     const handleFieldChange = (key) => (e) => {
         setUserData({ ...userData, [key]: e.target.value });
     };
 
-    const nameRegex = /^[a-zA-Z\s]{5,}$/
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const validateFields = () => {
         if (!userData.name || !userData.email) {
-            showAlert("Por favor, complete todos los campos", "warning");
+            showAlert(alertMessages.fill_fields, alertTypes.warning);
             return false
         }
-        if (!nameRegex.test(userData.name)) {
-            showAlert("El nombre debe ser de al menos 5 caracteres y no debe contener caracteres especiales", "warning");
+        if (!regex.name.test(userData.name)) {
+            showAlert(alertMessages.invalid_name, alertTypes.warning);
             return false
         }
-        if (!emailRegex.test(userData.email)) {
-            showAlert("El correo electronico no cumple las convenciones de correo electronico", "warning");
+        if (!regex.email.test(userData.email)) {
+            showAlert(alertMessages.invalid_email, alertTypes.warning);
             return false
         }
         return true;
@@ -45,14 +46,14 @@ const EditModal = ({ show, onClose, user, onChange }) => {
             const response = await EditUser(userChanges);
 
             if (response.ok) {
-                showAlert("Usuario editado exitosamente", "success");
+                showAlert(alertMessages.success, alertTypes.success);
             } else {
-                showAlert("Ocurrió un error desconocido", "error");
+                showAlert(alertMessages.unknown_error, alertTypes.error);
             }
             onChange();
             onClose();
         } catch (error) {
-            console.error('Error al editar el usuario:', error);
+            console.error(alertMessages.edit_error, error);
         }
 
         onClose();
@@ -70,7 +71,7 @@ const EditModal = ({ show, onClose, user, onChange }) => {
                 <Box bgcolor="rgba(255, 255, 255, 0.1)" borderRadius={10} p={2}>
                     <form noValidate autoComplete="off">
                         <TextField
-                            label="Nombre"
+                            label={labels.name}
                             variant="outlined"
                             color="secondary"
                             value={userData.name}
@@ -81,7 +82,7 @@ const EditModal = ({ show, onClose, user, onChange }) => {
                             }}
                         />
                         <TextField
-                            label="Correo Electrónico"
+                            label={labels.email}
                             variant="outlined"
                             color="secondary"
                             value={userData.email}
@@ -96,13 +97,13 @@ const EditModal = ({ show, onClose, user, onChange }) => {
                             <Select
                                 labelId="gender-label"
                                 id="gender"
-                                label="Género"
+                                label={labels.gender}
                                 value={userData.gender}
                                 onChange={handleFieldChange("gender")}
                             >
-                                <MenuItem value={"Masculino"}>Masculino</MenuItem>
-                                <MenuItem value={"Femenino"}>Femenino</MenuItem>
-                                <MenuItem value={"Otro"}>Otro</MenuItem>
+                                {Object.values(genderOptions).map((option) => (
+                                    <MenuItem key={option} value={option}>{option}</MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </form>
@@ -129,8 +130,6 @@ const EditModal = ({ show, onClose, user, onChange }) => {
 }
 
 export default EditModal;
-
-
 EditModal.propTypes = {
     show: PropTypes.bool,
     onClose: PropTypes.func,

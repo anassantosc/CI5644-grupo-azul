@@ -3,77 +3,85 @@ import PropTypes from "prop-types";
 import React from "react";
 import ColorButton from "./ColorButton";
 import CustomInput from "./CustomInput";
-
 import {Link, FormControl, Box, InputLabel, MenuItem, Select } from "@mui/material";
 import styles from "./../../styles/AuthForm.module.css";
+import { routes, labels, inputTypes, genderOptions, inputNames, formOptions } from "../utils/constants";
+
+const COMPONENTS = {
+    FORM: 'form',
+}
+const BUTTON_PROPS = {
+    bgcolor: '#731530',
+    textcolor: '#fff',
+}
 
 const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
     return (
-        <Box component="form" onSubmit={onSubmit} className={styles.authForm}>
+        <Box component={COMPONENTS.FORM} onSubmit={onSubmit} className={styles.authForm}>
             <h1 className={styles.h1Style}>
-                {isLogin ? "Iniciar sesión." : "Registrate"}
+                {isLogin ? formOptions.login : formOptions.signup}
             </h1>
 
             <CustomInput
-                type="text"
-                label="Usuario"
+                type={inputTypes.text}
+                label={labels.username}
                 onChange={onChange}
                 value={values.username}
-                name="username"
+                name={inputNames.username}
                 required
             />
             <CustomInput
-                type="password"
-                label="Contraseña"
+                type={inputTypes.password}
+                label={labels.password}
                 onChange={onChange}
                 value={values.password}
-                name="password"
+                name={inputNames.password}
                 required
             />
             {!isLogin && (
                 <React.Fragment>
                     <CustomInput
-                        type="password"
-                        label="Confirmar contraseña"
+                        type={inputTypes.password}
+                        label={labels.confirmPassword}
                         onChange={onChange}
                         value={values.confirmPassword}
-                        name="confirmPassword"
+                        name={inputNames.confirmPassword}
                         required
                     />
                     <CustomInput
-                        label="Nombre"
+                        label={labels.name}
                         onChange={onChange}
                         value={values.name}
-                        name="name"
+                        name={inputNames.name}
                         required
                     />
                     <CustomInput
-                        type="email"
-                        label="Direccion de correo electronico"
+                        type={inputTypes.email}
+                        label={labels.email}
                         onChange={onChange}
                         value={values.email}
-                        name="email"
+                        name={inputNames.email}
                         required
                     />
                     <CustomInput
-                        type="select"
-                        label="Género"
+                        type={inputTypes.select}
+                        label={labels.gender}
                         onChange={onChange}
                         value={values.gender}
-                        name="gender"
+                        name={inputNames.gender}
                         required
                         options={[
-                            { value: "Masculino", label: "Masculino" },
-                            { value: "Femenino", label: "Femenino" },
-                            { value: "Otro", label: "Otro" },
+                            { value: genderOptions.male, label: genderOptions.male},
+                            { value: genderOptions.female, label: genderOptions.female },
+                            { value: genderOptions.other, label: genderOptions.other },
                         ]}
                     />
                 </React.Fragment>
             )}
             <ColorButton
-                textcolor="#fff"
-                bgcolor="#731530"
-                type="submit"
+                bgcolor={BUTTON_PROPS.bgcolor}
+                textcolor={BUTTON_PROPS.textcolor}
+                type={inputTypes.submit}
                 className={styles.colorButton}
             >
                 <Box className={styles.boxPadding}> Continuar </Box>{" "}
@@ -83,14 +91,14 @@ const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
             {isLogin ? (
                 <Box>
                     ¿No tienes una cuenta?{" "}
-                    <Link href="/signup" underline="hover" color="white">
+                    <Link href={routes.signup} className={styles.linkStyle}>
                         Registrate
                     </Link>
                 </Box>
             ) : (
                 <Box>
                     ¿Ya tienes una cuenta?{" "}
-                    <Link href="/login" underline="hover" color="white">
+                    <Link href={routes.login} className={styles.linkStyle}>
                         Inicia sesión
                     </Link>
                 </Box>

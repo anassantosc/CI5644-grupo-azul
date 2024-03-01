@@ -34,3 +34,12 @@
 .h1Style {
     margin: 0;
 }
+
+.linkStyle {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.linkStyle:hover {
+    text-decoration: underline;
+}
