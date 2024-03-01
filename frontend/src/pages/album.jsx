@@ -8,14 +8,20 @@ import styles from "./../../styles/Album.module.css";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from '@mui/material/Button';
+import OfferModal from "../components/OfferModal";
 
 function Album() {
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(20);
     const [currentCards, setCurrentCards] = useState([]);
+    const [show, setShow] = useState(false);
+
     const { cards, loading, error } = useGetCards(page);
     const progress = useProgress();
     const fullSize = Array(641);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const nextPage = () => {
         if (size < 640) {
@@ -40,12 +46,14 @@ function Album() {
 
     return (
         <Layout>
+            <OfferModal show={show} onClose={handleClose} />
             <div className={styles.container}>
                 <div className={styles.containerH1}>
                     <h1 style={{ textAlign: 'center', marginBottom: "-10px", }}>Album</h1>
                     <div style={{ flex: '1', textAlign: 'right', marginTop: "-40px" }}>
                         <Button
                             variant="contained"
+                            onClick={handleShow}
                             size="medium"
                             style={{
                                 backgroundColor: "#731530",

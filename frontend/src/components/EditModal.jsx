@@ -1,12 +1,10 @@
-import { Box, Button, Dialog, DialogContent, DialogActions, FormControl, InputLabel, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogContent, DialogActions, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import Image from "next/image";
 import PropTypes from 'prop-types';
 import React, { useState } from "react";
 import images from '../utils/constants/images';
 import { EditUser } from "../utils/fetchs/EditUser";
 import { useAlert } from "../context/AlertContext";
-
-
 
 const EditModal = ({ show, onClose, user, onChange }) => {
     const showAlert = useAlert();
