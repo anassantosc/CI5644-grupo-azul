@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useState, useMemo } from "react";
 import { StyledTableRow } from "./StyledTableRow";
-
+import styles from './../../styles/TableSelector.module.css';
 
 const pageSize = 20;
 
@@ -43,8 +43,8 @@ export const TableSelector = ({ onSelect, onClick, receive, cards }) => {
     const rows = chunkArray(visibleOptions, 4);
 
     return (
-        <TableContainer component={Paper} style={{ backgroundColor: '#581E3D' }} >
-            <Typography variant="h6" gutterBottom style={{ margin: '10px', textAlign: 'center', color: 'white' }}>
+        <TableContainer component={Paper} className={styles.tableContainer} >
+            <Typography className={styles.title} variant="h6" gutterBottom >
                 {receive ? 'Elija la carta a recibir' : 'Elija la carta a ofrecer'}
             </Typography>
             <Table>
@@ -53,7 +53,7 @@ export const TableSelector = ({ onSelect, onClick, receive, cards }) => {
                         <StyledTableRow key={rowIndex}>
                             {row.map((card, index) => (
                                 <TableCell key={index}>
-                                    <Button onClick={() => handleSelect(card)} style={{ color: 'white' }}>
+                                    <Button onClick={() => handleSelect(card)} className={styles.cardButton} >
                                         Carta {card}
                                     </Button>
                                 </TableCell>
@@ -73,7 +73,7 @@ export const TableSelector = ({ onSelect, onClick, receive, cards }) => {
                             nextIconButtonProps={{
                                 disabled: visibleOptions.length < pageSize,
                             }}
-                            style={{ color: '#ffffff' }}
+                            className={styles.pagination}
                         />
                     </StyledTableRow>
                 </TableFooter>

@@ -11,9 +11,36 @@
     text-align: center;
 }
 
+.title {
+    text-align: center;
+    margin-bottom: -10px;
+}
+
+.containerButton {
+    text-align: right;
+    margin-top: -40px;
+}
+
+.offerButton {
+    background-color: #731530;
+    color: white;
+    text-transform: capitalize;
+    font-size: 1.2rem;
+}
+
+.offerButton:hover {
+    background-color: #731530;
+}
+
 .progressBar {
-    margin-top: 30px;
-    margin-bottom: 60px;
+    margin-top: 25px;
+    margin-bottom: 65px;
+}
+
+.containerProgress {
+    display: flex;
+    justify-content: space-between;
+    padding: 1%;
 }
 
 .albumCards {

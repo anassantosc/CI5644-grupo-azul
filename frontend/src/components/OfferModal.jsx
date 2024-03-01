@@ -15,6 +15,7 @@ import images from '../utils/constants/images';
 import { CreateOffer } from "../utils/fetchs/CreateOffer";
 import { useAlert } from "../context/AlertContext";
 import { TableSelector } from "./TableSelector";
+import styles from "../../styles/OfferModal.module.css";
 
 
 const dummyVariables = [
@@ -32,7 +33,7 @@ const dummyVariables = [
     '162', '17', '18', '19', '20',
 ];
 
-const EditModal = ({ show, onClose }) => {
+const OfferModal = ({ show, onClose }) => {
     const showAlert = useAlert();
     const [offerData, setOfferData] = useState({ receive: null, send: null })
     const missingCards = dummyVariables;
@@ -86,33 +87,30 @@ const EditModal = ({ show, onClose }) => {
 
     return (
         <Dialog open={show} onClose={onClose} fullWidth maxWidth="sm" >
-            <DialogContent dividers sx={{ backgroundColor: '#581E3D' }}>
+            <DialogContent dividers className={styles.dialogContent} >
                 <Box display="flex" alignItems="center">
                     <Image priority src={images.logo} alt="Logo" width={140} height={140} />
-                    <Typography variant="h4" sx={{ color: 'white', ml: 2 }}>Enviar oferta</Typography>
+                    <Typography variant="h4" className={styles.dialogTitle} >Enviar oferta</Typography>
                 </Box>
-                <Box
-                    bgcolor="rgba(255, 255, 255, 0.1)"
-                    borderRadius={10}
-                    p={2}>
+                <Box className={styles.formBox}>
                     <form noValidate autoComplete="off">
-                        <Box display="flex" justifyContent="space-between" width="100%" paddingLeft="5%" paddingRight="5%" marginBottom="3%">
+                        <Box className={styles.buttonGroup}>
                             <Button
                                 variant="outlined"
                                 id="receive"
                                 onClick={handleButtonClick('receive')}
-                                style={{ backgroundColor: 'grey', color: 'white' }}>
+                                className={styles.receiveButton}>
                                 Carta a recibir
                             </Button>
                             <Button
                                 variant="outlined"
                                 id="send"
                                 onClick={handleButtonClick('send')}
-                                style={{ backgroundColor: 'grey', color: 'white' }}>
+                                className={styles.sendButton}>
                                 Carta a enviar
                             </Button>
                         </Box>
-                        <FormControl fullWidth>
+                        <FormControl fullWidth >
                             {(!showReceive && !showSend) && (
                                 <>
                                     {offerData.receive && (
@@ -120,7 +118,7 @@ const EditModal = ({ show, onClose }) => {
                                             id="recibir"
                                             label="Carta a recibir"
                                             defaultValue={`Carta a recibir: ${offerData.receive}`}
-                                            style={{ marginBottom: "10px", color: "white" }}
+                                            className={styles.receiveTextField}
                                             InputProps={{ style: { color: "white" }, readOnly: true }}
                                         />
                                     )}
@@ -129,34 +127,35 @@ const EditModal = ({ show, onClose }) => {
                                             id="enviar"
                                             label="Carta a enviar"
                                             defaultValue={`Carta a enviar: ${offerData.send}`}
+                                            className={styles.sendTextField}
                                             InputProps={{ style: { color: "white" }, readOnly: true }}
                                         />
                                     )}
                                 </>
                             )}
                             {showReceive && (
-                                <TableSelector onSelect={handleFieldChange('receive')} onClick={handleCloseReceive} receive={true} cards={missingCards} />
+                                <TableSelector
+                                    onSelect={handleFieldChange('receive')}
+                                    onClick={handleCloseReceive}
+                                    receive={true}
+                                    cards={missingCards} />
                             )}
                             {showSend && (
-                                <TableSelector onSelect={handleFieldChange('send')} onClick={handleCloseSend} receive={false} cards={duplicatedCards} />
+                                <TableSelector
+                                    onSelect={handleFieldChange('send')}
+                                    onClick={handleCloseSend}
+                                    receive={false}
+                                    cards={duplicatedCards} />
                             )}
                         </FormControl>
                     </form>
                 </Box>
             </DialogContent>
-            <DialogActions sx={{ backgroundColor: '#581E3D' }}>
-                <Button variant="contained" size="medium" onClick={onClose} style={{
-                    backgroundColor: '#731530',
-                    color: 'white'
-                }}>
+            <DialogActions className={styles.dialogActions} >
+                <Button variant="contained" size="medium" onClick={onClose} className={styles.cancelButton} >
                     Cancelar
                 </Button>
-                <Button
-                    variant="contained"
-                    size="medium"
-                    onClick={handleConfirm}
-                    style={{ backgroundColor: '#520968', color: 'white' }}
-                >
+                <Button variant="contained" size="medium" onClick={handleConfirm} className={styles.confirmButton} >
                     Ofertar
                 </Button>
             </DialogActions>
@@ -164,10 +163,10 @@ const EditModal = ({ show, onClose }) => {
     );
 }
 
-export default EditModal;
+export default OfferModal;
 
 
-EditModal.propTypes = {
+OfferModal.propTypes = {
     show: PropTypes.bool,
     onClose: PropTypes.func,
     id: PropTypes.number

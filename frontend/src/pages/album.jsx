@@ -49,23 +49,18 @@ function Album() {
             <OfferModal show={show} onClose={handleClose} />
             <div className={styles.container}>
                 <div className={styles.containerH1}>
-                    <h1 style={{ textAlign: 'center', marginBottom: "-10px", }}>Album</h1>
-                    <div style={{ flex: '1', textAlign: 'right', marginTop: "-40px" }}>
+                    <h1 className={styles.title} >Album</h1>
+                    <div className={styles.containerButton}>
                         <Button
                             variant="contained"
                             onClick={handleShow}
                             size="medium"
-                            style={{
-                                backgroundColor: "#731530",
-                                color: "white",
-                                textTransform: 'capitalize',
-                                fontSize: '1.2rem'
-                            }}>Ofertar</Button>
+                            className={styles.offerButton}>Ofertar</Button>
                     </div>
                 </div>
                 {progress !== null && typeof progress === 'number' && (
                     <div className={styles.progressBar}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '1%' }}>
+                        <div className={styles.containerProgress}>
                             <h2 style={{ margin: '0' }}>Progreso Actual</h2>
                             <h2 style={{ margin: '0' }}>{progress.toFixed(2)}%</h2>
                         </div>

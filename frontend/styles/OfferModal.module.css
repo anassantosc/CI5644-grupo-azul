@@ -1,0 +1,61 @@
+.dialogContent {
+    background-color: #581E3D;
+}
+
+.dialogTitle {
+    color: white;
+    margin-left: 40px;
+}
+
+.formBox {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 40px;
+    padding: 16px;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+    margin-bottom: 3%;
+}
+
+.receiveButton,
+.sendButton {
+    background-color: grey;
+    color: white;
+}
+
+.receiveButton:hover,
+.sendButton:hover {
+    background-color: grey; /* Mantener el mismo color al pasar el mouse */
+}
+
+.receiveTextField,
+.sendTextField {
+    margin-bottom: 10px;
+}
+
+.dialogActions {
+    background-color: #581E3D;
+}
+
+.cancelButton {
+    background-color: #731530;
+    color: white;
+}
+
+.confirmButton {
+    background-color: #520968;
+    color: white;
+}
+
+.cancelButton:hover {
+    background-color: #731530;  /* Mantener el mismo color al pasar el mouse */
+}
+
+.confirmButton:hover {
+    background-color: #520968;  /* Mantener el mismo color al pasar el mouse */
+}
