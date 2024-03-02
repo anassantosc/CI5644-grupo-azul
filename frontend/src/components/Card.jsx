@@ -11,11 +11,6 @@ import React from "react";
 import styles from "../../styles/Card.module.css";
 import images from "../utils/constants/images";
 
-const ALT_TEXTS = {
-    PLAYER_IMAGE: 'Imagen de jugador',
-    UNKNOWN_PLAYER: 'No tienes este jugador aún',
-};
-
 const IMAGES_PROPS = {
     width: 0,
     height: 0,
@@ -55,7 +50,7 @@ export const Card = ({ name, number, position, height, weight }) => {
                         width={IMAGES_PROPS.width}
                         height={IMAGES_PROPS.height}
                         className={styles.image__fullsize}
-                        alt={ALT_TEXTS.PLAYER_IMAGE}
+                        alt='Imagen de jugador'
                         priority={IMAGES_PROPS.priority}
                     />
                 </div>
@@ -71,7 +66,7 @@ export const Card = ({ name, number, position, height, weight }) => {
                     width={IMAGES_PROPS.width}
                     height={IMAGES_PROPS.height}
                     className={styles.image__fullsize}
-                    alt={ALT_TEXTS.UNKNOWN_PLAYER}
+                    alt='No tienes este jugador aún'
                     priority={IMAGES_PROPS.priority}
                 />
             </div>

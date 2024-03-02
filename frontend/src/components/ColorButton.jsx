@@ -1,26 +1,15 @@
 import React from "react";
-import { Button } from "@mui/material";
-import { styled } from "@mui/system";
+import {Button} from "@mui/material";
+import {styled} from "@mui/system";
 import PropTypes from "prop-types";
 
-const BUTTON_STYLES = {
-    PADDING: "10px 20px",
-    BORDER_RADIUS: "5px",
-    TEXT_TRANSFORM: "uppercase",
-    FONT_WEIGHT: "bold",
-};
-
-const STYLEDBUTTON_SIZE = {
-    SMALL: "small",
-};
-
-const StyledButton = styled(Button)(({ bgcolor, textcolor }) => ({
+const StyledButton = styled(Button)(({bgcolor, textcolor}) => ({
     backgroundColor: bgcolor,
     color: textcolor,
-    padding: BUTTON_STYLES.PADDING,
-    borderRadius: BUTTON_STYLES.BORDER_RADIUS,
-    textTransform: BUTTON_STYLES.TEXT_TRANSFORM,
-    fontWeight: BUTTON_STYLES.FONT_WEIGHT,
+    padding: "10px 15px",
+    borderRadius: "0.5rem",
+    textTransform: "none",
+    fontWeight: "bold",
     "&:hover": {
         backgroundColor: bgcolor,
     },
@@ -37,7 +26,7 @@ export default function ColorButton({
         <StyledButton
             bgcolor={bgcolor}
             textcolor={textcolor}
-            size={STYLEDBUTTON_SIZE.SMALL}
+            size="small"
             onClick={onClick}
             {...props}
         >
@@ -52,3 +41,4 @@ ColorButton.propTypes = {
     children: PropTypes.node,
     onClick: PropTypes.func,
 };
+

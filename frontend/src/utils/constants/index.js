@@ -11,3 +11,4 @@ export { default as regex } from './regex';
 export { default as statusCodes } from './statusCodes';
 export { default as defaultFetchConfig } from './defaultFetchConfig';
 export { default as formOptions } from './formOptions';
+export { default as colors } from './colors';

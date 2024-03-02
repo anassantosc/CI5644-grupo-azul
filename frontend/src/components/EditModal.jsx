@@ -23,7 +23,7 @@ const EditModal = ({ show, onClose, user, onChange }) => {
             showAlert(alertMessages.fill_fields, alertTypes.warning);
             return false
         }
-        if (!regex.name.test(userData.name)) {
+        if (!regex.username.test(userData.name)) {
             showAlert(alertMessages.invalid_name, alertTypes.warning);
             return false
         }

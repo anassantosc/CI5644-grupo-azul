@@ -7,6 +7,7 @@ import { Background } from "../components/Background";
 import { useAlert } from "../context/AlertContext";
 import { Register } from "../utils/auth/Register";
 import styles from "../../styles/Login.module.css";
+import { regex, alertMessages, alertTypes, routes } from "../utils/constants";
 
 const SignUpPage = () => {
     const router = useRouter();
@@ -33,27 +34,12 @@ const SignUpPage = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Regex to validate username
-        const usernameRegex = /^[a-z]{5,}$/;
-        // Regex to validate password
-        const passwordRegex = /^[a-zA-Z\.\-\_]{8,}$/;
-
         if (values.password !== values.confirmPassword) {
-            showAlert(
-                "La contraseña y la confirmación de la contraseña no coinciden",
-                "warning"
-            );
-        } else if (!usernameRegex.test(values.username)) {
-            showAlert(
-                "El nombre de usuario debe contener al menos 5 letras minúsculas",
-                "warning"
-            );
-        } else if (!passwordRegex.test(values.password)) {
-            showAlert(
-                "La contraseña debe contener al menos 8 caracteres y solo letras," +
-                "puntos, guiones y guiones bajos",
-                "warning"
-            );
+            showAlert(alertMessages.passwords_dont_match, alertTypes.warning);
+        } else if (!regex.username.test(values.username)) {
+            showAlert(alertMessages.invalid_username, alertTypes.warning);
+        } else if (!regex.password.test(values.password)) {
+            showAlert(alertMessages.invalid_password, alertTypes.warning);
         } else {
             const response = await Register(
                 {
@@ -67,7 +53,7 @@ const SignUpPage = () => {
             );
 
             if (response?.ok) {
-                router.push("/login");
+                router.push(routes.login);
             }
         }
     };

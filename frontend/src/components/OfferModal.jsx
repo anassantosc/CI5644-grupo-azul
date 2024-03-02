@@ -16,6 +16,7 @@ import { CreateOffer } from "../utils/fetchs/CreateOffer";
 import { useAlert } from "../context/AlertContext";
 import { TableSelector } from "./TableSelector";
 import styles from "../../styles/OfferModal.module.css";
+import { alertMessages, alertTypes, labels } from "../utils/constants";
 
 
 const dummyVariables = [
@@ -64,7 +65,7 @@ const OfferModal = ({ show, onClose }) => {
 
     const handleConfirm = async () => {
         if (!offerData.receive || !offerData.send) {
-            showAlert("Por favor, complete todos los campos", "warning");
+            showAlert(alertMessages.fill_fields, alertTypes.warning);
             return
         }
 
@@ -73,13 +74,13 @@ const OfferModal = ({ show, onClose }) => {
             setOfferData({ receive: null, send: null });
 
             if (response.ok) {
-                showAlert("Oferta creada exitosamente", "success");
+                showAlert(alertMessages.offer_success, alertTypes.success);
             } else {
-                showAlert("Ocurrió un error desconocido", "error");
+                showAlert(alertMessages.unknown_error, alertTypes.error);
             }
             onClose();
         } catch (error) {
-            console.error('Error al crear la oferta:', error);
+            console.error(alertMessages.offer_error, error);
         }
 
         onClose();
@@ -116,7 +117,7 @@ const OfferModal = ({ show, onClose }) => {
                                     {offerData.receive && (
                                         <TextField
                                             id="recibir"
-                                            label="Carta a recibir"
+                                            label={labels.receive}
                                             defaultValue={`Carta a recibir: ${offerData.receive}`}
                                             className={styles.receiveTextField}
                                             InputProps={{ style: { color: "white" }, readOnly: true }}
@@ -125,7 +126,7 @@ const OfferModal = ({ show, onClose }) => {
                                     {offerData.send && (
                                         <TextField
                                             id="enviar"
-                                            label="Carta a enviar"
+                                            label={labels.send}
                                             defaultValue={`Carta a enviar: ${offerData.send}`}
                                             className={styles.sendTextField}
                                             InputProps={{ style: { color: "white" }, readOnly: true }}

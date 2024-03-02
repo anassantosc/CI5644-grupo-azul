@@ -61,8 +61,8 @@ function Album() {
                 {progress !== null && typeof progress === 'number' && (
                     <div className={styles.progressBar}>
                         <div className={styles.containerProgress}>
-                            <h2 style={{ margin: '0' }}>Progreso Actual</h2>
-                            <h2 style={{ margin: '0' }}>{progress.toFixed(2)}%</h2>
+                            <h2 className={styles.h2}>Progreso Actual</h2>
+                            <h2 className={styles.h2}>{progress.toFixed(2)}%</h2>
                         </div>
                         <ProgressBar value={progress} />
                     </div>

@@ -9,7 +9,7 @@ import ProgressCircle from "../components/ProgressCircle";
 import { useProgress } from "../hooks/useProgress";
 import Layout from "../layout/Layout";
 import { GetUser } from "../utils/fetchs/GetUser";
-
+import styles from "../../styles/Profile.module.css";
 
 export default function Profile() {
     const [show, setShow] = useState(false);
@@ -41,24 +41,12 @@ export default function Profile() {
 
     return (
         <Layout>
-            <Box
-                style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.3)",
-                    margin: "50px",
-                    borderRadius: "10px",
-                    padding: "20px",
-                    overflow: "hidden",
-                }}
-            >
+            <Box className={styles.profileBox}>
                 <Grid container spacing={2} alignItems="center">
                     <Grid item xs={4} container justifyContent="center">
                         <Avatar
                             alt="User Avatar"
-                            style={{
-                                width: "150px",
-                                height: "150px",
-                                backgroundColor: "black",
-                            }}
+                            className={styles.userAvatar}
                         />
                     </Grid>
                     <Grid
@@ -68,65 +56,27 @@ export default function Profile() {
                         direction="column"
                         justifyContent="center"
                     >
-                        <Typography
-                            style={{
-                                fontWeight: "bold",
-                                fontSize: "40px",
-                                color: "white",
-                                margin: "4px",
-                                padding: "4px",
-                            }}
-                        >
-                            <AlternateEmailIcon style={{ marginRight: "8px", height: "30px", width: "50px" }} />
+                        <Typography className={styles.username} >
+                            <AlternateEmailIcon className={styles.usernameIcon} />
                             {user.username || "Nombre de Usuario no disponible"}
                         </Typography>
-                        <Typography
-                            style={{
-                                fontWeight: 100,
-                                fontStyle: "italic",
-                                fontSize: "30px",
-                                color: "white",
-                                margin: "4px",
-                                padding: "4px",
-                            }}
-                        >
-                            <BadgeIcon style={{ marginRight: "8px", height: "25px" }} />
+                        <Typography className={styles.name}>
+                            <BadgeIcon className={styles.infoIcon} />
                             {user.name || "Nombre no disponible"}
                         </Typography>
-                        <Typography
-                            style={{
-                                fontWeight: "light",
-                                fontSize: "30px",
-                                color: "white",
-                                margin: "4px",
-                                padding: "4px",
-                            }}
-                        >
-                            <EmailIcon style={{ marginRight: "8px", height: "25px" }} />
+                        <Typography className={styles.userInfo}>
+                            <EmailIcon className={styles.infoIcon} />
                             {user.email || "Correo Electrónico no disponible"}
                         </Typography>
-                        <Typography
-                            style={{
-                                fontWeight: "light",
-                                fontSize: "30px",
-                                color: "white",
-                                margin: "4px",
-                                padding: "4px",
-                            }}
-                        >
-                            <WcIcon style={{ marginRight: "8px", height: "25px" }} />
+                        <Typography className={styles.userInfo}>
+                            <WcIcon className={styles.infoIcon} />
                             {user.gender || "Género del Usuario no disponible"}
                         </Typography>
                         <Button
                             variant="contained"
                             size="medium"
                             onClick={handleShow}
-                            style={{
-                                backgroundColor: "#731530",
-                                color: "white",
-                                marginTop: "-50px",
-                                alignSelf: "flex-end",
-                            }}
+                            className={styles.editButton}
                         >
                             Editar
                         </Button>
@@ -136,26 +86,13 @@ export default function Profile() {
                 </Grid>
             </Box>
 
-            <Box
-                style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.3)",
-                    margin: "50px",
-                    borderRadius: "10px",
-                    padding: "20px",
-                    overflow: "hidden",
-                }}
-            >
+            <Box className={styles.progressBox}>
                 <Grid container spacing={2} alignItems="center">
                     <Grid item xs={4} container justifyContent="center">
                         <Typography
                             variant="h4"
                             justifyContent="center"
-                            style={{
-                                fontWeight: "bold",
-                                color: "white",
-                                margin: "10px",
-                                padding: "10px",
-                            }}
+                            className={styles.progressTitle}
                         >
                             MI PROGRESO
                         </Typography>

@@ -5,19 +5,11 @@ import ColorButton from "./ColorButton";
 import CustomInput from "./CustomInput";
 import {Link, FormControl, Box, InputLabel, MenuItem, Select } from "@mui/material";
 import styles from "./../../styles/AuthForm.module.css";
-import { routes, labels, inputTypes, genderOptions, inputNames, formOptions } from "../utils/constants";
-
-const COMPONENTS = {
-    FORM: 'form',
-}
-const BUTTON_PROPS = {
-    bgcolor: '#731530',
-    textcolor: '#fff',
-}
+import { routes, labels, inputTypes, genderOptions, inputNames, formOptions, colors } from "../utils/constants";
 
 const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
     return (
-        <Box component={COMPONENTS.FORM} onSubmit={onSubmit} className={styles.authForm}>
+        <Box component='form' onSubmit={onSubmit} className={styles.authForm}>
             <h1 className={styles.h1Style}>
                 {isLogin ? formOptions.login : formOptions.signup}
             </h1>
@@ -79,8 +71,8 @@ const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
                 </React.Fragment>
             )}
             <ColorButton
-                bgcolor={BUTTON_PROPS.bgcolor}
-                textcolor={BUTTON_PROPS.textcolor}
+                bgcolor={colors.primary}
+                textcolor={colors.secondary}
                 type={inputTypes.submit}
                 className={styles.colorButton}
             >

@@ -1,0 +1,71 @@
+.profileBox {
+    background-color: rgba(255, 255, 255, 0.3);
+    margin: 50px;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.userAvatar {
+    width: 150px;
+    height: 150px;
+    background-color: black;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 40px;
+    color: white;
+    margin: 4px;
+    padding: 4px;
+}
+
+.name {
+    font-weight: 100;
+    font-style: italic;
+    font-size: 30px;
+    color: white;
+    margin: 4px;
+    padding: 4px;
+}
+
+.userInfo {
+    font-weight: 300;
+    font-size: 30px;
+    color: white;
+    margin: 4px;
+    padding: 4px;
+}
+
+.usernameIcon {
+    margin-right: 8px;
+    height: 30px;
+    width: 50px;
+}
+
+.infoIcon {
+    margin-right: 8px;
+    height: 25px;
+}
+
+.editButton {
+    background-color: #731530;
+    color: white;
+    margin-top: -50px;
+    align-self: flex-end;
+}
+
+.progressBox {
+    background-color: rgba(255, 255, 255, 0.3);
+    margin: 50px;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.progressTitle {
+    font-weight: bold;
+    color: white;
+    margin: 10px;
+    padding: 10px;
+}

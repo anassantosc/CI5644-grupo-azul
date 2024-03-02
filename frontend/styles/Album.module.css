@@ -32,6 +32,10 @@
     background-color: #731530;
 }
 
+.h2 {
+    margin: 0;
+}
+
 .progressBar {
     margin-top: 25px;
     margin-bottom: 65px;
