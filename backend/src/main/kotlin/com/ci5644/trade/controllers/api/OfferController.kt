@@ -45,7 +45,7 @@ class OfferController(private val authorizationService: AuthorizationService) {
             val cardOffer = requestBody["cardOffer"]
             val cardReceive = requestBody["cardReceive"]
     
-            if (cardOffer == null || cardReceive == null) {
+            if (cardOffer == null || cardReceive == null || cardOffer == cardReceive) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cardOffer and cardReceive must be provided")
             }
 
@@ -68,10 +68,10 @@ class OfferController(private val authorizationService: AuthorizationService) {
     *@param authCookie The JWT cookie
     * @return A list of offers with PENDING status
     */
-    @GetMapping("/get-offers")
+    @GetMapping("/get-offers/{pageable}")
     fun getOffers(
         @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
-        pageable: Pageable
+        @PathVariable pageable: Pageable
     ): ResponseEntity<Page<OfferDto>> {
         val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
         val user = authorizationService.retrieveUser(username)

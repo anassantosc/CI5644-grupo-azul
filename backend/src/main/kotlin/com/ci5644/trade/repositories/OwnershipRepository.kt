@@ -20,6 +20,9 @@ interface OwnershipRepository: JpaRepository<OwnershipEntity, Long> {
     @Query("SELECT o.user FROM OwnershipEntity o WHERE o.card = :card AND o.quantity > 1")
     fun findUserByCard(card: Int): List<Int>
 
+    @Query("SELECT o.card FROM OwnershipEntity o WHERE o.user = :user AND o.quantity > 1")
+    fun findDuplicatedCards(user: Int, pageable: Pageable): List<Int>
+
     @Query("SELECT u.username, count(o) FROM OwnershipEntity o JOIN UserEntity u ON u.id = o.user GROUP BY u.id ORDER BY count(o) DESC")
     fun findAllUsersWithPossessions(): List<List<Any>>
 }

@@ -76,4 +76,47 @@ class OwnershipController(private val authorizationService: AuthorizationService
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
     }
+
+
+    /**
+     * Retrieves a paginated list of the cards with quantity > 1.
+     *
+     * @param requestBody A map containing the request body with the key 'id' for the user ID and 'page' for the page number.
+     * @return A response entity containing a json with the list of card entities for the specified page.
+     */
+    @GetMapping("/get-duplicated-cards/{pageable}")
+    fun getDuplicatedCards(
+        @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
+        @PathVariable pageable: Int
+    ): ResponseEntity<*> {
+        return try {
+            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie);
+            val user = authorizationService.retrieveUser(username)
+            val duplicatedCards = ownershipService.getDuplicatedCards(user.id, pageable)
+            ResponseEntity.ok(duplicatedCards)
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
+        }
+    }
+
+    /**
+     * Retrieves a paginated list of the cards that the user does not own.
+     *
+     * @param requestBody A map containing the request body with the key 'id' for the user ID and 'page' for the page number.
+     * @return A response entity containing a json with the list of card entities for the specified page.
+     */
+    @GetMapping("/get-wishlist/{pageable}")
+    fun getWishList(
+        @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
+        @PathVariable pageable: Int
+    ): ResponseEntity<*> {
+        return try {
+            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie);
+            val user = authorizationService.retrieveUser(username)
+            val nonOwnedCards = ownershipService.getNonOwnedCards(user.id, pageable)
+            ResponseEntity.ok(nonOwnedCards)
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
+        }
+    }
 }
