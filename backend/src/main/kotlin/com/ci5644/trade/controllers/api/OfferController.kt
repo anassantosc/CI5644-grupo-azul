@@ -54,7 +54,7 @@ class OfferController(private val authorizationService: AuthorizationService) {
             if (offer.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No offers were created")
             }
-            ResponseEntity.ok(offer)
+            ResponseEntity.ok()
 
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)

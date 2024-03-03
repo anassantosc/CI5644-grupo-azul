@@ -84,7 +84,7 @@ class OwnershipController(private val authorizationService: AuthorizationService
      * @param requestBody A map containing the request body with the key 'id' for the user ID and 'page' for the page number.
      * @return A response entity containing a json with the list of card entities for the specified page.
      */
-    @GetMapping("/get-duplicated-cards/{pageable}")
+    @GetMapping("/get-duplicated/{pageable}")
     fun getDuplicatedCards(
         @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
         @PathVariable pageable: Int

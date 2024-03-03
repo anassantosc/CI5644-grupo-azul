@@ -60,7 +60,7 @@ class UserController(private val authorizationService: AuthorizationService) {
                 if (details.username.length < 5) {
                     errorMessage.append("Username cannot less than 5 characters.")
                 }
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage.toString())
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage.toString())
             }
             
             userService.editUser(details)
