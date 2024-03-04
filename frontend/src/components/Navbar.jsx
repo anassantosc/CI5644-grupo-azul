@@ -1,5 +1,6 @@
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import MailIcon from '@mui/icons-material/Mail';
 import {
+    Badge,
     Box,
     Button,
     IconButton,
@@ -9,11 +10,16 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material";
+import {
+    AccountCircle,
+} from "@mui/icons-material";
 import PropTypes from "prop-types";
 import Image from "next/image";
 import React from "react";
+import NotificationMenu from "./NotificationMenu";
 import images from "../utils/constants/images";
 import { useAuthentication } from "../hooks/useAuthentication";
+import colors from "../utils/constants/colors";
 
 const pages = ["Inicio", "Album", "Comprar"];
 const adminSettings = ["Perfil", "Mi Álbum", "Salir"];
@@ -84,6 +90,15 @@ export const Navbar = ({
                     </Button>
                 ))}
             </Box>
+            <NotificationMenu
+                handleOpenUserMenu={handleOpenUserMenu}
+                anchorElUser={anchorElUser}
+                handleCloseUserMenu={handleCloseUserMenu}
+                isLogin={isLogin}
+                adminSettings={adminSettings}
+                settings={settings}
+                handleClick={handleClick}
+            />
 
             <Box sx={{ flexGrow: 0, marginRight: 5 }}>
                 <Tooltip title="Menú">
@@ -121,6 +136,7 @@ export const Navbar = ({
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                 >
+
                     {(isLogin ? adminSettings : settings).map((setting) => (
                         <MenuItem
                             key={setting}
