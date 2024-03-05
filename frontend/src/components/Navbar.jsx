@@ -90,15 +90,7 @@ export const Navbar = ({
                     </Button>
                 ))}
             </Box>
-            <NotificationMenu
-                handleOpenUserMenu={handleOpenUserMenu}
-                anchorElUser={anchorElUser}
-                handleCloseUserMenu={handleCloseUserMenu}
-                isLogin={isLogin}
-                adminSettings={adminSettings}
-                settings={settings}
-                handleClick={handleClick}
-            />
+            {isLogin && <NotificationMenu/>}
 
             <Box sx={{ flexGrow: 0, marginRight: 5 }}>
                 <Tooltip title="Menú">

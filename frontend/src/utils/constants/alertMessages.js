@@ -20,6 +20,10 @@ const alertMessages = {
     http_error: "Error HTTP!, status:",
     passwords_dont_match: "Las contraseñas no coinciden",
     invalid_password: "La contraseña debe ser de al menos 8 caracteres y solo letras, puntos, guiones y guiones bajos",
+    accept_trade: "Intercambio aceptado",
+    reject_trade: "Intercambio rechazado",
+    counter_offer_success: "Contraoferta enviada exitosamente",
+    counteroffer_canceled: "Contraoferta cancelada",
 }
 
 export default alertMessages;
