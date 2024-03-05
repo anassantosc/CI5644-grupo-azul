@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Badge, Box, Grid, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip} from '@mui/material';
+import React, { useState } from 'react';
+import { Badge, Box, Grid, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from '@mui/material';
 import MailIcon from '@mui/icons-material/Mail';
 import colors from "../utils/constants/colors";
 import TurnLeftIcon from '@mui/icons-material/TurnLeft';
@@ -9,19 +9,19 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useAlert } from "../context/AlertContext";
 import { alertMessages, alertTypes } from "../utils/constants";
-import CounterOfferModal from "./CounterOfferModal";
+import OfferModal from './OfferModal';
 
 
 const dummyTrades = [
-    {nombreUsuario: 'Usuario1', idCartaQueQuiere: '1', idCartaQueOfrece: '2'},
-    {nombreUsuario: 'Usuario2', idCartaQueQuiere: '3', idCartaQueOfrece: '4'},
-    {nombreUsuario: 'Usuario3', idCartaQueQuiere: '5', idCartaQueOfrece: '6'},
-    {nombreUsuario: 'Usuario4', idCartaQueQuiere: '7', idCartaQueOfrece: '8'},
-    {nombreUsuario: 'Usuario5', idCartaQueQuiere: '9', idCartaQueOfrece: '10'},
-    {nombreUsuario: 'Usuario6', idCartaQueQuiere: '11', idCartaQueOfrece: '12'},
-    {nombreUsuario: 'Usuario7', idCartaQueQuiere: 13, idCartaQueOfrece: 14},
-    {nombreUsuario: 'Usuario8', idCartaQueQuiere: 15, idCartaQueOfrece: 16},
-    {nombreUsuario: 'Usuario9', idCartaQueQuiere: 17, idCartaQueOfrece: 18},
+    { username: 'Usuario1', receive: '1', offer: '2' },
+    { username: 'Usuario2', receive: '3', offer: '4' },
+    { username: 'Usuario3', receive: '5', offer: '6' },
+    { username: 'Usuario4', receive: '7', offer: '8' },
+    { username: 'Usuario5', receive: '9', offer: '10' },
+    { username: 'Usuario6', receive: '11', offer: '12' },
+    { username: 'Usuario7', receive: '13', offer: '14' },
+    { username: 'Usuario8', receive: '15', offer: '16' },
+    { username: 'Usuario9', receive: '17', offer: '18' }
 ]
 
 export default function NotificationMenu() {
@@ -34,11 +34,9 @@ export default function NotificationMenu() {
     const showAlert = useAlert();
 
     const handleClick = (event) => {
-        console.log('click');
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
-        console.log('close');
         setAnchorEl(null);
     };
 
@@ -49,24 +47,30 @@ export default function NotificationMenu() {
     };
 
     const handleAccept = (offer) => {
-        console.log('Accept', offer);
+        console.log('Accepted', offer);
         setTrades(trades.filter((o) => o !== offer));
         showAlert(alertMessages.accept_trade, alertTypes.success);
+        handleClose();
     }
 
     const handleReject = (offer) => {
         console.log('Reject', offer);
         setTrades(trades.filter((o) => o !== offer));
         showAlert(alertMessages.reject_trade, alertTypes.error);
+        handleClose();
     }
 
     const handleCounterOffer = (offer) => {
-        console.log('Counter Offer', offer);
+        console.log(offer);
         setCounterOffer(offer);
         setShowModal(true);
+        handleClose();
     }
 
-    const handleCloseModal = () => setShowModal(false);
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setCounterOffer(null)
+    }
 
     const prevStep = () => {
         if (step > 0) {
@@ -76,18 +80,18 @@ export default function NotificationMenu() {
 
     return (
         <React.Fragment>
-            <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center', marginRight: 5}}>
+            <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', marginRight: 5 }}>
                 <Tooltip title="Account settings">
                     <IconButton
                         onClick={handleClick}
                         size="small"
-                        sx={{ml: 2}}
+                        sx={{ ml: 2 }}
                         aria-controls={open ? 'account-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                     >
                         <Badge badgeContent={trades.length} color="error">
-                            <MailIcon sx={{fontSize: 35, color: colors.secondary}}/>
+                            <MailIcon sx={{ fontSize: 35, color: colors.secondary }} />
                         </Badge>
                     </IconButton>
                 </Tooltip>
@@ -101,69 +105,51 @@ export default function NotificationMenu() {
                     elevation: 0,
                     sx: {
                         overflow: 'visible',
-                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                         mt: 1.5,
-                        '& .MuiAvatar-root': {
-                            width: 32,
-                            height: 32,
-                            ml: -0.5,
-                            mr: 1,
-                        },
-                        '&::before': {
-                            content: '""',
-                            display: 'block',
-                            position: 'absolute',
-                            top: 0,
-                            right: 14,
-                            width: 10,
-                            height: 10,
-                            bgcolor: 'background.paper',
-                            transform: 'translateY(-50%) rotate(45deg)',
-                            zIndex: 0,
-                        },
+                        backgroundColor: '#581E3D',
                         padding: "0.5rem",
                     },
                 }}
-                transformOrigin={{horizontal: 'right', vertical: 'top'}}
-                anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem>
+                <MenuItem sx={{ backgroundColor: 'rgb(78, 20, 50)', cursor: 'default', "&:hover": { backgroundColor: 'rgb(78, 20, 50)' } }}>
                     <Grid container spacing={4} alignItems="center">
                         <Grid item xs={4}>
-                            <ListItemText sx={{fontSize: '0.5rem', textAlign: 'center'}}> Carta a recibir </ListItemText>
+                            <ListItemText sx={{ fontSize: '0.5rem', textAlign: 'center', color: '#FFFFFF' }}> Carta a recibir </ListItemText>
                         </Grid>
                         <Grid item xs={4}>
-                            <ListItemText sx={{fontSize: '0.5rem', textAlign: 'center'}}> Carta ofrecida </ListItemText>
+                            <ListItemText sx={{ fontSize: '0.5rem', textAlign: 'center', color: '#FFFFFF' }}> Carta ofrecida </ListItemText>
                         </Grid>
                         <Grid item xs={4}>
-                            <ListItemText sx={{fontSize: '0.5rem', textAlign: 'center'}}> Acciones </ListItemText>
+                            <ListItemText sx={{ fontSize: '0.5rem', textAlign: 'center', color: '#FFFFFF' }}> Acciones </ListItemText>
                         </Grid>
                     </Grid>
                 </MenuItem>
                 {trades.slice(step, step + 3).map((offer) => (
-                    <MenuItem key={offer.nombreUsuario}>
+                    <MenuItem key={offer.username} sx={{ cursor: 'default' }}>
                         <Grid container spacing={2} alignItems="center">
                             <Grid item xs={4}>
-                                <ListItemText sx={{textAlign: 'center'}}>{offer.idCartaQueQuiere}</ListItemText>
+                                <ListItemText sx={{ textAlign: 'center', color: '#FFFFFF' }}>{offer.receive}</ListItemText>
                             </Grid>
                             <Grid item xs={4}>
-                                <ListItemText sx={{textAlign: 'center'}}>{offer.idCartaQueOfrece}</ListItemText>
+                                <ListItemText sx={{ textAlign: 'center', color: '#FFFFFF' }}>{offer.offer}</ListItemText>
                             </Grid>
                             <Grid item xs={4}>
                                 <ListItemIcon>
                                     <Tooltip title="Aceptar intercambio">
                                         <IconButton onClick={() => handleAccept(offer)}>
-                                            <CheckIcon color="success"/>
+                                            <CheckIcon color="success" />
                                         </IconButton>
                                     </Tooltip>
                                     <Tooltip title="Rechazar intercambio">
                                         <IconButton onClick={() => handleReject(offer)}>
-                                            <CloseIcon color="error"/>
+                                            <CloseIcon color="error" />
                                         </IconButton>
                                     </Tooltip>
                                     <Tooltip title="Contraofertar">
                                         <IconButton onClick={() => handleCounterOffer(offer)}>
-                                            <TurnLeftIcon/>
+                                            <TurnLeftIcon sx={{ color: '#d9d9d9' }} />
                                         </IconButton>
                                     </Tooltip>
                                 </ListItemIcon>
@@ -171,18 +157,18 @@ export default function NotificationMenu() {
                         </Grid>
                     </MenuItem>
                 ))}
-                <MenuItem>
+                <MenuItem sx={{ backgroundColor: 'rgb(78, 20, 50)', cursor: 'default', "&:hover": { backgroundColor: 'rgb(78, 20, 50)' } }}>
                     <Grid container justifyContent="space-around">
                         <IconButton onClick={prevStep} disabled={step === 0}>
-                            <ArrowBackIosIcon/>
+                            <ArrowBackIosIcon sx={{ color: step === 0 ? '#8c8c8c' : '#FFFFFF' }} />
                         </IconButton>
                         <IconButton onClick={nextStep} disabled={step >= trades.length - 3}>
-                            <ArrowForwardIosIcon/>
+                            <ArrowForwardIosIcon sx={{ color: step >= trades.length - 3 ? '#8c8c8c' : '#FFFFFF' }} />
                         </IconButton>
                     </Grid>
                 </MenuItem>
             </Menu>
-            <CounterOfferModal show={showModal} onClose={handleCloseModal} offer={counterOffer}/>
+            <OfferModal show={showModal} onClose={handleCloseModal} offer={counterOffer} />
         </React.Fragment>
-);
+    );
 }

@@ -15,6 +15,7 @@ const routes = {
     getProgress: '/get-progress',
     detail: '/detail',
     home: '/',
+    counteroffer: '/counteroffer'
 }
 
 export default routes;

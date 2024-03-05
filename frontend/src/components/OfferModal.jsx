@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import PropTypes from 'prop-types';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import images from '../utils/constants/images';
 import { CreateOffer } from "../utils/fetchs/CreateOffer";
 import { useAlert } from "../context/AlertContext";
@@ -34,7 +34,7 @@ const dummyVariables = [
     '162', '17', '18', '19', '20',
 ];
 
-const OfferModal = ({ show, onClose }) => {
+const OfferModal = ({ show, onClose, offer = null }) => {
     const showAlert = useAlert();
     const [offerData, setOfferData] = useState({ receive: null, send: null })
     const missingCards = dummyVariables;
@@ -47,20 +47,12 @@ const OfferModal = ({ show, onClose }) => {
     const handleCloseSend = () => setShowSend(false);
 
     const handleButtonClick = (type) => () => {
-        if (type === 'receive') {
-            setShowReceive(!showReceive);
-            handleCloseSend();
-        } else if (type === 'send') {
-            setShowSend(!showSend);
-            handleCloseReceive();
-        }
+        setShowReceive(type === 'receive' ? !showReceive : false);
+        setShowSend(type === 'send' ? !showSend : false);
     };
 
     const handleFieldChange = (key) => (e) => {
-        console.log(key);
-        console.log(e);
         setOfferData({ ...offerData, [key]: e });
-        console.log(offerData);
     };
 
     const handleConfirm = async () => {
@@ -70,7 +62,15 @@ const OfferModal = ({ show, onClose }) => {
         }
 
         try {
-            const response = await CreateOffer(offerData);
+            const offerWithUsername = {
+                ...offerData,
+                username: offer?.username
+            };
+
+            const response = offer?.username === null ?
+                await CreateOffer(offerData) :
+                await CounterOffer(offerWithUsername);
+
             setOfferData({ receive: null, send: null });
 
             if (response.ok) {
@@ -78,20 +78,24 @@ const OfferModal = ({ show, onClose }) => {
             } else {
                 showAlert(alertMessages.unknown_error, alertTypes.error);
             }
-            onClose();
         } catch (error) {
             console.error(alertMessages.offer_error, error);
+            showAlert(alertMessages.offer_error, alertTypes.error);
         }
 
         onClose();
     }
+
+    useEffect(() => {
+        setOfferData({ receive: offer?.receive, send: offer?.offer })
+    }, [offer]);
 
     return (
         <Dialog open={show} onClose={onClose} fullWidth maxWidth="sm" >
             <DialogContent dividers className={styles.dialogContent} >
                 <Box display="flex" alignItems="center">
                     <Image priority src={images.logo} alt="Logo" width={140} height={140} />
-                    <Typography variant="h4" className={styles.dialogTitle} >Enviar oferta</Typography>
+                    <Typography variant="h4" className={styles.dialogTitle} >{offer ? "Enviar contraoferta" : "Enviar oferta"}</Typography>
                 </Box>
                 <Box className={styles.formBox}>
                     <form noValidate autoComplete="off">
@@ -152,11 +156,27 @@ const OfferModal = ({ show, onClose }) => {
                     </form>
                 </Box>
             </DialogContent>
-            <DialogActions className={styles.dialogActions} >
-                <Button variant="contained" size="medium" onClick={onClose} className={styles.cancelButton} >
+            <DialogActions className={styles.dialogActions}>
+                <Button
+                    variant="contained"
+                    size="medium"
+                    onClick={() => {
+                        onClose();
+                        setOfferData({ receive: null, send: null });
+                    }}
+                    className={styles.cancelButton}
+                >
                     Cancelar
                 </Button>
-                <Button variant="contained" size="medium" onClick={handleConfirm} className={styles.confirmButton} >
+                <Button
+                    variant="contained"
+                    size="medium"
+                    onClick={() => {
+                        handleConfirm();
+                        setOfferData({ receive: null, send: null });
+                    }}
+                    className={styles.confirmButton}
+                >
                     Ofertar
                 </Button>
             </DialogActions>
