@@ -16,7 +16,9 @@ const routes = {
     home: '/',
     counteroffer: '/counteroffer',
     duplicated: '/duplicated',
-    wishlist: '/wishlist'
+    wishlist: '/wishlist',
+    page: (page) => `?page=${page}`,
+    offerId: (id) => `&offerId=${id}`
 }
 
 export default routes;

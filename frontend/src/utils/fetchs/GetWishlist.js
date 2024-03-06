@@ -2,10 +2,13 @@ import secureFetch from "./SecureFetch";
 import { HTTPMethods, routes, alertMessages } from "../constants";
 
 export const GetWishlist = async (data) => {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.ownership}${routes.wishlist}`;
+    let url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.ownership}${routes.wishlist}${routes.page(data.page)}`;
     const method = HTTPMethods.GET;
-    const data = JSON.stringify(data);
+    const data = null;
     const headers = {};
+    if (data.id !== null && data.id !== undefined) {
+        url += routes.offerId(data.id);
+    }
 
     try {
         const response = await secureFetch(url, method, data, headers);

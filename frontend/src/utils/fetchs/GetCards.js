@@ -2,9 +2,9 @@ import secureFetch from "./SecureFetch";
 import { HTTPMethods, routes, alertMessages } from "../constants";
 
 export const GetCards = async (page) => {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.ownership}`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.ownership}${routes.page(page)}`;
     const method = HTTPMethods.GET;
-    const data = JSON.stringify(page);
+    const data = null;
     const headers = {};
 
     try {
