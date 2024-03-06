@@ -5,7 +5,7 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
-name: Marmota Salvaje Backend
+name: Marmota Salvaje
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
     branches: [ "development" ]
 
 jobs:
-  test:
+  test-backend:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -33,13 +33,13 @@ jobs:
       - name: Run unit tests
         working-directory: backend
         run: bash ./gradlew test
-  build:
 
+  build-backend:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    needs: test
-    if: ${{ needs.test.result == 'success' }}
+    needs: test-backend
+    if: ${{ needs.test-backend.result == 'success' }}
 
     steps:
       - uses: actions/checkout@v4
@@ -57,3 +57,46 @@ jobs:
       - name: Build with Gradle Wrapper
         working-directory: backend
         run: bash ./gradlew build
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Run frontend tests
+        working-directory: frontend
+        run: npm run test
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    needs: test-frontend
+    if: ${{ needs.test-frontend.result == 'success' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Build with Next
+        working-directory: frontend
+        run: npm run build
