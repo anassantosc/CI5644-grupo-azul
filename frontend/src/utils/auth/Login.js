@@ -12,7 +12,7 @@ export const Login = async (userData, showAlert) => {
 
         if (response.ok) {
             showAlert(alertMessages.success_login, alertTypes.success);
-        } else if (response.status === statusCodes.conflict) {
+        } else if (response.status === statusCodes.bad_request) {
             showAlert(alertMessages.user_not_found, alertTypes.warning);
         } else if (response.status === statusCodes.unauthorized) {
             showAlert(alertMessages.invalid_credentials, alertTypes.warning);

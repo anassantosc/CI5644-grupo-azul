@@ -1,7 +1,6 @@
 import secureFetch from "./SecureFetch";
 import { HTTPMethods, routes, alertMessages } from "../constants";
 
-
 export const GetMundialProgress = async () => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.ownership}${routes.getMundialProgress}`;
     const method = HTTPMethods.GET;

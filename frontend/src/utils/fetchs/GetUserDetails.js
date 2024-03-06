@@ -1,9 +1,9 @@
 import secureFetch from "./SecureFetch";
 import { HTTPMethods, routes, alertMessages } from "../constants";
 
-export const GetUser = async () => {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.user}${routes.detail}`;
-    const method = "GET";
+export const GetUserDetails = async () => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.users}`;
+    const method = HTTPMethods.GET;
     const data = null;
     const headers = {};
 
@@ -11,10 +11,9 @@ export const GetUser = async () => {
         const response = await secureFetch(url, method, data, headers);
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`${alertMessages.http_error} ${response.status}`);
         }
-        const user = await response.json();
-        return user;
+        return await response.json();
     } catch (error) {
         console.error(error);
     }

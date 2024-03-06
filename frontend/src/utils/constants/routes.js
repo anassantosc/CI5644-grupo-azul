@@ -5,17 +5,18 @@ const routes = {
     auth: '/auth',
     register: '/register',
     api: '/api',
-    user: '/user',
+    users: '/users',
     edit: '/edit',
     offer: '/offer',
     create: '/create',
     ownership: '/ownership',
-    getCards: '/get-cards',
-    getMundialProgress: '/get-mundial-progress',
-    getProgress: '/get-progress',
+    getMundialProgress: '/top-progress',
+    getProgress: '/progress',
     detail: '/detail',
     home: '/',
-    counteroffer: '/counteroffer'
+    counteroffer: '/counteroffer',
+    duplicated: '/duplicated',
+    wishlist: '/wishlist'
 }
 
 export default routes;

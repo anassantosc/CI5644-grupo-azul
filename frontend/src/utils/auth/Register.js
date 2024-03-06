@@ -12,9 +12,8 @@ export const Register = async (userData, showAlert) => {
 
         if (response.ok) {
             showAlert(alertMessages.success_register, alertTypes.success);
-        } else if (response.status === statusCodes.conflict) {
+        } else if (response.status === statusCodes.bad_request) {
             showAlert(alertMessages.user_already_exists, alertTypes.warning);
-            );
         } else {
             showAlert(alertMessages.unknown_error, alertTypes.error);
         }
