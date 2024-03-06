@@ -6,25 +6,25 @@ CREATE UNIQUE INDEX idx_usuario_username ON USUARIO(username);
 -- This index will speed up queries related to a user's album
 CREATE INDEX idx_pertenencia_user_card ON PERTENENCIA("user", card);
 
--- Creating an index on the 'id_usuario_offer' column of the 'TRADE' table
+-- Creating an index on the 'id_usuario_offer' column of the 'OFERTA' table
 -- This index will speed up queries that filter by 'id_usuario_offer'
-CREATE INDEX idx_trade_id_usuario_offer ON TRADE(id_usuario_offer);
+CREATE INDEX idx_oferta_id_usuario_offer ON OFERTA(id_usuario_offer);
 
--- Creating an index on the 'id_usuario_recieve' column of the 'TRADE' table
--- This index will speed up queries that filter by 'id_usuario_recieve'
-CREATE INDEX idx_trade_id_usuario_recieve ON TRADE(id_usuario_recieve);
+-- Creating an index on the 'id_usuario_recieve' column of the 'OFERTA' table
+-- This index will speed up queries that filter by 'id_usuario_receive'
+CREATE INDEX idx_oferta_id_usuario_receive ON OFERTA(id_usuario_receive);
 
--- Creating an index on the 'id_barajita_offer' column of the 'TRADE' table
+-- Creating an index on the 'id_barajita_offer' column of the 'OFERTA' table
 -- This index will speed up queries that filter by 'id_barajita_offer'
-CREATE INDEX idx_trade_id_barajita_offer ON TRADE(id_barajita_offer);
+CREATE INDEX idx_oferta_id_barajita_offer ON OFERTA(id_barajita_offer);
 
--- Creating an index on the 'id_barajita_recieve' column of the 'TRADE' table
--- This index will speed up queries that filter by 'id_barajita_recieve'
-CREATE INDEX idx_trade_id_barajita_recieve ON TRADE(id_barajita_recieve);
+-- Creating an index on the 'id_barajita_recieve' column of the 'OFERTA' table
+-- This index will speed up queries that filter by 'id_barajita_receive'
+CREATE INDEX idx_oferta_id_barajita_receive ON OFERTA(id_barajita_receive);
 
--- Creating an index on the 'status' column of the 'TRADE' table
+-- Creating an index on the 'status' column of the 'OFERTA' table
 -- This index will speed up queries that filter by 'status'
-CREATE INDEX idx_trade_status ON TRADE(status);
+CREATE INDEX idx_oferta_status ON OFERTA(status);
 
 -- Creating an index on the 'id_usuario' column of the 'COMPRA' table
 -- This index will speed up queries that filter by 'id_usuario'
