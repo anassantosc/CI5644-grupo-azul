@@ -46,10 +46,13 @@ const EditModal = ({ show, onClose, user, onChange }) => {
             const response = await EditUser(userChanges);
 
             if (response.ok) {
-                showAlert(alertMessages.success, alertTypes.success);
+                showAlert(alertMessages.success_user, alertTypes.success);
+            } else if (response.status === statusCodes.bad_request) {
+                showAlert(response.message, alertTypes.error);
             } else {
                 showAlert(alertMessages.unknown_error, alertTypes.error);
             }
+
             onChange();
             onClose();
         } catch (error) {

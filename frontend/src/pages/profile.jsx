@@ -8,7 +8,7 @@ import EditModal from "../components/EditModal";
 import ProgressCircle from "../components/ProgressCircle";
 import { useProgress } from "../hooks/useProgress";
 import Layout from "../layout/Layout";
-import { GetUser } from "../utils/fetchs/GetUser";
+import { GetUserDetails } from "../utils/fetchs/GetUserDetails";
 import styles from "../../styles/Profile.module.css";
 
 export default function Profile() {
@@ -27,7 +27,7 @@ export default function Profile() {
 
     useEffect(() => {
         const updateUser = async () => {
-            const userData = await GetUser();
+            const userData = await GetUserDetails();
             setUser(userData);
         };
 
@@ -35,7 +35,7 @@ export default function Profile() {
     }, []);
 
     const handleChange = async () => {
-        const userData = await GetUser();
+        const userData = await GetUserDetails();
         setUser(userData);
     };
 

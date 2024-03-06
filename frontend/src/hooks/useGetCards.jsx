@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getCardsByPage } from "../utils/fetchs/GetCardsByPage";
+import { getCards } from "../utils/fetchs/GetCards";
 
 export const useGetCards = (page) => {
     const [status, setStatus] = useState({
@@ -11,7 +11,7 @@ export const useGetCards = (page) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getCardsByPage(page);
+                const data = await getCards(page);
                 if (data.length > 0) {
                     setStatus(prevState => ({
                         ...prevState,

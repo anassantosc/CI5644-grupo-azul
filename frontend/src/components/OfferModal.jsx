@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from "react";
 import images from '../utils/constants/images';
 import { CreateOffer } from "../utils/fetchs/CreateOffer";
+import { CreateCounterOffer } from "../utils/fetchs/CreateCounterOffer";
 import { useAlert } from "../context/AlertContext";
 import { TableSelector } from "./TableSelector";
 import styles from "../../styles/OfferModal.module.css";
@@ -69,12 +70,14 @@ const OfferModal = ({ show, onClose, offer = null }) => {
 
             const response = offer?.username === null ?
                 await CreateOffer(offerData) :
-                await CounterOffer(offerWithUsername);
+                await CreateCounterOffer(offerWithUsername);
 
             setOfferData({ receive: null, send: null });
 
             if (response.ok) {
                 showAlert(alertMessages.offer_success, alertTypes.success);
+            } else if (response.status === statusCodes.bad_request) {
+                showAlert(response.message, alertTypes.error);
             } else {
                 showAlert(alertMessages.unknown_error, alertTypes.error);
             }

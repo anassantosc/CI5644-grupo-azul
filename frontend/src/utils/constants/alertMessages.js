@@ -18,7 +18,7 @@ const alertMessages = {
     offer_error: "Error al crear la oferta: ",
     passwords_dont_match: "Las contraseñas no coinciden",
     reject_trade: "Intercambio rechazado",
-    success: "Usuario editado exitosamente",
+    success_user: "Usuario editado exitosamente",
     success_login: "Inicio de sesión exitoso",
     success_logout: "Sesión cerrada con éxito",
     success_register: "Registro exitoso",

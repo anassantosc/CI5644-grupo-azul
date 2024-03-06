@@ -10,14 +10,12 @@ export const EditUser = async (userData) => {
     try {
         const response = await secureFetch(url, method, data, headers);
 
-        if (response.ok) {
-            showAlert(alertMessages.counter_offer_success, alertTypes.success);
-        } else {
-            if (response.status === statusCodes.bad_request) showAlert(response.message, alertTypes.error);
+        if (!response.ok) {
             throw new Error(`${alertMessages.http_error} ${response.status}`);
         }
-        return await response.json();
+        return response;
     } catch (error) {
         console.error(error);
     }
 };
+
