@@ -87,7 +87,7 @@ class AuthenticationControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginDTO))
         )
-            .andExpect(status().isConflict())
+            .andExpect(status().isBadRequest())
     }
 
     /**

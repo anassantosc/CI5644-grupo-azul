@@ -3,6 +3,7 @@ package com.ci5644.trade.services.user
 import com.ci5644.trade.repositories.UserRepository
 import com.ci5644.trade.models.user.UserEntity
 import com.ci5644.trade.dto.UserDetailsDto
+import com.ci5644.trade.services.auth.AuthorizationService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.security.core.userdetails.User

@@ -7,23 +7,19 @@ import com.ci5644.trade.repositories.CardRepository
 import com.ci5644.trade.repositories.UserRepository
 import com.ci5644.trade.repositories.OwnershipRepository
 import com.ci5644.trade.models.card.OwnershipEntity
+import com.ci5644.trade.services.auth.AuthorizationService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service 
 import com.ci5644.trade.models.card.OfferStatus  
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 
 
 @Service
-class OfferService() {
+class OfferService(private val authorizationService: AuthorizationService) {
     @Autowired
     lateinit var offerRepository: OfferRepository
-
-    @Autowired 
-    lateinit var cardRepository: CardRepository
-    
-    @Autowired
-    lateinit var userRepository: UserRepository
 
     @Autowired
     lateinit var ownershipRepository: OwnershipRepository
@@ -36,7 +32,8 @@ class OfferService() {
     * @param cardReceiveId The ID of the card received
     * @return              A list of offers made by the user
     */
-    fun createOffer(userOffer:Int, cardOffer: Int, cardReceive: Int) : List<OfferEntity> {
+    fun createOffer(usernameOffer: String, cardOffer: Int, cardReceive: Int) : List<OfferEntity> {
+        val userOffer = authorizationService.retrieveUser(usernameOffer).id
         val usersReceive = ownershipRepository.findUserByCard(cardReceive)
         val offerList = mutableListOf<OfferEntity>()
         
@@ -65,7 +62,8 @@ class OfferService() {
         * @param pageable The Pageable object that provides the pagination information.
         * @return A page of offers made with PENDING status
         */
-    fun getPendingOffers(pageable: Pageable) : Page<OfferEntity> {
+    fun getPendingOffers(page: Int) : Page<OfferEntity> {
+        val pageable: Pageable = PageRequest.of(page, 3)
         return offerRepository.findByStatus(OfferStatus.PENDING, pageable)
     }
     

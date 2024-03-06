@@ -15,6 +15,7 @@ interface OwnershipRepository: JpaRepository<OwnershipEntity, Long> {
     fun findByUserAndCard(user: Int, card: Int): OwnershipEntity
 
     fun findByUser(user: Int): List<OwnershipEntity>
+    fun findByUserWithPagination(user: Int, pageable: Pageable): Page<OwnershipEntity>
     override fun findAll(pageable: Pageable): Page<OwnershipEntity>
 
     @Query("SELECT o.user FROM OwnershipEntity o WHERE o.card = :card AND o.quantity > 1")

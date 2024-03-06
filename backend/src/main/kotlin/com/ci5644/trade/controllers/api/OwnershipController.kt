@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import com.ci5644.trade.services.auth.AuthorizationService
 
 
 /**
@@ -15,8 +14,7 @@ import com.ci5644.trade.services.auth.AuthorizationService
  */
 @RestController
 @RequestMapping("/api/ownership")
-@CrossOrigin(origins = ["http://localhost:3000"], allowCredentials = "true")
-class OwnershipController(private val authorizationService: AuthorizationService) {
+class OwnershipController() {
 
     @Autowired
     private lateinit var ownershipService: OwnershipService
@@ -27,16 +25,21 @@ class OwnershipController(private val authorizationService: AuthorizationService
      * @param requestBody A map containing the request body with keys 'id' for the user ID and 'page' for the page number.
      * @return A response entity containing a json with the list of card entities for the specified page.
      */
-    @GetMapping("/get-cards/{pageable}")
+    @GetMapping()
     fun getCardsPerPage(
         @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie : String,
-        @PathVariable pageable : Int
+        @RequestBody requestBody: Map<String, Int>
     ): ResponseEntity<*> {
         return try {
-            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie);
-            val user = authorizationService.retrieveUser(username)
-            val pageOfOwnedCards = ownershipService.getCardsPerPage(user.id, pageable)
-            return ResponseEntity.ok(pageOfOwnedCards)
+            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
+            val page = requestBody["page"] 
+
+            if (page == null || page < 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
+            }
+
+            val pageOfOwnedCards = ownershipService.getCardsPerPage(username, page)
+            ResponseEntity.ok(pageOfOwnedCards)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
@@ -48,12 +51,11 @@ class OwnershipController(private val authorizationService: AuthorizationService
      * @param requestBody A map containing the request body with the key 'id' for the user ID.
      * @return A response entity containing a json with the progress of the user.
      */
-    @GetMapping("/get-progress")
+    @GetMapping("/progress")
     fun getProgress(@CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String): ResponseEntity<*> {
         return try {
-            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie);
-            val user = authorizationService.retrieveUser(username)
-            val progress = ownershipService.getUserProgress(user.id)
+            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
+            val progress = ownershipService.getUserProgress(username)
             ResponseEntity.ok(progress)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
@@ -67,11 +69,14 @@ class OwnershipController(private val authorizationService: AuthorizationService
      * @param limit The maximum number of users to return the progress for.
      * @return A response entity containing a json with a list of pairs representing the progress of users.
      */
-    @GetMapping("/get-mundial-progress")
-    fun getMundialProgress(@RequestParam(required = false, defaultValue = "3") limit: Int): ResponseEntity<*> {
+    @GetMapping("/top-progress")
+    fun getTopProgress(@RequestBody requestBody: Map<String, Int>): ResponseEntity<*> {
         return try {
-            val mundialProgress = ownershipService.getMostPossessions(limit)
-            ResponseEntity.ok(mundialProgress)
+            var limit = requestBody["limit"] ?: 3
+            if (limit <= 0) limit = 3
+
+            val topProgress = ownershipService.getMostPossessions(limit)
+            ResponseEntity.ok(topProgress)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
@@ -84,15 +89,20 @@ class OwnershipController(private val authorizationService: AuthorizationService
      * @param requestBody A map containing the request body with the key 'id' for the user ID and 'page' for the page number.
      * @return A response entity containing a json with the list of card entities for the specified page.
      */
-    @GetMapping("/get-duplicated/{pageable}")
+    @GetMapping("/duplicated")
     fun getDuplicatedCards(
         @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
-        @PathVariable pageable: Int
+        @RequestBody requestBody: Map<String, Int>
     ): ResponseEntity<*> {
         return try {
-            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie);
-            val user = authorizationService.retrieveUser(username)
-            val duplicatedCards = ownershipService.getDuplicatedCards(user.id, pageable)
+            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
+            val page = requestBody["page"] 
+
+            if (page == null || page < 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
+            }
+
+            val duplicatedCards = ownershipService.getDuplicatedCards(username, page)
             ResponseEntity.ok(duplicatedCards)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
@@ -105,15 +115,20 @@ class OwnershipController(private val authorizationService: AuthorizationService
      * @param requestBody A map containing the request body with the key 'id' for the user ID and 'page' for the page number.
      * @return A response entity containing a json with the list of card entities for the specified page.
      */
-    @GetMapping("/get-wishlist/{pageable}")
+    @GetMapping("/wishlist")
     fun getWishList(
         @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
-        @PathVariable pageable: Int
+        @RequestBody requestBody: Map<String, Int>
     ): ResponseEntity<*> {
         return try {
-            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie);
-            val user = authorizationService.retrieveUser(username)
-            val nonOwnedCards = ownershipService.getNonOwnedCards(user.id, pageable)
+            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
+            val page = requestBody["page"] 
+
+            if (page == null || page < 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
+            }
+
+            val nonOwnedCards = ownershipService.getNonOwnedCards(username, page)
             ResponseEntity.ok(nonOwnedCards)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
