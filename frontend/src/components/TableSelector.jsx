@@ -9,15 +9,19 @@ import {
     Button,
     Typography
 } from "@mui/material";
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { StyledTableRow } from "./StyledTableRow";
 import styles from './../../styles/TableSelector.module.css';
+import { GetWishlist } from "../utils/fetchs/GetWishlist";
+import { GetDuplicatedCards } from "../utils/fetchs/GetDuplicatedCards";
+
 
 const pageSize = 20;
 
 export const TableSelector = ({ onSelect, onClick, receive, offer = null }) => {
     const [page, setPage] = useState(0);
     const [cards, setCards] = useState([]);
+    const [rows, setRows] = useState([]);
 
     const handleSelect = (number) => {
         onSelect(number);
@@ -29,16 +33,30 @@ export const TableSelector = ({ onSelect, onClick, receive, offer = null }) => {
     };
 
     useEffect(() => {
-        if (receive) {
-            const Data = {
-                page: page,
-                username: offer?.username
-            };
-            setCards(GetWishlist(Data))
-        } else {
-            setCards(GetDuplicatedCards(Data))
-        }
-    }, [page, receive]);
+        const fetchData = async () => {
+            try {
+                let temp;
+                if (receive) {
+                    const data = {
+                        page,
+                        id: offer?.username
+                    };
+                    console.log(data)
+                    console.log(offer)
+                    temp = await GetWishlist(data);
+                } else {
+                    temp = await GetDuplicatedCards(page);
+                }
+                console.log(temp);
+                setCards(temp);
+                setRows(chunkArray(temp, 4));
+            } catch (error) {
+                console.error("Error al obtener datos:", error);
+            }
+        };
+    
+        fetchData();
+    }, [page, receive, offer]);
 
     const chunkArray = useMemo(
         () => (arr, chunkSize) => {
@@ -50,8 +68,6 @@ export const TableSelector = ({ onSelect, onClick, receive, offer = null }) => {
         },
         []
     );
-
-    const rows = chunkArray(cards, 4);
 
     return (
         <TableContainer component={Paper} className={styles.tableContainer} >
@@ -82,7 +98,7 @@ export const TableSelector = ({ onSelect, onClick, receive, offer = null }) => {
                             onPageChange={handleChangePage}
                             labelDisplayedRows={({ from, to, count }) => `${from}-${to}`}
                             nextIconButtonProps={{
-                                disabled: visibleOptions.length < pageSize,
+                                disabled: cards.length < pageSize,
                             }}
                             className={styles.pagination}
                         />
