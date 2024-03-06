@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*
  * Uses JWT authentication for requests and CORS configuration.
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 class UserController(private val authorizationService: AuthorizationService) {
 
     @Autowired
@@ -45,7 +45,7 @@ class UserController(private val authorizationService: AuthorizationService) {
      * @param details UserDto - The new user details to be edited.
      * @return ResponseEntity<String> - ResponseEntity indicating success or failure of the edit operation.
      */
-    @PostMapping()
+    @PutMapping()
     fun editUser(
             @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
             @RequestBody details: UserDetailsDto
@@ -54,14 +54,15 @@ class UserController(private val authorizationService: AuthorizationService) {
         return try {
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
         
-            if (username != details.username || details.username.length < 5) {
-                val errorMessage = StringBuilder("User details invalid ")
-                if (details.username.length < 5) {
-                    errorMessage.append("Username cannot less than 5 characters.")
-                }
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage.toString())
+            val validationError = details.validate()
+            if (validationError != null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validationError)
             }
-            
+
+            if (username != details.username) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot edit other users")
+            }
+
             userService.editUser(details)
             ResponseEntity.ok("User successfully edited")
         } catch (e: Exception) {

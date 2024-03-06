@@ -32,7 +32,7 @@ class OwnershipService(private val authorizationService: AuthorizationService) {
     fun getCardsPerPage(username: String, page: Int): List<CardEntity> {
         val userId = authorizationService.retrieveUser(username).id
         val pageable: Pageable = PageRequest.of(page, 20)
-        val ownershipPage = ownershipRepository.findByUserWithPagination(userId, pageable)
+        val ownershipPage = ownershipRepository.findByUser(userId, pageable)
         val ownedCards = ownershipPage.content.map { it.card }
         return cardRepository.findAllById(ownedCards)
     }
