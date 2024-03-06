@@ -32,7 +32,7 @@ class AuthenticationController {
             val jwtCookie = authService.loginUser(log.username, log.password)
             ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).build()
         } catch (e: UsernameNotFoundException) {
-            ResponseEntity.status(HttpStatus.CONFLICT).body(e.message)
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
         } catch (e: AuthenticationException) {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: ${e.message}")
         }
@@ -51,9 +51,9 @@ class AuthenticationController {
             authService.registerUser(trimmedReg)
             ResponseEntity.ok().build()
         } catch (e: UsernameTakenException) {
-            ResponseEntity.status(HttpStatus.CONFLICT).body("Username already taken")
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already taken")
         } catch (e: IllegalArgumentException) {
-            ResponseEntity.status(HttpStatus.CONFLICT).body(e.message)
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error")
         }

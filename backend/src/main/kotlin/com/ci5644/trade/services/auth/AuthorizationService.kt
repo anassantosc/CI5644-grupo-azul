@@ -39,10 +39,11 @@ class AuthorizationService {
      */
     @Throws(UsernameNotFoundException::class)
     fun retrieveUser(username: String): UserEntity {
-        if (!userRepository.existsByUsername(username)) {
-            throw UsernameNotFoundException("Username not found: ${username}")
+        val user = userRepository.findByUsername(username)
+        if (user == null) {
+            throw UsernameNotFoundException("Not found: $username")
         }
-        return userRepository.findByUsername(username)
+        return user
     }
 
     /**
@@ -53,14 +54,12 @@ class AuthorizationService {
      */
     @Throws(UsernameTakenException::class, IllegalArgumentException::class)
     fun registerUser(reg: RegisterDTO): UserEntity {
+        val validationError = reg.validate()
         if (userRepository.existsByUsername(reg.username.trim())) {
             throw UsernameTakenException()
         }
-        if (reg.username.length < 5) {
-            throw IllegalArgumentException("Username must be longer or equal than 5 characters")
-        }
-        if (reg.password.length < 8) {
-            throw IllegalArgumentException("Password must be longer or equal than 8 characters")
+        if (validationError != null) {
+            throw IllegalArgumentException(validationError)
         }
 
         val newUser = UserEntity(

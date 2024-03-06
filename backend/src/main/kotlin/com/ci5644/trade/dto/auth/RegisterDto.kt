@@ -14,7 +14,7 @@ data class RegisterDTO(
 
     @NotNull
     @NotEmpty
-    @Size(min = 3)
+    @Size(min = 8)
     val password: String,
 
     @NotNull
@@ -28,4 +28,18 @@ data class RegisterDTO(
     val email: String,
 
     val gender: String?
-)
+) {
+    fun validate(): String? {
+        val errorMessage = StringBuilder()
+
+        if (username.length < 5) {
+            errorMessage.append("Username must be longer or equal to 5 characters. ")
+        }
+
+        if (password.length < 8) {
+            errorMessage.append("Password must be longer or equal to 8 characters. ")
+        }
+
+        return if (errorMessage.isNotEmpty()) errorMessage.toString() else null
+    }
+}
