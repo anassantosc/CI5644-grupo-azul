@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import ColorButton from "./ColorButton";
 import CustomInput from "./CustomInput";
-import {Link, FormControl, Box, InputLabel, MenuItem, Select } from "@mui/material";
+import {Link, Box } from "@mui/material";
 import styles from "./../../styles/AuthForm.module.css";
 import { routes, labels, inputTypes, genderOptions, inputNames, formOptions, colors } from "../utils/constants";
 

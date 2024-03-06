@@ -55,6 +55,10 @@
     align-self: flex-end;
 }
 
+.editButton:hover {
+    background-color: #731530;
+}
+
 .progressBox {
     background-color: rgba(255, 255, 255, 0.3);
     margin: 50px;

@@ -1,7 +1,7 @@
 import secureFetch from "./SecureFetch";
 import { HTTPMethods, routes, alertMessages } from "../constants";
 
-export const getOffers = async (page) => {
+export const GetOffers = async (page) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.offer}`;
     const method = HTTPMethods.GET;
     const data = JSON.stringify(page);

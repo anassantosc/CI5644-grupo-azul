@@ -1,6 +1,7 @@
 const httpMethods = {
     POST: "POST",
-    GET: "GET"
+    GET: "GET",
+    PUT: "PUT"
 }
 
 export default httpMethods

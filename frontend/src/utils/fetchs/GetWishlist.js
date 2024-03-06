@@ -1,10 +1,10 @@
 import secureFetch from "./SecureFetch";
 import { HTTPMethods, routes, alertMessages } from "../constants";
 
-export const getWishlist = async (page) => {
+export const GetWishlist = async (data) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.ownership}${routes.wishlist}`;
     const method = HTTPMethods.GET;
-    const data = JSON.stringify(page);
+    const data = JSON.stringify(data);
     const headers = {};
 
     try {

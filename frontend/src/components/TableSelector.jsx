@@ -15,10 +15,9 @@ import styles from './../../styles/TableSelector.module.css';
 
 const pageSize = 20;
 
-export const TableSelector = ({ onSelect, onClick, receive, cards }) => {
+export const TableSelector = ({ onSelect, onClick, receive, offer = null }) => {
     const [page, setPage] = useState(0);
-    const startIndex = page * pageSize;
-    const visibleOptions = useMemo(() => cards.slice(startIndex, startIndex + pageSize), [cards, page]);
+    const [cards, setCards] = useState([]);
 
     const handleSelect = (number) => {
         onSelect(number);
@@ -28,6 +27,18 @@ export const TableSelector = ({ onSelect, onClick, receive, cards }) => {
     const handleChangePage = (_, newPage) => {
         setPage(newPage);
     };
+
+    useEffect(() => {
+        if (receive) {
+            const Data = {
+                page: page,
+                username: offer?.username
+            };
+            setCards(GetWishlist(Data))
+        } else {
+            setCards(GetDuplicatedCards(Data))
+        }
+    }, [page, receive]);
 
     const chunkArray = useMemo(
         () => (arr, chunkSize) => {
@@ -40,7 +51,7 @@ export const TableSelector = ({ onSelect, onClick, receive, cards }) => {
         []
     );
 
-    const rows = chunkArray(visibleOptions, 4);
+    const rows = chunkArray(cards, 4);
 
     return (
         <TableContainer component={Paper} className={styles.tableContainer} >

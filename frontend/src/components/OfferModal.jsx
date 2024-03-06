@@ -19,27 +19,9 @@ import { TableSelector } from "./TableSelector";
 import styles from "../../styles/OfferModal.module.css";
 import { alertMessages, alertTypes, labels } from "../utils/constants";
 
-
-const dummyVariables = [
-    '12', '2', '3', '4', '5',
-    '6', '7', '8', '9', '10',
-    '11', '12', '13', '14', '15',
-    '16', '17', '18', '19', '20',
-    '11', '2', '3', '4', '5',
-    '61', '7', '8', '9', '10',
-    '111', '12', '13', '14', '15',
-    '116', '17', '18', '19', '20',
-    '12', '2', '3', '4', '5',
-    '62', '7', '8', '9', '10',
-    '112', '12', '13', '14', '15',
-    '162', '17', '18', '19', '20',
-];
-
 const OfferModal = ({ show, onClose, offer = null }) => {
     const showAlert = useAlert();
     const [offerData, setOfferData] = useState({ receive: null, send: null })
-    const missingCards = dummyVariables;
-    const duplicatedCards = dummyVariables;
 
     const [showReceive, setShowReceive] = useState(false);
     const [showSend, setShowSend] = useState(false);
@@ -114,7 +96,8 @@ const OfferModal = ({ show, onClose, offer = null }) => {
                                 variant="outlined"
                                 id="send"
                                 onClick={handleButtonClick('send')}
-                                className={styles.sendButton}>
+                                className={styles.sendButton}
+                                disabled={offer !== null}>
                                 Carta a enviar
                             </Button>
                         </Box>
@@ -146,14 +129,13 @@ const OfferModal = ({ show, onClose, offer = null }) => {
                                     onSelect={handleFieldChange('receive')}
                                     onClick={handleCloseReceive}
                                     receive={true}
-                                    cards={missingCards} />
+                                    offer={offer} />
                             )}
                             {showSend && (
                                 <TableSelector
                                     onSelect={handleFieldChange('send')}
                                     onClick={handleCloseSend}
-                                    receive={false}
-                                    cards={duplicatedCards} />
+                                    receive={false} />
                             )}
                         </FormControl>
                     </form>
