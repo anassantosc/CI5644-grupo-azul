@@ -61,7 +61,7 @@ jobs:
       - name: Transfer compiled data
         working-directory: backend
         run: |
-            sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -r backend/build ${{secrets.SSH_USERNAME}}@${{secrets.SSH_HOST}}:/blue-team
+            sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -r backend/build ${{secrets.SSH_USERNAME}}@${{secrets.SSH_HOST}}:~/blue-team
 
   test-frontend:
     runs-on: ubuntu-latest
