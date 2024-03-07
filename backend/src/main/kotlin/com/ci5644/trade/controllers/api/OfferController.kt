@@ -68,7 +68,7 @@ class OfferController() {
     @GetMapping()
     fun getOffers(
         @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
-        @PathVariable page: Int
+        @RequestParam page: Int
     ): ResponseEntity<*> {
         return try {
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie) 
