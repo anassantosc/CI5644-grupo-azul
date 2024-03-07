@@ -64,6 +64,7 @@ jobs:
           host: ${{secrets.SSH_HOST}}
           username: ${{secrets.SSH_USERNAME}}
           password: ${{secrets.PASSWORD}}
+          key: ${{secrets.SSH_PRIVATE_KEY}}
           port: 22
           source: backend/build
           target: ~/blue-team
