@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import com.ci5644.trade.models.card.CardEntity
+import kotlin.math.min
 
 @Service
 class OwnershipService(private val authorizationService: AuthorizationService) {
@@ -88,7 +89,8 @@ class OwnershipService(private val authorizationService: AuthorizationService) {
         val userId = authorizationService.retrieveUser(username).id
         val pageable: Pageable = PageRequest.of(page, 20)
         val ownedCards = ownershipRepository.findByUser(userId).map { it.card }
-        val nonOwnedCards = cardRepository.findAll().filter { it.id !in ownedCards }
+        val nonOwnedCards = cardRepository.findAll(pageable).content.filter { it.id !in ownedCards }
         return nonOwnedCards
     }
+    
 }

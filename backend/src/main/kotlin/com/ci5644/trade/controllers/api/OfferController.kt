@@ -50,6 +50,7 @@ class OfferController() {
             if (offer.isEmpty()) {
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No offers were created")
             }
+
             ResponseEntity.ok("Offer created")
 
         } catch (e: Exception) {
@@ -67,17 +68,16 @@ class OfferController() {
     @GetMapping()
     fun getOffers(
         @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
-        @RequestBody requestBody: Map<String, Int>
+        @PathVariable page: Int
     ): ResponseEntity<*> {
         return try {
-            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
-            val page = requestBody["page"] 
+            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie) 
 
-            if (page == null || page < 0) {
+            if (page < 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
             }
 
-            val offers = offerService.getPendingOffers(page).map { OfferDto.fromEntity(it) }
+            val offers = offerService.getPendingOffers(username, page).map { OfferDto.fromEntity(it) }
             ResponseEntity.ok(offers)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)

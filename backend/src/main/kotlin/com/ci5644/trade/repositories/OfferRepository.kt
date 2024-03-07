@@ -25,7 +25,7 @@ interface OfferRepository: JpaRepository<OfferEntity, Long> {
 
     fun findByUserOfferAndCardOfferAndCardReceive(user: Int, cardOffer: Int, cardReceive: Int): List<OfferEntity>
 
-    fun findByStatus(status: OfferStatus, pageable: Pageable): Page<OfferEntity>
+    fun findByStatus(user: Int, status: OfferStatus, pageable: Pageable): Page<OfferEntity>
 
     @Modifying
     @Transactional

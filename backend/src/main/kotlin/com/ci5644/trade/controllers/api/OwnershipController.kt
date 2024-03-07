@@ -92,13 +92,12 @@ class OwnershipController() {
     @GetMapping("/duplicated")
     fun getDuplicatedCards(
         @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
-        @RequestBody requestBody: Map<String, Int>
+        @PathVariable page: Int
     ): ResponseEntity<*> {
         return try {
-            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
-            val page = requestBody["page"] 
+            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie) 
 
-            if (page == null || page < 0) {
+            if (page < 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
             }
 
@@ -118,13 +117,12 @@ class OwnershipController() {
     @GetMapping("/wishlist")
     fun getWishList(
         @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
-        @RequestBody requestBody: Map<String, Int>
+        @PathVariable page: Int
     ): ResponseEntity<*> {
         return try {
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
-            val page = requestBody["page"] 
-
-            if (page == null || page < 0) {
+            
+            if (page < 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
             }
 

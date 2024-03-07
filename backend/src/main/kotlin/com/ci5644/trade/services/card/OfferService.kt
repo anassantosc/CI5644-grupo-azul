@@ -37,6 +37,10 @@ class OfferService(private val authorizationService: AuthorizationService) {
         val usersReceive = ownershipRepository.findUserByCard(cardReceive)
         val offerList = mutableListOf<OfferEntity>()
         
+        if (offerRepository.findByUserOfferAndCardOfferAndCardReceive(userOffer, cardOffer, cardReceive).isEmpty()) {
+            return offerList
+        }
+        
         for (user in usersReceive) {
             if (user != userOffer) {
                 
@@ -62,9 +66,11 @@ class OfferService(private val authorizationService: AuthorizationService) {
         * @param pageable The Pageable object that provides the pagination information.
         * @return A page of offers made with PENDING status
         */
-    fun getPendingOffers(page: Int) : Page<OfferEntity> {
-        val pageable: Pageable = PageRequest.of(page, 3)
-        return offerRepository.findByStatus(OfferStatus.PENDING, pageable)
+    fun getPendingOffers(username: String, page: Int) : Page<OfferEntity> {
+        val userId = authorizationService.retrieveUser(username).id
+        val pageable: Pageable = PageRequest.of(page, 20)
+        val offer = offerRepository.findByStatus(userId, OfferStatus.PENDING, pageable)
+        return offer
     }
     
     /*
