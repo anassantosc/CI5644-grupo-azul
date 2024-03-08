@@ -66,7 +66,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          script: scp -r backend/build ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/blue-team
+          script: scp -r -i ${{ secrets.SSH_PRIVATE_KEY }} backend/build ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/blue-team
 
   test-frontend:
     runs-on: ubuntu-latest
