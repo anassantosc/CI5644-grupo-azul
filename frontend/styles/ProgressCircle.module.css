@@ -1,0 +1,18 @@
+.progressCircle {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    color: white;
+    font-size: 35px;
+    font-weight: 600;
+}
+
+.progressCircleContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}

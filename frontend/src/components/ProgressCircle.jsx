@@ -4,27 +4,22 @@ import { styled } from "@mui/system";
 import CircularProgress, {
     circularProgressClasses,
 } from "@mui/material/CircularProgress";
+import styles from "./../../styles/ProgressCircle.module.css";
+import {colors} from "../utils/constants";
 
 const StyledCircularProgress = styled(CircularProgress)(({ theme }) => ({
     position: "absolute",
     [`&.${circularProgressClasses.colorPrimary}`]: {
-        color: "white", // Este es el circulo de progreso
+        color: colors.secondary,
     },
     [`&.${circularProgressClasses.colorSecondary}`]: {
-        color: "#731530", // Este es el circulo de fondo
+        color: colors.primary,
     },
 }));
 
 const ProgressCircle = ({ value }) => {
     return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "200px",
-            }}
-        >
+        <div className={styles.progressCircleContainer} >
             <StyledCircularProgress
                 variant="determinate"
                 size={200}
@@ -39,19 +34,7 @@ const ProgressCircle = ({ value }) => {
                 value={Number(value)}
                 color="primary"
             />
-            <div
-                style={{
-                    position: "absolute",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "200px",
-                    height: "200px",
-                    color: "white",
-                    fontSize: "35px",
-                    fontWeight: "semi-bold",
-                }}
-            >
+            <div className={styles.progressCircle} >
                 {value}%
             </div>
         </div>

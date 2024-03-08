@@ -1,149 +1,140 @@
-import CloseIcon from '@mui/icons-material/Close';
-import { Box, Button, FormControl, IconButton, InputLabel, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogContent, DialogActions, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import Image from "next/image";
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from "react";
-import logo from "../assets/logo.png";
-import { useEdit } from "../hooks/useEdit";
-import { Background } from "./Background";
+import React, { useState } from "react";
+import { EditUser } from "../utils/fetchs/EditUser";
+import { useAlert } from "../context/AlertContext";
+import { alertMessages, alertTypes, regex, images, labels, genderOptions } from "../utils/constants";
+
+const EditModal = ({ show, onClose, user, onChange }) => {
+    const showAlert = useAlert();
+    const [userData, setUserData] = useState(
+        { email: user.email || "",
+        gender: user.gender || "",
+        name: user.name || "" })
+
+    const handleFieldChange = (key) => (e) => {
+        setUserData({ ...userData, [key]: e.target.value });
+    };
 
 
-
-const EditModal = ({show, onClose}) => {
-    const user = useEdit();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [gender, setGender] = useState('');
-    const [name, setName] = useState('');
-
-    useEffect(() => {
-        if (user) {
-            setName(user.name);
-            setEmail(user.email);
-            setPassword(user.password);
-            setGender(user.gender);
+    const validateFields = () => {
+        if (!userData.name || !userData.email) {
+            showAlert(alertMessages.fill_fields, alertTypes.warning);
+            return false
         }
-    }, [user]);
+        if (!regex.username.test(userData.name)) {
+            showAlert(alertMessages.invalid_name, alertTypes.warning);
+            return false
+        }
+        if (!regex.email.test(userData.email)) {
+            showAlert(alertMessages.invalid_email, alertTypes.warning);
+            return false
+        }
+        return true;
+    };
 
-    const handleConfirm = () => {
-        if (!name || !email || !password) {
-            alert('Por favor, complete todos los campos');
-            return
+    const handleConfirm = async () => {
+        if (!validateFields()) return;
+
+        const userChanges = {
+            username: user.username,
+            ...userData
+        };
+
+        try {
+            const response = await EditUser(userChanges);
+
+            if (response.ok) {
+                showAlert(alertMessages.success_user, alertTypes.success);
+            } else if (response.status === statusCodes.bad_request) {
+                showAlert(response.message, alertTypes.error);
+            } else {
+                showAlert(alertMessages.unknown_error, alertTypes.error);
+            }
+
+            onChange();
+            onClose();
+        } catch (error) {
+            console.error(alertMessages.edit_error, error);
         }
 
         onClose();
     }
 
-
     return (
-        
-        <Modal open={show} onClose={onClose}>
-            <div style={{ overflow: "auto"}}>
-                    
-
-                    <Image src={logo} alt="Logo" width={150} height={150} style={{
-                        position: 'absolute', 
-                        left: '10px', 
-                        top: '10px' 
-                    }}
-                />
-            
-                <Typography variant="h4" style={{ 
-                    color: 'white', 
-                    textAlign: 'left', 
-                    marginTop: '50px', 
-                    marginBottom: '20px',
-                    marginLeft: '200px',
-                    fontWeight: 'bold',
-                    position: 'relative'
-                }}>
-                    Editar Perfil
-                </Typography>  
-
-                <IconButton 
-                    onClick={onClose} 
-                    style={{ 
-                        color: 'gray', 
-                        position: 'absolute', 
-                        right: '10px', 
-                        top: '10px' 
-                }}>
-                    <CloseIcon />
-                </IconButton>
-
-            <Box style={{ 
-                backgroundColor: 'rgba(255, 255, 255, 0.1)', 
-                margin: '50px', 
-                borderRadius: '10px', 
-                padding: '20px',
-                overflow: 'auto',
-                height: '50%',
-                width: '80%',
-                display: 'flex', 
-                justifyContent: 'center',
-                alignItems: 'center' }}>
+        <Dialog open={show} onClose={onClose} fullWidth maxWidth="sm" >
+            <DialogContent dividers sx={{ backgroundColor: '#581E3D' }}>
+                <Box display="flex" alignItems="center">
+                    <Image priority src={images.logo} alt="Logo" width={150} height={150} />
+                    <Typography variant="h4" sx={{
+                        color: 'white', ml: 2
+                    }}>Editar Perfil</Typography>
+                </Box>
+                <Box bgcolor="rgba(255, 255, 255, 0.1)" borderRadius={10} p={2}>
                     <form noValidate autoComplete="off">
-                        
-                        <TextField label="Nombre" variant="outlined" color="secondary" value={name} onChange={(e) => setName(e.target.value)} fullWidth style={{ 
-                            margin: 'normal',
-                            backgroundColor: 'gray',
-                            marginBottom: '10px',
-                            borderRadius: '10px'
-                        }} />
-
-                        <TextField label="Correo Electrónico" variant="outlined" color="secondary" value={email} onChange={(e) => setEmail(e.target.value)} fullWidth style={{ 
-                            margin: 'normal',
-                            backgroundColor: 'gray',
-                            marginBottom: '10px',
-                            borderRadius: '10px' 
-                        }} />
-                        <TextField label="Contraseña" variant="outlined" type="password" color="secondary" value={password} onChange={(e) => setPassword(e.target.value)} fullWidth style={{ 
-                            margin: 'normal',
-                            backgroundColor: 'gray',
-                            marginBottom: '10px',
-                            borderRadius: '10px' 
-                        }} />  
-
-                        <FormControl variant="outlined" color="secondary" fullWidth style={{ 
-                            margin: 'normal',
-                            backgroundColor: 'gray',
-                            marginBottom: '10px',
-                            borderRadius: '10px' 
-                        }}>
+                        <TextField
+                            label={labels.name}
+                            variant="outlined"
+                            color="secondary"
+                            value={userData.name}
+                            onChange={handleFieldChange("name")}
+                            fullWidth
+                            sx={{
+                                color: 'white', mb: 2
+                            }}
+                        />
+                        <TextField
+                            label={labels.email}
+                            variant="outlined"
+                            color="secondary"
+                            value={userData.email}
+                            onChange={handleFieldChange("email")}
+                            fullWidth
+                            sx={{
+                                color: 'white', mb: 2
+                            }}
+                        />
+                        <FormControl variant="outlined" color="secondary" fullWidth sx={{ mb: 2 }}>
                             <InputLabel id="gender-label">Género</InputLabel>
                             <Select
                                 labelId="gender-label"
                                 id="gender"
-                                label="Género"
-                                value={gender}
-                                onChange={(e) => setGender(e.target.value)}
+                                label={labels.gender}
+                                value={userData.gender}
+                                onChange={handleFieldChange("gender")}
                             >
-                                <MenuItem value={"Masculino"}>Hombre</MenuItem>
-                                <MenuItem value={"Femenino"}>Mujer</MenuItem>
-                                <MenuItem value={"Otro"}>Otro</MenuItem>
+                                {Object.values(genderOptions).map((option) => (
+                                    <MenuItem key={option} value={option}>{option}</MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
-                        <Button variant="contained" size="medium" onClick={handleConfirm} style={{ 
-                            backgroundColor: '#731530', 
-                            color: 'white', 
-                            alignSelf: 'flex-center' }}>Confirmar
-                        </Button>
-                    </form>                   
-                 
-            </Box>       
-
-            <Background />
-
-            </div>
-        </Modal>
+                    </form>
+                </Box>
+            </DialogContent>
+            <DialogActions sx={{ backgroundColor: '#581E3D' }}>
+                <Button variant="contained" size="medium" onClick={onClose} style={{
+                    backgroundColor: '#731530',
+                    color: 'white'
+                }}>
+                    Cancelar
+                </Button>
+                <Button
+                    variant="contained"
+                    size="medium"
+                    onClick={handleConfirm}
+                    style={{ backgroundColor: '#520968', color: 'white' }}
+                >
+                    Confirmar
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 }
 
 export default EditModal;
-
-
 EditModal.propTypes = {
     show: PropTypes.bool,
-    onClose: PropTypes.func, 
+    onClose: PropTypes.func,
     id: PropTypes.number
 }

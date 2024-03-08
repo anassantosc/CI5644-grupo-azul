@@ -1,8 +1,9 @@
 import secureFetch from "../fetchs/SecureFetch";
+import { HTTPMethods, routes, alertMessages, alertTypes, statusCodes } from "../constants";
 
 export const Register = async (userData, showAlert) => {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/register`;
-    const method = "POST";
+    const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.auth}${routes.register}`;
+    const method = HTTPMethods.POST;
     const data = JSON.stringify(userData);
     const headers = {};
 
@@ -10,17 +11,14 @@ export const Register = async (userData, showAlert) => {
         const response = await secureFetch(url, method, data, headers);
 
         if (response.ok) {
-            showAlert("Registro exitoso", "success");
-        } else if (response.status === 409) {
-            showAlert(
-                "Usuario existente, intente con uno diferente",
-                "warning"
-            );
+            showAlert(alertMessages.success_register, alertTypes.success);
+        } else if (response.status === statusCodes.bad_request) {
+            showAlert(alertMessages.user_already_exists, alertTypes.warning);
         } else {
-            showAlert("Ocurrió un error desconocido", "error");
+            showAlert(alertMessages.unknown_error, alertTypes.error);
         }
         return response;
     } catch (error) {
-        console.error("Contexto de error ocurrido durante registro:", error);
+        console.error(alertMessages.context_register_error, error);
     }
 };

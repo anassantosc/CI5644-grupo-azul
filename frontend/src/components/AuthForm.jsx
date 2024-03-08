@@ -3,107 +3,94 @@ import PropTypes from "prop-types";
 import React from "react";
 import ColorButton from "./ColorButton";
 import CustomInput from "./CustomInput";
-
-import { Link } from "@mui/material";
-import Box from "@mui/material/Box";
+import {Link, Box } from "@mui/material";
+import styles from "./../../styles/AuthForm.module.css";
+import { routes, labels, inputTypes, genderOptions, inputNames, formOptions, colors } from "../utils/constants";
 
 const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
-    const style = {
-        height: "auto",
-        width: "100%",
-        maxWidth: "22rem",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "left",
-        justifyContent: "space-around",
-        padding: "3rem 4rem",
-        backgroundColor: "#fff2",
-        borderRadius: "10px",
-        border: "1px solid #fffe",
-        color: "#fff",
-        fontSize: ".9rem",
-        "@media (max-width:600px)": {
-            padding: "1.5rem 2rem",
-            fontSize: "0.8rem",
-        },
-    };
-
     return (
-        <Box component="form" onSubmit={onSubmit} sx={style}>
-            <h1 style={{ margin: 0 }}>
-                {isLogin ? "Iniciar sesión." : "Registrate"}
+        <Box component='form' onSubmit={onSubmit} className={styles.authForm}>
+            <h1 className={styles.h1Style}>
+                {isLogin ? formOptions.login : formOptions.signup}
             </h1>
 
             <CustomInput
-                type="text"
-                label="Usuario"
+                type={inputTypes.text}
+                label={labels.username}
                 onChange={onChange}
                 value={values.username}
-                name="username"
+                name={inputNames.username}
                 required
             />
             <CustomInput
-                type="password"
-                label="Contraseña"
+                type={inputTypes.password}
+                label={labels.password}
                 onChange={onChange}
                 value={values.password}
-                name="password"
+                name={inputNames.password}
                 required
             />
             {!isLogin && (
                 <React.Fragment>
                     <CustomInput
-                        type="password"
-                        label="Confirmar contraseña"
+                        type={inputTypes.password}
+                        label={labels.confirmPassword}
                         onChange={onChange}
                         value={values.confirmPassword}
-                        name="confirmPassword"
+                        name={inputNames.confirmPassword}
                         required
                     />
                     <CustomInput
-                        label="Nombre"
+                        label={labels.name}
                         onChange={onChange}
                         value={values.name}
-                        name="name"
+                        name={inputNames.name}
                         required
                     />
                     <CustomInput
-                        type="email"
-                        label="Direccion de correo electronico"
+                        type={inputTypes.email}
+                        label={labels.email}
                         onChange={onChange}
                         value={values.email}
-                        name="email"
+                        name={inputNames.email}
                         required
                     />
                     <CustomInput
-                        label="Genero"
+                        type={inputTypes.select}
+                        label={labels.gender}
                         onChange={onChange}
                         value={values.gender}
-                        name="gender"
+                        name={inputNames.gender}
+                        required
+                        options={[
+                            { value: genderOptions.male, label: genderOptions.male},
+                            { value: genderOptions.female, label: genderOptions.female },
+                            { value: genderOptions.other, label: genderOptions.other },
+                        ]}
                     />
                 </React.Fragment>
             )}
             <ColorButton
-                textcolor="#fff"
-                bgcolor="#731530"
-                type="submit"
-                sx={{ height: "29px", marginBottom: "1rem", marginTop: "1rem" }}
+                bgcolor={colors.primary}
+                textcolor={colors.secondary}
+                type={inputTypes.submit}
+                className={styles.colorButton}
             >
-                <Box sx={{ paddingRight: "7px" }}> Continuar </Box>{" "}
+                <Box className={styles.boxPadding}> Continuar </Box>{" "}
                 <ArrowForwardIcon />
             </ColorButton>
 
             {isLogin ? (
                 <Box>
                     ¿No tienes una cuenta?{" "}
-                    <Link href="/register" underline="hover" color="white">
+                    <Link href={routes.signup} className={styles.linkStyle}>
                         Registrate
                     </Link>
                 </Box>
             ) : (
                 <Box>
                     ¿Ya tienes una cuenta?{" "}
-                    <Link href="/login" underline="hover" color="white">
+                    <Link href={routes.login} className={styles.linkStyle}>
                         Inicia sesión
                     </Link>
                 </Box>

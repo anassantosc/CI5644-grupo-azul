@@ -1,14 +1,15 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import logo from "../assets/logo.png";
+import images from "../utils/constants/images";
 import AuthForm from "../components/AuthForm";
 import { Background } from "../components/Background";
 import { useAlert } from "../context/AlertContext";
 import { Register } from "../utils/auth/Register";
-import styles from "./../../styles/Login.module.css";
+import styles from "../../styles/Login.module.css";
+import { regex, alertMessages, alertTypes, routes } from "../utils/constants";
 
-const RegisterPage = () => {
+const SignUpPage = () => {
     const router = useRouter();
 
     const [values, setValues] = useState({
@@ -23,6 +24,7 @@ const RegisterPage = () => {
     const [errors, setErrors] = useState(null);
 
     const handleChange = (event) => {
+        console.log(event.target.name, event.target.value);
         setValues({
             ...values,
             [event.target.name]: event.target.value,
@@ -33,10 +35,11 @@ const RegisterPage = () => {
         event.preventDefault();
 
         if (values.password !== values.confirmPassword) {
-            showAlert(
-                "La contraseña y la confirmación de la contraseña no coinciden",
-                "warning"
-            );
+            showAlert(alertMessages.passwords_dont_match, alertTypes.warning);
+        } else if (!regex.username.test(values.username)) {
+            showAlert(alertMessages.invalid_username, alertTypes.warning);
+        } else if (!regex.password.test(values.password)) {
+            showAlert(alertMessages.invalid_password, alertTypes.warning);
         } else {
             const response = await Register(
                 {
@@ -50,7 +53,7 @@ const RegisterPage = () => {
             );
 
             if (response?.ok) {
-                router.push("/login");
+                router.push(routes.login);
             }
         }
     };
@@ -63,7 +66,10 @@ const RegisterPage = () => {
                 <Image
                     priority
                     className={styles.loginLogo}
-                    src={logo}
+                    src={images.logo}
+                    sizes="100vw"
+                    width={0}
+                    height={0}
                     alt="logo"
                 />
                 <h1 className={styles.loginH1}>Marmota Salvaje</h1>
@@ -80,4 +86,4 @@ const RegisterPage = () => {
     );
 };
 
-export default RegisterPage;
+export default SignUpPage;

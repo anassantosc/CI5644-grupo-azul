@@ -1,5 +1,6 @@
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import MailIcon from '@mui/icons-material/Mail';
 import {
+    Badge,
     Box,
     Button,
     IconButton,
@@ -9,11 +10,16 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material";
+import {
+    AccountCircle,
+} from "@mui/icons-material";
 import PropTypes from "prop-types";
 import Image from "next/image";
 import React from "react";
-import logo from "./../assets/logo.png";
-import Cookies from "js-cookie"
+import NotificationMenu from "./NotificationMenu";
+import images from "../utils/constants/images";
+import { useAuthentication } from "../hooks/useAuthentication";
+import colors from "../utils/constants/colors";
 
 const pages = ["Inicio", "Album", "Comprar"];
 const adminSettings = ["Perfil", "Mi Álbum", "Salir"];
@@ -25,7 +31,7 @@ export const Navbar = ({
     handleCloseUserMenu,
     anchorElUser,
 }) => {
-    const isLogin = Cookies.get("JWT");
+    const isLogin = useAuthentication();
 
     return (
         <Toolbar
@@ -50,7 +56,9 @@ export const Navbar = ({
             >
                 <Button onClick={() => handleClick("Inicio")}>
                     <Image
-                        src={logo}
+                        src={images.logo}
+                        width={0}
+                        height={0}
                         sizes="100vw"
                         style={{ width: "100%", height: "100%" }}
                         alt="logo"
@@ -82,6 +90,7 @@ export const Navbar = ({
                     </Button>
                 ))}
             </Box>
+            {isLogin && <NotificationMenu/>}
 
             <Box sx={{ flexGrow: 0, marginRight: 5 }}>
                 <Tooltip title="Menú">
@@ -119,6 +128,7 @@ export const Navbar = ({
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                 >
+
                     {(isLogin ? adminSettings : settings).map((setting) => (
                         <MenuItem
                             key={setting}

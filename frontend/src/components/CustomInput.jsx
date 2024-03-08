@@ -1,8 +1,9 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
 import PropTypes from "prop-types";
 
-const CustomInput = ({ type, label, onChange, error, name, required }) => {
+const CustomInput = ({ type, label, onChange, error, name, required, options }) => {
     return (
         <TextField
             required={required}
@@ -13,11 +14,12 @@ const CustomInput = ({ type, label, onChange, error, name, required }) => {
             }}
             type={type}
             label={label}
-            onChange={onChange} // Aquí pasas el evento completo a la función onChange
+            onChange={onChange}
             error={!!error}
             helperText={error}
             variant="standard"
             size="small"
+            select={type === "select"}
             InputProps={{
                 disableUnderline: true,
                 style: {
@@ -33,7 +35,13 @@ const CustomInput = ({ type, label, onChange, error, name, required }) => {
                     color: "#fff",
                 },
             }}
-        />
+        >
+            {type === "select" && options.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                </MenuItem>
+            ))}
+        </TextField>
     );
 };
 
@@ -43,6 +51,10 @@ CustomInput.propTypes = {
     onChange: PropTypes.func,
     error: PropTypes.string,
     name: PropTypes.string,
+    options: PropTypes.arrayOf(PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string,
+    })),
 };
 
 export default CustomInput;

@@ -1,14 +1,15 @@
-import { Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import {Button} from "@mui/material";
+import {styled} from "@mui/material/styles";
 import Image from "next/image";
-import { Card } from "../components/Card";
-import styles from "./../../styles/Home.module.css";
-import albumImage from "./../assets/album.png";
-import packImage from "./../assets/pack.png";
-import { useMundialProgress } from "../hooks/useMundialProgress";
+import {Card} from "../components/Card";
+import styles from "../../styles/Home.module.css";
+import images from "../utils/constants/images";
+import {useMundialProgress} from "../hooks/useMundialProgress";
 import TopMundial from "../components/TopMundial";
+import {useRouter} from 'next/router';
+import {useAuthentication} from "../hooks/useAuthentication";
 
-const ColorButton = styled(Button)(({ theme, margintop }) => ({
+const ColorButton = styled(Button)(({theme, margintop}) => ({
     color: "#581E3D",
     fontWeight: "600",
     backgroundColor: "#FFF",
@@ -20,8 +21,15 @@ const ColorButton = styled(Button)(({ theme, margintop }) => ({
     },
 }));
 
-export const Home = () => {
-    const mundialProgress = useMundialProgress();
+const Home = () => {
+    const router = useRouter();
+    const isLogin = useAuthentication();
+    const mundialProgress = useMundialProgress(isLogin);
+
+    const handleClick = () => {
+        router.push("/store");
+    };
+
     return (
         <div className={styles.home}>
             <div className={styles.homeTop}>
@@ -63,12 +71,12 @@ export const Home = () => {
                         thirdPlace={mundialProgress[2]}
                     />
                 )}
-                <ColorButton margintop="70px">Comienza ahora</ColorButton>
+                <ColorButton onClick={handleClick} margintop="70px">Comienza ahora</ColorButton>
             </div>
 
             <div className={styles.homeMiddle}>
                 <Image
-                    src={albumImage}
+                    src={images.album}
                     width={398}
                     height={552}
                     alt="Imagen de album"
@@ -88,7 +96,7 @@ export const Home = () => {
 
             <div className={styles.homeBottom}>
                 <Image
-                    src={packImage}
+                    src={images.pack}
                     width={407}
                     height={432}
                     alt="Imagen de paquete de barajitas"
@@ -108,3 +116,5 @@ export const Home = () => {
         </div>
     );
 };
+
+export default Home;

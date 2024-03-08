@@ -1,28 +1,39 @@
 import { useState, useEffect } from "react";
-import { getCardsByPage } from "../utils/fetchs/GetCardsByPage";
+import { GetCards } from "../utils/fetchs/GetCards";
 
 export const useGetCards = (page) => {
-    const [cards, setCards] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [status, setStatus] = useState({
+        cards: [],
+        loading: true,
+        error: null
+    });
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getCardsByPage(page);
+                const data = await GetCards(page);
                 if (data.length > 0) {
-                    setCards(data);
+                    setStatus(prevState => ({
+                        ...prevState,
+                        cards: data
+                    }));
                     page++;
                 }
-                setLoading(false);
+                setStatus(prevState => ({
+                    ...prevState,
+                    loading: false
+                }));
             } catch (error) {
-                setError(error);
-                setLoading(false);
+                setStatus(prevState => ({
+                    ...prevState,
+                    error: error,
+                    loading: false
+                }));
             }
         };
 
         fetchData();
     }, [page]);
 
-    return { cards, loading, error };
+    return status;
 };

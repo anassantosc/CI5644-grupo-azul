@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import logo from "../assets/logo.png";
+import images from "../utils/constants/images";
 import AuthForm from "../components/AuthForm";
 import { Background } from "../components/Background";
 import { useAlert } from "../context/AlertContext";
 import { Login } from "../utils/auth/Login";
-import styles from "./../../styles/Login.module.css";
+import styles from "../../styles/Login.module.css";
 
 const LoginPage = () => {
     const [values, setValues] = useState({ username: "", password: "" });
@@ -40,7 +40,7 @@ const LoginPage = () => {
         <div className={styles.login}>
             <Background />
             <div className={styles.logoContainer}>
-                <Image priority className={styles.loginLogo} src={logo} alt="logo" />
+                <Image priority className={styles.loginLogo} src={images.logo} sizes="100vw" width={0} height={0} alt="logo" />
                 <h1 className={styles.loginH1}>Marmota Salvaje</h1>
             </div>
 
