@@ -59,13 +59,16 @@ jobs:
         run: bash ./gradlew build
 
       - name: Transfer build using SSH
-        uses: pierrickdelrieu/scp-action@v0.1.0
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
-          ssh-username: ${{ secrets.SSH_USERNAME }}
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source_dir: backend/build
-          destination_dir: ~/blue-team
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: "backend/build"
+          target: ~/blue-team
+
   test-frontend:
     runs-on: ubuntu-latest
     permissions:
