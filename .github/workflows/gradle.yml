@@ -58,16 +58,16 @@ jobs:
         working-directory: backend
         run: bash ./gradlew build
 
-      - name: Transfer compiled data
-        uses: appleboy/scp-action@v0.1.7
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{secrets.SSH_HOST}}
-          username: ${{secrets.SSH_USERNAME}}
-          password: ${{secrets.PASSWORD}}
-          key: ${{secrets.SSH_PRIVATE_KEY}}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
           port: 22
-          source: backend/build
-          target: ~/blue-team
+          script: | 
+            whoami
+            ls -al
 
   test-frontend:
     runs-on: ubuntu-latest
