@@ -115,7 +115,8 @@ class OwnershipController() {
     @GetMapping("/wishlist")
     fun getWishList(
         @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
-        @RequestParam page: Int
+        @RequestParam page: Int,
+        @RequestParam(required = false) id: Int?
     ): ResponseEntity<*> {
         return try {
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
