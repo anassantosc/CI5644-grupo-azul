@@ -49,18 +49,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            whoami
-            ls -al
-
       # Configure Gradle for optimal use in GiHub Actions, including caching of downloaded dependencies.
       # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
       - name: Setup Gradle
@@ -69,6 +57,16 @@ jobs:
       - name: Build with Gradle Wrapper
         working-directory: backend
         run: bash ./gradlew build
+
+      - name: Transfer build using SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: scp -r backend/build ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/blue-team
 
   test-frontend:
     runs-on: ubuntu-latest
