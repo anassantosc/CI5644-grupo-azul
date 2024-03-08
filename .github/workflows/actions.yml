@@ -14,8 +14,8 @@ on:
     branches: [ "development" ]
 env:
   REGISTRY: ghcr.io
-  BACKEND_IMAGE_NAME: ${{ github.actor }}/docker-backend-github:latest
-  FRONTEND_IMAGE_NAME: ${{ github.actor }}/docker-frontend-github:latest
+  BACKEND_IMAGE_NAME: anassantosc/docker-backend-github:latest
+  FRONTEND_IMAGE_NAME: anassantosc/docker-frontend-github:latest
 
 jobs:
   test-backend:
