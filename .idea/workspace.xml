@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ddb6e6-9192-40c9-b6e8-b4f8bea05fbd" name="Changes" comment="">
+    <list default="true" id="d5ddb6e6-9192-40c9-b6e8-b4f8bea05fbd" name="Changes" comment="TEST: Pass backend and frontend builds">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/controllers/api/CardResource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/controllers/api/CardResource.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/services/card/CardService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/com/ci5644/trade/services/card/CardService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run-nuke.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run-nuke.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +85,7 @@
     &quot;Spring Boot.DeckApplication.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.DeckApplicationKt.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.TradeApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/backend&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/frontend&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Ana/OneDrive/Documentos/Universidad/Herramientas de Prog en Internet/CI5644-grupo-azul&quot;,
@@ -109,6 +111,7 @@
       <recent name="C:\Users\cedgo\Documents\Universidad\Herramientas para desarrollo web\deck\src\test\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\cedgo\Documents\Universidad\Herramientas para desarrollo web\CI5644-grupo-azul\frontend" />
       <recent name="C:\Users\Ana\OneDrive\Documentos\Universidad\Herramientas de Prog en Internet\CI5644-grupo-azul\backend\src\main\kotlin\com\ci5644\trade\controllers\api" />
       <recent name="C:\Users\Ana\OneDrive\Documentos\Universidad\Herramientas de Prog en Internet\CI5644-grupo-azul\backend\src\main\kotlin\com\ci5644\trade\services\card" />
       <recent name="C:\Users\cedgo\Documents\Universidad\Herramientas para desarrollo web\deck\src\main\kotlin\com\ci5644\trade\entities" />
@@ -198,6 +201,7 @@
       <workItem from="1706414163393" duration="870000" />
       <workItem from="1706415424920" duration="7993000" />
       <workItem from="1706466270692" duration="32916000" />
+      <workItem from="1709880440015" duration="4670000" />
     </task>
     <servers />
   </component>
