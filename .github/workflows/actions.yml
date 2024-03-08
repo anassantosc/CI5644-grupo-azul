@@ -139,9 +139,14 @@ jobs:
         run: |
           echo ${{secrets.PAT}} | docker login ghcr.io -u anassantosc --password-stdin
 
-      - name: Build and Publish
+      - name: Build Backend and Publish
         run: |
-          docker build . --tag ${{env.REGISTRY}}/${{env.BACKEND_IMAGE_NAME}}
+          docker build . --file backend/Dockerfile --tag ${{env.REGISTRY}}/${{env.BACKEND_IMAGE_NAME}}
+          docker push ${{env.REGISTRY}}/${{env.BACKEND_IMAGE_NAME}}
+
+      - name: Build Frontend and Publish
+        run: |
+          docker build . --file frontend/Dockerfile --tag ${{env.REGISTRY}}/${{env.FRONTEND_IMAGE_NAME}}
           docker push ${{env.REGISTRY}}/${{env.BACKEND_IMAGE_NAME}}
 
   deploy:
@@ -158,4 +163,7 @@ jobs:
           port: 22
           script: |
             cd blue-team
+            docker compose down
             docker compose pull
+            docker compose up -d
+            exit
