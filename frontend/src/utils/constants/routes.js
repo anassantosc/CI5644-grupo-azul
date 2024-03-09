@@ -18,7 +18,9 @@ const routes = {
     duplicated: '/duplicated',
     wishlist: '/wishlist',
     page: (page) => `?page=${page}`,
-    offerId: (id) => `&offerId=${id}`
+    offerId: (id) => `&offerId=${id}`,
+    deny: '/deny',
+    accept: '/accept',
 }
 
 export default routes;
