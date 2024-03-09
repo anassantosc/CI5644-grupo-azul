@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping("/api/ownership")
-class OwnershipController() {
-
-    @Autowired
-    private lateinit var ownershipService: OwnershipService
+class OwnershipController(private val ownershipService: OwnershipService) {
 
     /**
      * Retrieves a paginated list of card entities owned by a user.

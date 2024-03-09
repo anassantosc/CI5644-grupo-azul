@@ -15,10 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
  * Service class for managing user-related operations.
  */
 @Service
-class UserService : UserDetailsService {
-
-    @Autowired
-    lateinit var userRepository: UserRepository
+class UserService(private val userRepository: UserRepository) : UserDetailsService {
 
     /**
      * Loads user details by username.

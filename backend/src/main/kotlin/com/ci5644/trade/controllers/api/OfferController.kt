@@ -23,10 +23,7 @@ import java.util.NoSuchElementException
 
 @RestController
 @RequestMapping("/api/offer")
-class OfferController() {
-
-    @Autowired
-    private lateinit var offerService: OfferService
+class OfferController(private val offerService: OfferService) {
 
     /**
      * Creates a new offer.
@@ -78,7 +75,7 @@ class OfferController() {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
             } 
 
-            ResponseEntity.ok(offerService.getPendingOffers(username, page))
+            ResponseEntity.ok(offerService.getAvailableOffers(username, page))
         } catch (e: OfferNotFoundException) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
         } catch (e: Exception) {
@@ -103,11 +100,11 @@ class OfferController() {
             JWTSecurityUtils.getAuthUserFromJWT(authCookie);
             val offerId = requestBody["offerId"]
 
-            if (offerId < 0) {
+            if (offerId == null || offerId < 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("offerId number must be an integer greater or equal than 0")
             }
 
-            offerService.updateOfferByStatus(offerId, OfferStatus.CANCELLED)
+            offerService.denyOffer(offerId)
             ResponseEntity.ok("Offer denied")
         } catch (e: OfferNotFoundException) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
@@ -133,11 +130,11 @@ class OfferController() {
             JWTSecurityUtils.getAuthUserFromJWT(authCookie);
             val offerId = requestBody["offerId"]
 
-            if (offerId < 0) {
+            if (offerId == null || offerId < 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("offerId number must be an integer greater or equal than 0")
             }
     
-            val offer = offerService.updateOfferByStatus(offerId, OfferStatus.ACCEPTED)
+            offerService.acceptOffer(offerId)
             ResponseEntity.ok("Offer accepted")
         } catch (e: OfferNotFoundException) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
@@ -145,4 +142,32 @@ class OfferController() {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
         }
     }
+
+
+    @PutMapping("/counteroffer")
+    fun createCounterOffer(
+        @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
+        @RequestBody requestBody: Map<String, Int>
+    ): ResponseEntity<*> {
+        return try {
+            JWTSecurityUtils.getAuthUserFromJWT(authCookie)
+            val offerId = requestBody["offerId"]
+            val cardOffer = requestBody["cardOffer"]
+            val cardReceive = requestBody["cardReceive"]
+    
+            if (offerId == null || cardOffer == null || cardReceive == null || cardOffer == cardReceive ) {
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cardOffer and cardReceive must be provided")
+            }
+    
+            offerService.createCounterOffer(offerId!!, cardOffer!!, cardReceive!!)
+            ResponseEntity.ok("Offer created")
+        } catch (e: IllegalArgumentException) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
+        } catch (e: NoSuchElementException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message)
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
+        }
+    }
+
 }

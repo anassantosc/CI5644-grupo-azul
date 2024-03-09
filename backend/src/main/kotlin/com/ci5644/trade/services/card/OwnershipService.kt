@@ -3,7 +3,6 @@ package com.ci5644.trade.services.card
 import com.ci5644.trade.repositories.OwnershipRepository
 import com.ci5644.trade.models.card.OwnershipEntity
 import com.ci5644.trade.repositories.CardRepository
-import com.ci5644.trade.services.card.OfferService
 import com.ci5644.trade.exceptions.runtime.OfferNotFoundException
 import com.ci5644.trade.services.auth.AuthorizationService
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,17 +12,12 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import com.ci5644.trade.models.card.CardEntity
+import com.ci5644.trade.repositories.OfferRepository
 import kotlin.math.min
 
 @Service
-class OwnershipService(private val authorizationService: AuthorizationService, private val offerService: OfferService) {
-
-    @Autowired
-    lateinit var ownershipRepository: OwnershipRepository
-
-    @Autowired
-    lateinit var cardRepository: CardRepository
-
+class OwnershipService(private val authorizationService: AuthorizationService, private val offerRepository: OfferRepository, private val ownershipRepository: OwnershipRepository, private val cardRepository: CardRepository) {
+    
     /**
      * Retrieve a paginated list of card entities owned by a user.
      *
@@ -93,7 +87,7 @@ class OwnershipService(private val authorizationService: AuthorizationService, p
         val pageable: Pageable = PageRequest.of(page, 20)
 
         if (offerId != null) {
-            val offer = offerService.findOfferById(offerId) ?: throw OfferNotFoundException()
+            val offer = offerRepository.findById(offerId) ?: throw OfferNotFoundException()
             return ownershipRepository.findInterceptionCards(userId, offer.userOffer, pageable)
         } else {
             return ownershipRepository.findNonOwnedCards(userId, pageable)

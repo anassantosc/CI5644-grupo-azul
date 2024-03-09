@@ -24,12 +24,9 @@ import jakarta.servlet.http.HttpServletResponse
  * validates the token, and sets authentication for the user.
  */
 @Component
-class JWTFilter : OncePerRequestFilter() {
+class JWTFilter(private var userService: UserService) : OncePerRequestFilter() {
 
     private val logger = LoggerFactory.getLogger(JWTFilter::class.java)
-
-    @Autowired
-    private lateinit var userService: UserService
 
     /**
      * Performs filtering of incoming requests.
