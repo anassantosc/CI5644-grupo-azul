@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Badge, Box, Grid, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip} from '@mui/material';
 import MailIcon from '@mui/icons-material/Mail';
-import colors from "../utils/constants/colors";
 import TurnLeftIcon from '@mui/icons-material/TurnLeft';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
