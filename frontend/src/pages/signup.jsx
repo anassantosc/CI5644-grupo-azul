@@ -24,7 +24,6 @@ const SignUpPage = () => {
     const [errors, setErrors] = useState(null);
 
     const handleChange = (event) => {
-        console.log(event.target.name, event.target.value);
         setValues({
             ...values,
             [event.target.name]: event.target.value,

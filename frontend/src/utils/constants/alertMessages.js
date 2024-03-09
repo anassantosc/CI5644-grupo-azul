@@ -16,14 +16,18 @@ const alertMessages = {
     invalid_email: "El correo electronico no cumple las convenciones de correo electronico",
     offer_success: "Oferta creada exitosamente",
     offer_error: "Error al crear la oferta: ",
+    offer_not_created: "No hay ningun usuario compatible con la oferta: ",
     passwords_dont_match: "Las contraseñas no coinciden",
-    reject_trade: "Intercambio rechazado",
+    deny_trade: "Intercambio rechazado",
     success_user: "Usuario editado exitosamente",
     success_login: "Inicio de sesión exitoso",
     success_logout: "Sesión cerrada con éxito",
     success_register: "Registro exitoso",
     user_not_found: "Usuario no encontrado",
     user_already_exists: "Usuario existente, intente con uno diferente",
+    offer_not_exists: "La oferta no existe",
+    accept_trade_error: "Error al aceptar el intercambio",
+    deny_trade_error: "Error al rechazar el intercambio",
 }
 
 export default alertMessages;

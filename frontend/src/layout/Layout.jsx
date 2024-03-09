@@ -7,6 +7,7 @@ import { Footer } from "./../components/Footer";
 import PropTypes from "prop-types";
 import { Logout } from "../utils/auth/Logout";
 import { useAlert } from "../context/AlertContext";
+import {routes as r} from "../utils/constants";
 
 export default function Layout({ children }) {
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -14,14 +15,14 @@ export default function Layout({ children }) {
     const showAlert = useAlert();
 
     const routes = {
-        Inicio: "/",
-        Perfil: "/profile",
-        Album: "/album",
-        Comprar: "/store",
-        "Mi Álbum": "/album",
-        Salir: "/",
-        Login: "/login",
-        Registro: "/register"
+        Inicio: r.home,
+        Perfil: r.profile,
+        Album: r.album,
+        Comprar: r.store,
+        "Mi Álbum": r.album,
+        Salir: r.home,
+        Login: r.login,
+        Registro: r.signup
     };
 
     const handleClick = (key) => {

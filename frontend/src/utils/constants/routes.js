@@ -4,6 +4,9 @@ const routes = {
     logout: '/logout',
     auth: '/auth',
     register: '/register',
+    profile: '/profile',
+    album: '/album',
+    store: '/store',
     api: '/api',
     users: '/users',
     edit: '/edit',
@@ -18,7 +21,9 @@ const routes = {
     duplicated: '/duplicated',
     wishlist: '/wishlist',
     page: (page) => `?page=${page}`,
-    offerId: (id) => `&offerId=${id}`
+    offerId: (id) => `&offerId=${id}`,
+    deny: '/deny',
+    accept: '/accept',
 }
 
 export default routes;
