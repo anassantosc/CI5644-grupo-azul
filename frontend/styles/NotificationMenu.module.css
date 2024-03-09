@@ -1,0 +1,46 @@
+.notificationMenuBox {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-right: 5px;
+}
+
+.notificationMenuIconButton {
+    margin-left: 2px;
+}
+
+.notificationMenuBadge {
+    font-size: 35px;
+    color: #fff;
+}
+
+.notificationMenu {
+    overflow: visible;
+    margin-top: 1.5rem;
+    background-color: #581E3D;
+    padding: 0.5rem;
+}
+
+.menuItem {
+    background-color: rgb(78, 20, 50);
+    cursor: default;
+}
+
+.menuItemHover:hover {
+    background-color: rgb(78, 20, 50);
+}
+
+.listItemTextTitle {
+    font-size: 0.5rem;
+    text-align: center;
+    color: #fff;
+}
+
+.listItemText {
+    text-align: center;
+    color: #fff;
+}
+
+.iconButton {
+    color: #d9d9d9;
+}
