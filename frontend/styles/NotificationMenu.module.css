@@ -1,7 +1,4 @@
 .notificationMenuBox {
-    display: flex;
-    align-items: center;
-    text-align: center;
     margin-right: 5px;
 }
 
@@ -24,6 +21,8 @@
 .menuItem {
     background-color: rgb(78, 20, 50);
     cursor: default;
+    pointer-events: none;
+
 }
 
 .menuItemHover:hover {

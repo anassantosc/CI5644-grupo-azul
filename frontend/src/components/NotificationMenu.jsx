@@ -15,6 +15,7 @@ import {AcceptOffer} from '../utils/fetchs/AcceptOffer';
 import {DenyOffer} from '../utils/fetchs/DenyOffer';
 import styles from '../../styles/NotificationMenu.module.css';
 
+
 export default function NotificationMenu() {
     const [page, setPage] = useState(0);
     const {offers: trades, loading, error} = useGetOffers(page);
@@ -82,7 +83,7 @@ export default function NotificationMenu() {
     };
 
     return (
-        <React.Fragment>
+        <>
             <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center', marginRight: 5}}>
                 <Tooltip title="Notificaciones de Intercambio">
                     <IconButton
@@ -92,7 +93,7 @@ export default function NotificationMenu() {
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                     >
-                        <Badge badgeContent={trades.length} color="error">
+                        <Badge badgeContent={(trades.length < 3)? `${trades.length}` :`${trades.length}+`} color="error">
                             <MailIcon className={styles.notificationMenuBadge}/>
                         </Badge>
                     </IconButton>
@@ -115,27 +116,18 @@ export default function NotificationMenu() {
                 transformOrigin={{horizontal: 'right', vertical: 'top'}}
                 anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             >
-                <MenuItem sx={{
-                    backgroundColor: 'rgb(78, 20, 50)',
-                    cursor: 'default',
-                    pointerEvents: 'none',
-                    "&:hover": {backgroundColor: 'rgb(78, 20, 50)'}
-                }} >
+                <MenuItem className={`${styles.menuItem} ${styles.menuItemHover}`} >
                     <Grid container spacing={4} alignItems="center">
                         <Grid item xs={4}>
-                            <ListItemText sx={{fontSize: '0.5rem', textAlign: 'center', color: '#FFFFFF'}}> Carta a
+                            <ListItemText className={styles.listItemTextTitle}> Carta a
                                 recibir </ListItemText>
                         </Grid>
                         <Grid item xs={4}>
-                            <ListItemText sx={{fontSize: '0.5rem', textAlign: 'center', color: '#FFFFFF'}}> Carta
+                            <ListItemText className={styles.listItemTextTitle}> Carta
                                 ofrecida </ListItemText>
                         </Grid>
                         <Grid item xs={4}>
-                            <ListItemText sx={{
-                                fontSize: '0.5rem',
-                                textAlign: 'center',
-                                color: '#FFFFFF'
-                            }}> Acciones </ListItemText>
+                            <ListItemText className={styles.listItemTextTitle}> Acciones </ListItemText>
                         </Grid>
                     </Grid>
                 </MenuItem>
@@ -143,11 +135,10 @@ export default function NotificationMenu() {
                     <MenuItem key={offer.id} sx={{cursor: 'default'}}>
                         <Grid container spacing={2} alignItems="center">
                             <Grid item xs={4}>
-                                <ListItemText
-                                    sx={{textAlign: 'center', color: '#FFFFFF'}}>{offer.cardReceive}</ListItemText>
+                                <ListItemText className={styles.listItemText}>{offer.cardReceive}</ListItemText>
                             </Grid>
                             <Grid item xs={4}>
-                                <ListItemText sx={{textAlign: 'center', color: '#FFFFFF'}}>{offer.cardOffer}</ListItemText>
+                                <ListItemText className={styles.listItemText}>{offer.cardOffer}</ListItemText>
                             </Grid>
                             <Grid item xs={4}>
                                 <ListItemIcon>
@@ -163,7 +154,7 @@ export default function NotificationMenu() {
                                     </Tooltip>
                                     <Tooltip title="Contraofertar">
                                         <IconButton onClick={() => handleCounterOffer(offer)}>
-                                            <TurnLeftIcon sx={{color: '#d9d9d9'}}/>
+                                            <TurnLeftIcon className={styles.iconButton}/>
                                         </IconButton>
                                     </Tooltip>
                                 </ListItemIcon>
@@ -171,11 +162,7 @@ export default function NotificationMenu() {
                         </Grid>
                     </MenuItem>
                 ))}
-                <MenuItem sx={{
-                    backgroundColor: 'rgb(78, 20, 50)',
-                    cursor: 'default',
-                    "&:hover": {backgroundColor: 'rgb(78, 20, 50)'}
-                }}>
+                <MenuItem className={`${styles.menuItem} ${styles.menuItemHover}`}>
                     <Grid container justifyContent="space-around">
                         <IconButton onClick={prevStep} disabled={page === 0}>
                             <ArrowBackIosIcon sx={{color: page === 0 ? '#8c8c8c' : '#FFFFFF'}}/>
@@ -187,6 +174,6 @@ export default function NotificationMenu() {
                 </MenuItem>
             </Menu>
             <OfferModal show={showModal} onClose={handleCloseModal} offer={counterOffer}/>
-        </React.Fragment>
+        </>
     );
 }
