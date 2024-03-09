@@ -43,11 +43,11 @@ class OfferController() {
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
             val cardOffer = requestBody["cardOffer"]
             val cardReceive = requestBody["cardReceive"]
-
+    
             if (cardOffer == null || cardReceive == null || cardOffer == cardReceive ) {
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cardOffer and cardReceive must be provided")
             }
-
+    
             offerService.createOffer(username, cardOffer!!, cardReceive!!)
             ResponseEntity.ok("Offer created")
         } catch (e: IllegalArgumentException) {
@@ -58,10 +58,10 @@ class OfferController() {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
         }
     }
+    
 
-
-    /*
-    * Gets a list of offers with pending
+    /* 
+    * Gets a list of offers with pending 
     *
     *@param authCookie The JWT cookie
     * @return A list of offers with PENDING status
@@ -72,24 +72,24 @@ class OfferController() {
         @RequestParam page: Int
     ): ResponseEntity<*> {
         return try {
-            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
+            val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie) 
 
             if (page < 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
-            }
+            } 
 
-            ResponseEntity.ok(offerService.getAvailableOffers(username, page))
+            ResponseEntity.ok(offerService.getPendingOffers(username, page))
         } catch (e: OfferNotFoundException) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
     }
-
+    
 
     /**
      * Denies an offer.
-     *
+     * 
      * @param authCookie The JWT cookie
      * @param requestBody A map containing the request body with the key 'offerId' for the offer ID.
      * @return A response entity containing a json with the deny offer.
@@ -103,11 +103,11 @@ class OfferController() {
             JWTSecurityUtils.getAuthUserFromJWT(authCookie);
             val offerId = requestBody["offerId"]
 
-            if (offerId == null || offerId < 0) {
+            if (offerId < 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("offerId number must be an integer greater or equal than 0")
             }
 
-            offerService.denyOffer(offerId)
+            offerService.updateOfferByStatus(offerId, OfferStatus.CANCELLED)
             ResponseEntity.ok("Offer denied")
         } catch (e: OfferNotFoundException) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
@@ -119,7 +119,7 @@ class OfferController() {
 
     /**
      * Accepts an offer.
-     *
+     * 
      * @param authCookie The JWT cookie
      * @param requestBody A map containing the request body with the key 'offerId' for the offer ID.
      * @return A response entity containing a json with the accept offer.
@@ -133,11 +133,11 @@ class OfferController() {
             JWTSecurityUtils.getAuthUserFromJWT(authCookie);
             val offerId = requestBody["offerId"]
 
-            if (offerId == null || offerId < 0) {
+            if (offerId < 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("offerId number must be an integer greater or equal than 0")
             }
-
-            offerService.acceptOffer(offerId)
+    
+            val offer = offerService.updateOfferByStatus(offerId, OfferStatus.ACCEPTED)
             ResponseEntity.ok("Offer accepted")
         } catch (e: OfferNotFoundException) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
@@ -145,32 +145,4 @@ class OfferController() {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
         }
     }
-
-
-    @PutMapping("/counteroffer")
-    fun createCounterOffer(
-        @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
-        @RequestBody requestBody: Map<String, Int>
-    ): ResponseEntity<*> {
-        return try {
-            JWTSecurityUtils.getAuthUserFromJWT(authCookie)
-            val offerId = requestBody["offerId"]
-            val cardOffer = requestBody["cardOffer"]
-            val cardReceive = requestBody["cardReceive"]
-
-            if (offerId == null || cardOffer == null || cardReceive == null || cardOffer == cardReceive ) {
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cardOffer and cardReceive must be provided")
-            }
-
-            offerService.createCounterOffer(offerId!!, cardOffer!!, cardReceive!!)
-            ResponseEntity.ok("Offer created")
-        } catch (e: IllegalArgumentException) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
-        } catch (e: NoSuchElementException) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message)
-        } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
-        }
-    }
-
 }
