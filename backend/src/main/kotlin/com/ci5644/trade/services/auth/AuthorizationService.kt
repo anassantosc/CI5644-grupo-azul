@@ -16,21 +16,13 @@ import org.springframework.stereotype.Service
 import javax.naming.AuthenticationException
 import org.springframework.security.crypto.password.PasswordEncoder
 
+
 /**
  * Service class for handling authorization-related operations.
  */
 @Service
-class AuthorizationService {
-
-    @Autowired
-    private lateinit var authenticationManager: AuthenticationManager
-
-    @Autowired
-    private lateinit var userRepository: UserRepository
-
-    @Autowired
-    private lateinit var encoder: PasswordEncoder
-
+class AuthorizationService(private var userRepository: UserRepository, private var authenticationManager: AuthenticationManager, private var encoder: PasswordEncoder) {
+    
     /**
      * Retrieves user entity by username.
      * @param username String - The username of the user.
@@ -53,7 +45,7 @@ class AuthorizationService {
      * @throws UsernameTakenException if the specified username is already taken.
      */
     @Throws(UsernameTakenException::class, IllegalArgumentException::class)
-    fun registerUser(reg: RegisterDTO): UserEntity {
+    fun registerUser(reg: RegisterDTO) {
         val validationError = reg.validate()
         if (userRepository.existsByUsername(reg.username.trim())) {
             throw UsernameTakenException()
@@ -69,8 +61,7 @@ class AuthorizationService {
             email=reg.email,
             gender=reg.gender
         )
-
-        return userRepository.save(newUser)
+        userRepository.save(newUser)
     }
 
     /**

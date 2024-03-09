@@ -13,7 +13,16 @@ import org.springframework.transaction.annotation.Transactional
 @Repository
 interface OfferRepository: JpaRepository<OfferEntity, Long> {
 
-    fun findById(id: Int): OfferEntity
+    @Query("SELECT CASE WHEN COUNT(o) > 0 THEN TRUE ELSE FALSE END " +
+            "FROM OfferEntity o " +
+            "WHERE o.userOffer = :userOfferId " +
+            "AND o.userReceive = :userReceiveId " +
+            "AND o.cardOffer = :cardOffer " +
+            "AND o.cardReceive = :cardReceive " +
+            "AND o.status IN ('PENDING', 'COUNTEROFFER')")
+    fun existByUsers(userOfferId: Int, userReceiveId: Int, cardOffer: Int, cardReceive: Int): Boolean
+
+    fun findById(id: Int): OfferEntity?
 
     fun findByUserOffer(user: Int): List<OfferEntity>
 
@@ -23,16 +32,12 @@ interface OfferRepository: JpaRepository<OfferEntity, Long> {
 
     fun findByCardReceive(card: Int): List<OfferEntity>
 
-    fun findByUserOfferAndCardOfferAndCardReceive(user: Int, cardOffer: Int, cardReceive: Int): List<OfferEntity>
+    @Query("SELECT o FROM OfferEntity o WHERE (o.userOffer = :user AND o.cardReceive = :card) OR (o.userReceive = :user AND o.cardOffer = :card)")
+    fun findByUserAndCard(user: Int, card: Int): List<OfferEntity>
 
-    fun findByStatus(status: OfferStatus, pageable: Pageable): Page<OfferEntity>
-
-    @Modifying
-    @Transactional
-    @Query("DELETE FROM OfferEntity o WHERE o.id = :id")
-    fun deleteById(id: Int)
+    @Query("SELECT o FROM OfferEntity o WHERE o.status IN ('PENDING', 'COUNTEROFFER') AND userReceive = :user")
+    fun findAvailableByUserReceive(user: Int, pageable: Pageable): List<OfferEntity>
 
     @Query("SELECT o FROM OfferEntity o")
     fun findAllOffers(): List<OfferEntity>
-
 }

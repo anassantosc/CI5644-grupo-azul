@@ -3,7 +3,7 @@ package com.ci5644.trade.services.card
 import com.ci5644.trade.repositories.OwnershipRepository
 import com.ci5644.trade.models.card.OwnershipEntity
 import com.ci5644.trade.repositories.CardRepository
-import com.ci5644.trade.exceptions.runtime.NonOwnershipException
+import com.ci5644.trade.exceptions.runtime.OfferNotFoundException
 import com.ci5644.trade.services.auth.AuthorizationService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -12,19 +12,15 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import com.ci5644.trade.models.card.CardEntity
+import com.ci5644.trade.repositories.OfferRepository
+import kotlin.math.min
 
 @Service
-class OwnershipService(private val authorizationService: AuthorizationService) {
-
-    @Autowired
-    lateinit var ownershipRepository: OwnershipRepository
-
-    @Autowired
-    lateinit var cardRepository: CardRepository
-
+class OwnershipService(private val authorizationService: AuthorizationService, private val offerRepository: OfferRepository, private val ownershipRepository: OwnershipRepository, private val cardRepository: CardRepository) {
+    
     /**
      * Retrieve a paginated list of card entities owned by a user.
-     * 
+     *
      * @param userId   The ID of the user
      * @param page     The page number (starts from 0)
      * @return         A list of card entities within the specified page
@@ -33,7 +29,7 @@ class OwnershipService(private val authorizationService: AuthorizationService) {
         val userId = authorizationService.retrieveUser(username).id
         val pageable: Pageable = PageRequest.of(page, 20)
         val ownershipPage = ownershipRepository.findByUser(userId, pageable)
-        val ownedCards = ownershipPage.content.map { it.card }
+        val ownedCards = ownershipPage.map { it.card }
         return cardRepository.findAllById(ownedCards)
     }
 
@@ -80,15 +76,22 @@ class OwnershipService(private val authorizationService: AuthorizationService) {
     /*
     * Retrieve a paginated list of the cards that the user does not own
     *
-    * @param userId   The ID of the user
+    * @param username The username of the user
     * @param page     The page number (starts from 0)
-    * @return         A list of card entities within the specified page
+    * @param id       The ID of the offer (optional)
+    * @return         A list of card IDs within the specified page
+    * @throws         OfferNotFoundException if the offer is not found
     */
-    fun getNonOwnedCards(username: String, page: Int): List<CardEntity> {
+    fun getNonOwnedCards(username: String, page: Int, offerId: Int?): List<Int> {
         val userId = authorizationService.retrieveUser(username).id
         val pageable: Pageable = PageRequest.of(page, 20)
-        val ownedCards = ownershipRepository.findByUser(userId).map { it.card }
-        val nonOwnedCards = cardRepository.findAll().filter { it.id !in ownedCards }
-        return nonOwnedCards
+
+        if (offerId != null) {
+            val offer = offerRepository.findById(offerId) ?: throw OfferNotFoundException()
+            return ownershipRepository.findInterceptionCards(userId, offer.userOffer, pageable)
+        } else {
+            return ownershipRepository.findNonOwnedCards(userId, pageable)
+        }
     }
+
 }
