@@ -58,6 +58,7 @@ const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
                     <CustomInput
                         type={inputTypes.select}
                         label={labels.gender}
+                        defaultValue={values.gender}
                         onChange={onChange}
                         value={values.gender}
                         name={inputNames.gender}
@@ -107,6 +108,9 @@ AuthForm.propTypes = {
     values: PropTypes.shape({
         username: PropTypes.string,
         password: PropTypes.string,
+        name: PropTypes.string,
+        email: PropTypes.string,
+        gender: PropTypes.string,
         confirmPassword: PropTypes.string,
     }),
     isLogin: PropTypes.bool,

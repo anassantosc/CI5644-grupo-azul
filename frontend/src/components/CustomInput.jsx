@@ -3,10 +3,11 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import PropTypes from "prop-types";
 
-const CustomInput = ({ type, label, onChange, error, name, required, options }) => {
+const CustomInput = ({ type, label, onChange, error, name, required, options, defaultValue }) => {
     return (
         <TextField
             required={required}
+            defaultValue={defaultValue}
             name={name}
             style={{
                 width: "100%",
