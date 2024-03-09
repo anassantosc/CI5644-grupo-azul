@@ -26,13 +26,9 @@ import java.lang.Exception
  * Configuration class for security settings.
  */
 @Configuration
-class SecurityConfig {
+class SecurityConfig(private val userDetailsService: UserService) {
 
-    @Autowired
-    lateinit var userDetailsService: UserService
-
-    @Autowired
-    private val unauthorizedHandler: EntryPointJWT? = null
+    private var unauthorizedHandler: EntryPointJWT? = null
 
     /**
      * Provides a custom PasswordEncoder bean.
@@ -49,7 +45,7 @@ class SecurityConfig {
      */
     @Bean
     fun authenticationJwtTokenFilter(): JWTFilter {
-        return JWTFilter()
+        return JWTFilter(userDetailsService)
     }
 
     /**

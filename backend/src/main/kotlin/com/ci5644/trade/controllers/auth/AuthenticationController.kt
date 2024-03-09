@@ -16,10 +16,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
  */
 @RestController
 @RequestMapping("/auth")
-class AuthenticationController {
+class AuthenticationController(private val authService: AuthorizationService) {
 
-    @Autowired
-    private lateinit var authService: AuthorizationService
 
     /**
      * Handles login requests.

@@ -8,7 +8,8 @@ enum class OfferStatus {
     PENDING,
     ACCEPTED,
     CANCELLED,
-    COUNTEROFFER
+    COUNTEROFFER,
+    AUTO_CANCELLED
 }
 
 /**

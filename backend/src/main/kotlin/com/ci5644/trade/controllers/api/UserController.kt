@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping("/api/users")
-class UserController(private val authorizationService: AuthorizationService) {
-
-    @Autowired
-    private lateinit var userService: UserService
+class UserController(private val authorizationService: AuthorizationService, private val userService: UserService) {
 
     /**
      * Retrieves user details based on the provided authentication token.

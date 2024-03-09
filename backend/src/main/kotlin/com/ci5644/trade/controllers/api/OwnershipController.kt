@@ -3,6 +3,7 @@ package com.ci5644.trade.controllers.api
 import com.ci5644.trade.services.card.OwnershipService
 import com.ci5644.trade.config.SecurityConstants
 import com.ci5644.trade.config.JWT.JWTSecurityUtils
+import com.ci5644.trade.exceptions.runtime.OfferNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -14,10 +15,7 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping("/api/ownership")
-class OwnershipController() {
-
-    @Autowired
-    private lateinit var ownershipService: OwnershipService
+class OwnershipController(private val ownershipService: OwnershipService) {
 
     /**
      * Retrieves a paginated list of card entities owned by a user.
@@ -115,7 +113,8 @@ class OwnershipController() {
     @GetMapping("/wishlist")
     fun getWishList(
         @CookieValue(name = SecurityConstants.AUTH_COOKIE_NAME) authCookie: String,
-        @RequestParam page: Int
+        @RequestParam page: Int,
+        @RequestParam(required = false) offerId: Int?
     ): ResponseEntity<*> {
         return try {
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
@@ -123,9 +122,14 @@ class OwnershipController() {
             if (page < 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
             }
+            if (offerId != null && offerId < 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("offerId must be null or a positive number")
+            }
 
-            val nonOwnedCards = ownershipService.getNonOwnedCards(username, page)
+            val nonOwnedCards = ownershipService.getNonOwnedCards(username, page, offerId)
             ResponseEntity.ok(nonOwnedCards)
+        } catch (e: OfferNotFoundException) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
