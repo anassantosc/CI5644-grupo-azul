@@ -17,8 +17,6 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.web.server.ResponseStatusException
 import org.springframework.http.HttpStatus
-import java.util.stream.Stream
-import java.util.NoSuchElementException
 
 
 @Service
@@ -32,7 +30,7 @@ class OfferService(private val authorizationService: AuthorizationService, priva
 
     private fun validateUsersReceiveNotEmpty(usersReceive: List<Int>) {
         if (usersReceive.isEmpty()) {
-            throw NoSuchElementException("No users to receive the offer")
+            throw IllegalArgumentException("No hay ningun usuario compatible con la oferta")
         }
     }
 
@@ -63,6 +61,7 @@ class OfferService(private val authorizationService: AuthorizationService, priva
         validateUserDoesNotOwnCard(userOffer, cardReceive)
         validateUsersReceiveNotEmpty(usersReceive)
         
+        var isCreated = false
         for (userReceive in usersReceive) {
             val entity = OfferEntity(
                 userOffer = userOffer,
@@ -74,8 +73,11 @@ class OfferService(private val authorizationService: AuthorizationService, priva
             if (offerRepository.existByUsers(userOffer, userReceive, cardOffer, cardReceive)) {
                 continue
             }
-            offerRepository.save(entity)            
+            offerRepository.save(entity)
+            isCreated = true         
         }
+
+        if (!isCreated) throw IllegalArgumentException("The current status is not valid for accepting the offer")
     }
 
 
