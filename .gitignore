@@ -16,6 +16,7 @@ npm-debug.log*
 # Ignorar carpetas y archivos generados por Gradle
 build/
 .gradle/
+.gradle/*
 
 # Ignorar carpetas y archivos generados por el sistema
 bin/
