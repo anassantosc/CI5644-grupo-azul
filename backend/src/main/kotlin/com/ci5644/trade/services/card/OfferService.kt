@@ -29,6 +29,25 @@ class OfferService(private val authorizationService: AuthorizationService) {
     @Autowired
     lateinit var ownershipRepository: OwnershipRepository
 
+
+    private fun validateOfferNotExist(userOfferId: Int, cardOffer: Int, cardReceive: Int) {
+        if (!offerRepository.findByUserOfferAndCardOfferAndCardReceive(userOfferId, cardOffer, cardReceive).isEmpty()) {
+            throw IllegalArgumentException("An offer with these parameters already exists")
+        }
+    }
+
+    private fun validateUserDoesNotOwnCard(userOfferId: Int, cardReceive: Int) {
+        if (ownershipRepository.existsByUserAndCard(userOfferId, cardReceive)) {
+            throw IllegalArgumentException("User offer already has the card receive")
+        }
+    }
+
+    private fun validateUsersReceiveNotEmpty(usersReceive: List<User>) {
+        if (usersReceive.isEmpty()) {
+            throw NoSuchElementException("No users to receive the offer")
+        }
+    }    
+
     /* 
     * Retrieves a list of offers made by a user.
     *
@@ -41,15 +60,9 @@ class OfferService(private val authorizationService: AuthorizationService) {
         val userOffer = authorizationService.retrieveUser(usernameOffer).id
         val usersReceive = ownershipRepository.findUserByCard(cardReceive)
         
-        if (!offerRepository.findByUserOfferAndCardOfferAndCardReceive(userOffer, cardOffer, cardReceive).isEmpty()) {
-            throw IllegalArgumentException("An offer with these parameters already exists")
-        }
-        if ( ownershipRepository.existsByUserAndCard(userOffer, cardReceive)) {
-            throw IllegalArgumentException("User offer already has the card receive")
-        }
-        if (usersReceive.isEmpty()) {
-            throw NoSuchElementException("No offers were created")
-        }
+        validateOfferNotExist(userOffer, cardOffer, cardReceive)
+        validateUserDoesNotOwnCard(userOffer, cardReceive)
+        validateUsersReceiveExist(usersReceive)
         
         for (user in usersReceive) {
             val entity = OfferEntity(
@@ -62,6 +75,7 @@ class OfferService(private val authorizationService: AuthorizationService) {
             offerRepository.save(entity)            
         }
     }
+
 
     /* 
         * Retrieves a list of offers made by a user.
@@ -86,12 +100,6 @@ class OfferService(private val authorizationService: AuthorizationService) {
         val entity = offerRepository.findById(offerId.toLong()).orElseThrow{OfferNotFoundException()}
         entity.status = status
         val savedEntity = offerRepository.save(entity)
-        
-        /* 
-        if (status == OfferStatus.CANCELLED) {
-            offerRepository.deleteById(offerId.toLong())
-        }
-        */
 
         if (status == OfferStatus.ACCEPTED) {
             val ownerOffer = ownershipRepository.findByUserAndCard(entity.userOffer, entity.cardOffer)
@@ -114,16 +122,29 @@ class OfferService(private val authorizationService: AuthorizationService) {
             ownerReceive.quantity -= 1
 
             //Se cancelan las ofertas de los otros usuarios para el userOffer
-            val otherUsersReceives = offerRepository.findByUserAndCard
-            for (otherUser in otherUsersReceives) {
+            var otherUsers = offerRepository.findByUserAndCard(entity.userOffer, entity.cardReceive)
+            for (otherUser in otherUsers) {
                 if (otherUser.id != entity.userReceive) {
                     otherUser.status = OfferStatus.CANCELLED
                     offerRepository.save(otherUser)
                 }
             }
 
-            //Se cancelan las ofertas de los otros usuarios
+            //Se cancelan las ofertas de los otros usuarios para el userReceive
+            otherUsers = offerRepository.findByUserAndCard(entity.userReceive, entity.cardOffer)
+            for (otherUser in otherUsers) {
+                if (otherUser.id != entity.userOffer) {
+                    otherUser.status = OfferStatus.CANCELLED
+                    offerRepository.save(otherUser)
+                }
+            }
             
+        }
+
+        if (status == OfferStatus.COUNTEROFFER) {
+            if (entity.status != OfferStatus.PENDING) {
+                throw ResponseStatusException(HttpStatus.BAD_REQUEST, "The offer is not pending")
+            }
         }
 
         return OfferDto.fromEntity(savedEntity)
