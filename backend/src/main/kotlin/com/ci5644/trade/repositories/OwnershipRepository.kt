@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 interface OwnershipRepository: JpaRepository<OwnershipEntity, Long> {
 
+    fun existsByUserAndCard(user: Int, card: Int) : Boolean
+    
     fun findByUserAndCard(user: Int, card: Int): OwnershipEntity
 
     fun findByUser(user: Int): List<OwnershipEntity>

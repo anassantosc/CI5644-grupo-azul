@@ -23,9 +23,13 @@ interface OfferRepository: JpaRepository<OfferEntity, Long> {
 
     fun findByCardReceive(card: Int): List<OfferEntity>
 
-    fun findByUserOfferAndCardOfferAndCardReceive(user: Int, cardOffer: Int, cardReceive: Int): List<OfferEntity>
+    @Query("SELECT o FROM OfferEntity o WHERE (o.userOffer = :user AND o.cardReceive = :card) OR (o.userReceive = :user AND o.cardOffer = :card)")
+    fun findByUserAndCard(user: Int, card: Int): List<OfferEntity>
 
-    fun findByStatus(user: Int, status: OfferStatus, pageable: Pageable): Page<OfferEntity>
+    //fun findByUserOfferAndCardOfferAndCardReceive(user: Int, cardOffer: Int, cardReceive: Int): List<OfferEntity>
+
+    @Query("SELECT o FROM OfferEntity o WHERE (o.status = 'PENDING' OR o.status = 'COUNTEROFFER') AND userReceive = :user")
+    fun findPendingByUserReceive(user: Int, pageable: Pageable): List<OfferEntity>
 
     @Modifying
     @Transactional

@@ -5,6 +5,7 @@ import com.ci5644.trade.dto.OfferDto
 import com.ci5644.trade.models.card.OfferStatus
 import com.ci5644.trade.config.SecurityConstants
 import com.ci5644.trade.config.JWT.JWTSecurityUtils
+import com.ci5644.trade.exceptions.runtime.OfferNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.security.core.AuthenticationException
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Page
+import java.util.NoSuchElementException
 
 
 
@@ -46,13 +48,12 @@ class OfferController() {
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cardOffer and cardReceive must be provided")
             }
     
-            val offer = offerService.createOffer(username, cardOffer!!, cardReceive!!)
-            if (offer.isEmpty()) {
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No offers were created")
-            }
-
+            offerService.createOffer(username, cardOffer!!, cardReceive!!)
             ResponseEntity.ok("Offer created")
-
+        } catch (e: IllegalArgumentException) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
+        } catch (e: NoSuchElementException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
         }
@@ -75,10 +76,11 @@ class OfferController() {
 
             if (page < 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
-            }
+            } 
 
-            val offers = offerService.getPendingOffers(username, page).map { OfferDto.fromEntity(it) }
-            ResponseEntity.ok(offers)
+            ResponseEntity.ok(offerService.getPendingOffers(username, page))
+        } catch (e: OfferNotFoundException) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
@@ -101,18 +103,14 @@ class OfferController() {
             JWTSecurityUtils.getAuthUserFromJWT(authCookie);
             val offerId = requestBody["offerId"]
 
-            if (offerId == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer ID must be provided")
+            if (offerId < 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("offerId number must be an integer greater or equal than 0")
             }
-    
-            val offer = offerService.findOfferById(offerId)
 
-            if (offer == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found")
-            }
-            
             offerService.updateOfferByStatus(offerId, OfferStatus.CANCELLED)
-            ResponseEntity.ok(offer)
+            ResponseEntity.ok("Offer denied")
+        } catch (e: OfferNotFoundException) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
         }
@@ -135,17 +133,14 @@ class OfferController() {
             JWTSecurityUtils.getAuthUserFromJWT(authCookie);
             val offerId = requestBody["offerId"]
 
-            if (offerId == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer ID must be provided")
+            if (offerId < 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("offerId number must be an integer greater or equal than 0")
             }
     
-            val offer = offerService.findOfferById(offerId)
-            if (offer == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found")
-            }
-
-            val updatedOffer = offerService.updateOfferByStatus(offerId, OfferStatus.ACCEPTED)
-            ResponseEntity.ok(updatedOffer)
+            val offer = offerService.updateOfferByStatus(offerId, OfferStatus.ACCEPTED)
+            ResponseEntity.ok("Offer accepted")
+        } catch (e: OfferNotFoundException) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
         }
