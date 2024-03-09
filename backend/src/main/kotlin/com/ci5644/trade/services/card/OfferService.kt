@@ -24,7 +24,7 @@ class OfferService(private val authorizationService: AuthorizationService, priva
 
     private fun validateUserDoesNotOwnCard(userOfferId: Int, cardReceive: Int) {
         if (ownershipRepository.existsByUserAndCard(userOfferId, cardReceive)) {
-            throw IllegalArgumentException("User offer already has the card to receive")
+            throw IllegalArgumentException("El usuario ya posee la carta que se quiere recibir")
         }
     }
 
@@ -41,7 +41,7 @@ class OfferService(private val authorizationService: AuthorizationService, priva
         }
 
         if (entity.status != OfferStatus.PENDING && entity.status != OfferStatus.COUNTEROFFER) {
-            throw IllegalArgumentException("The current status is not valid for accepting the offer")
+            throw IllegalArgumentException("El estado actual no es valido para aceptar la oferta")
         }
         return entity
     }
@@ -77,7 +77,7 @@ class OfferService(private val authorizationService: AuthorizationService, priva
             isCreated = true         
         }
 
-        if (!isCreated) throw IllegalArgumentException("The current status is not valid for accepting the offer")
+        if (!isCreated) throw IllegalArgumentException("No se pudo crear la oferta, ya existe una oferta con las mismas caracteristicas")
     }
 
 
@@ -120,7 +120,7 @@ class OfferService(private val authorizationService: AuthorizationService, priva
         //Se verifica que el usuario tenga al menos 2 cartas para poder hacer el intercambio
         if (ownerOffer.quantity < 2 || ownerReceive.quantity < 2) {
             entity.status = OfferStatus.AUTO_CANCELLED
-            throw NoSuchElementException("The user does not have enough cards to trade")
+            throw NoSuchElementException("El usuario no tiene suficientes cartas para hacer el intercambio")
         }
 
         //Se actualizan los datos de propiedad al aceptar la oferta
@@ -169,10 +169,10 @@ class OfferService(private val authorizationService: AuthorizationService, priva
     fun createCounterOffer(offerId: Int, cardOffer: Int, cardReceive: Int) {
         val offer = offerRepository.findById(offerId)
         if (offer == null) {
-            throw IllegalArgumentException("An offer with this id does not exists")
+            throw IllegalArgumentException("La oferta no existe")
         }
         if (offer.status != OfferStatus.PENDING) {
-            throw IllegalArgumentException("The offer is not pending")
+            throw IllegalArgumentException("El estado actual no es valido para crear una contraoferta")
         }
 
         offer.status = OfferStatus.COUNTEROFFER
@@ -183,7 +183,7 @@ class OfferService(private val authorizationService: AuthorizationService, priva
         offer.cardReceive = cardReceive
         
         if (offerRepository.existByUsers(offer.userOffer, offer.userReceive, cardOffer, cardReceive)) {
-            throw IllegalArgumentException("An offer with this characteristics already exists")
+            throw IllegalArgumentException("Una oferta con las mismas caracteristicas ya existe")
         }
 
         validateUserDoesNotOwnCard(offer.userReceive, offer.cardOffer)

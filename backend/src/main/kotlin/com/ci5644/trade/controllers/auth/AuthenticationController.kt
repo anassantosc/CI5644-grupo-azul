@@ -49,11 +49,11 @@ class AuthenticationController(private val authService: AuthorizationService) {
             authService.registerUser(trimmedReg)
             ResponseEntity.ok().build()
         } catch (e: UsernameTakenException) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already taken")
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El nombre de usuario ya existe")
         } catch (e: IllegalArgumentException) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
         } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error")
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor")
         }
     }
 
