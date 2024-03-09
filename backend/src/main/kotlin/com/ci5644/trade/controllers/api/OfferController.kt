@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.security.core.AuthenticationException
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Page
-import java.util.NoSuchElementException
 
 
 
@@ -49,8 +48,6 @@ class OfferController(private val offerService: OfferService) {
             ResponseEntity.ok("Offer created")
         } catch (e: IllegalArgumentException) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
-        } catch (e: NoSuchElementException) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
         }
@@ -163,8 +160,6 @@ class OfferController(private val offerService: OfferService) {
             ResponseEntity.ok("Offer created")
         } catch (e: IllegalArgumentException) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
-        } catch (e: NoSuchElementException) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
         }
