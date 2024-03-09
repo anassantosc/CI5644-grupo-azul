@@ -21,7 +21,7 @@ import { alertMessages, alertTypes, labels } from "../utils/constants";
 
 const OfferModal = ({ show, onClose, offer = null }) => {
     const showAlert = useAlert();
-    const [offerData, setOfferData] = useState({ receive: null, send: null })
+    const [offerData, setOfferData] = useState({ cardReceive: null, cardOffer: null })
 
     const [showReceive, setShowReceive] = useState(false);
     const [showSend, setShowSend] = useState(false);
@@ -39,30 +39,23 @@ const OfferModal = ({ show, onClose, offer = null }) => {
     };
 
     const handleConfirm = async () => {
-        if (!offerData.receive || !offerData.send) {
+        if (!offerData.cardReceive || !offerData.cardOffer) {
             showAlert(alertMessages.fill_fields, alertTypes.warning);
             return
         }
 
         try {
-            const offerWithUsername = {
+            const offerWithId = {
                 ...offerData,
-                username: offer?.username
+                offerId: offer?.id
             };
 
-            const response = offer?.username === null ?
-                await CreateOffer(offerData) :
-                await CreateCounterOffer(offerWithUsername);
+            offer?.id == null ?
+                await CreateOffer(offerData, showAlert) :
+                await CreateCounterOffer(offerWithId, showAlert);
 
-            setOfferData({ receive: null, send: null });
+            setOfferData({ cardReceive: null, cardOffer: null });
 
-            if (response.ok) {
-                showAlert(alertMessages.offer_success, alertTypes.success);
-            } else if (response.status === statusCodes.bad_request) {
-                showAlert(response.message, alertTypes.error);
-            } else {
-                showAlert(alertMessages.unknown_error, alertTypes.error);
-            }
         } catch (error) {
             console.error(alertMessages.offer_error, error);
             showAlert(alertMessages.offer_error, alertTypes.error);
@@ -72,7 +65,7 @@ const OfferModal = ({ show, onClose, offer = null }) => {
     }
 
     useEffect(() => {
-        setOfferData({ receive: offer?.receive, send: offer?.offer })
+        setOfferData({ cardReceive: offer?.receive, cardOffer: offer?.offer })
     }, [offer]);
 
     return (
@@ -104,20 +97,20 @@ const OfferModal = ({ show, onClose, offer = null }) => {
                         <FormControl fullWidth >
                             {(!showReceive && !showSend) && (
                                 <>
-                                    {offerData.receive && (
+                                    {offerData.cardReceive && (
                                         <TextField
                                             id="recibir"
                                             label={labels.receive}
-                                            defaultValue={`Carta a recibir: ${offerData.receive}`}
+                                            defaultValue={`Carta a recibir: ${offerData.cardReceive}`}
                                             className={styles.receiveTextField}
                                             InputProps={{ style: { color: "white" }, readOnly: true }}
                                         />
                                     )}
-                                    {offerData.send && (
+                                    {offerData.cardOffer && (
                                         <TextField
                                             id="enviar"
                                             label={labels.send}
-                                            defaultValue={`Carta a enviar: ${offerData.send}`}
+                                            defaultValue={`Carta a enviar: ${offerData.cardOffer}`}
                                             className={styles.sendTextField}
                                             InputProps={{ style: { color: "white" }, readOnly: true }}
                                         />
@@ -126,14 +119,14 @@ const OfferModal = ({ show, onClose, offer = null }) => {
                             )}
                             {showReceive && (
                                 <TableSelector
-                                    onSelect={handleFieldChange('receive')}
+                                    onSelect={handleFieldChange('cardReceive')}
                                     onClick={handleCloseReceive}
                                     receive={true}
                                     offer={offer} />
                             )}
                             {showSend && (
                                 <TableSelector
-                                    onSelect={handleFieldChange('send')}
+                                    onSelect={handleFieldChange('cardOffer')}
                                     onClick={handleCloseSend}
                                     receive={false} />
                             )}
@@ -147,7 +140,7 @@ const OfferModal = ({ show, onClose, offer = null }) => {
                     size="medium"
                     onClick={() => {
                         onClose();
-                        setOfferData({ receive: null, send: null });
+                        setOfferData({ cardReceive: null, cardOffer: null });
                     }}
                     className={styles.cancelButton}
                 >
@@ -158,7 +151,7 @@ const OfferModal = ({ show, onClose, offer = null }) => {
                     size="medium"
                     onClick={() => {
                         handleConfirm();
-                        setOfferData({ receive: null, send: null });
+                        setOfferData({ cardReceive: null, cardOffer: null });
                     }}
                     className={styles.confirmButton}
                 >

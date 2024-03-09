@@ -16,6 +16,7 @@ const alertMessages = {
     invalid_email: "El correo electronico no cumple las convenciones de correo electronico",
     offer_success: "Oferta creada exitosamente",
     offer_error: "Error al crear la oferta: ",
+    offer_not_created: "No hay ningun usuario compatible con la oferta: ",
     passwords_dont_match: "Las contraseñas no coinciden",
     deny_trade: "Intercambio rechazado",
     success_user: "Usuario editado exitosamente",

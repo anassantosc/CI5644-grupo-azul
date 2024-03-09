@@ -41,13 +41,10 @@ export const TableSelector = ({ onSelect, onClick, receive, offer = null }) => {
                         page,
                         id: offer?.username
                     };
-                    console.log(data)
-                    console.log(offer)
                     temp = await GetWishlist(data);
                 } else {
                     temp = await GetDuplicatedCards(page);
                 }
-                console.log(temp);
                 setCards(temp);
                 setRows(chunkArray(temp, 4));
             } catch (error) {

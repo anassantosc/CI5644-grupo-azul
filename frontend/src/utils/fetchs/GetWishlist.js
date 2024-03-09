@@ -11,8 +11,6 @@ export const GetWishlist = async (dataList) => {
     }
 
     try {
-        console.log(url)
-        console.log(dataList)
         const response = await secureFetch(url, method, data, headers);
 
         if (!response.ok) {
