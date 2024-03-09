@@ -65,7 +65,7 @@ const OfferModal = ({ show, onClose, offer = null }) => {
     }
 
     useEffect(() => {
-        setOfferData({ cardReceive: offer?.receive, cardOffer: offer?.offer })
+        setOfferData({ cardReceive: offer?.cardReceive, cardOffer: offer?.cardOffer})
     }, [offer]);
 
     return (
