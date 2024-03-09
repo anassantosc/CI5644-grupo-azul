@@ -32,7 +32,7 @@ CREATE TABLE OFERTA (
     id_usuario_receive  INT         NOT NULL REFERENCES USUARIO (id),
     id_barajita_offer   INT         NOT NULL,
     id_barajita_receive INT         NOT NULL,
-    status              VARCHAR(50) NOT NULL CHECK (status IN ('PENDING', 'ACEPTED', 'CANCELLED', 'COUNTEROFFER', 'AUTO_CANCELLED'))
+    status              VARCHAR(50) NOT NULL CHECK (status IN ('PENDING', 'ACCEPTED', 'CANCELLED', 'COUNTEROFFER', 'AUTO_CANCELLED'))
 );
 
 CREATE TABLE COMPRA (
