@@ -1,5 +1,5 @@
 import secureFetch from "./SecureFetch";
-import { HTTPMethods, routes, alertMessages, alertTypes } from "../constants";
+import { HTTPMethods, routes, alertMessages, alertTypes, statusCodes } from "../constants";
 
 export const CreateOffer = async (offerData, showAlert) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.offer}`;
@@ -9,11 +9,11 @@ export const CreateOffer = async (offerData, showAlert) => {
 
     try {
         const response = await secureFetch(url, method, data, headers);
-
+        
         if (response.ok) {
             showAlert(alertMessages.offer_success, alertTypes.success);
         } else if (response.status === statusCodes.bad_request) {
-            showAlert(response.message, alertTypes.error);
+            showAlert(await response.text(), alertTypes.error);
         } else {
             showAlert(alertMessages.unknown_error, alertTypes.error);
         }

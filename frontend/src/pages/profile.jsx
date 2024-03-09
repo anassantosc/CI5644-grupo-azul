@@ -104,7 +104,7 @@ export default function Profile() {
                         direction="column"
                         justifyContent="center"
                     >
-                        {progress && (
+                        {progress !== null && (
                             <ProgressCircle value={progress.toFixed(2)} />
                         )}
                     </Grid>

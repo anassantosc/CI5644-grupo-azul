@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from "react";
 import { EditUser } from "../utils/fetchs/EditUser";
 import { useAlert } from "../context/AlertContext";
-import { alertMessages, alertTypes, regex, images, labels, genderOptions } from "../utils/constants";
+import { alertMessages, alertTypes, regex, images, labels, genderOptions, statusCodes } from "../utils/constants";
 
 const EditModal = ({ show, onClose, user, onChange }) => {
     const showAlert = useAlert();
@@ -48,7 +48,7 @@ const EditModal = ({ show, onClose, user, onChange }) => {
             if (response.ok) {
                 showAlert(alertMessages.success_user, alertTypes.success);
             } else if (response.status === statusCodes.bad_request) {
-                showAlert(response.message, alertTypes.error);
+                showAlert(await response.text(), alertTypes.error);
             } else {
                 showAlert(alertMessages.unknown_error, alertTypes.error);
             }

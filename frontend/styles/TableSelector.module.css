@@ -1,3 +1,21 @@
+.loading-container {
+    text-align: center;
+    margin: 50px;
+}
+
+.loading-text {
+    color: white;
+}
+
+.status-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    margin: 50px;
+}
+
 .tableContainer {
     background-color: #581E3D;
 }
@@ -10,6 +28,9 @@
 
 .cardButton {
     color: white;
+    font-size: 13px;
+    font-weight: bold;
+
 }
 
 .pagination {
