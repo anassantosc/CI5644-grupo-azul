@@ -17,7 +17,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useAlert } from "../context/AlertContext";
-import { alertMessages, alertTypes } from "../utils/constants";
 import OfferModal from "./OfferModal";
 import { useGetOffers } from "../hooks/useGetOffers";
 import { AcceptOffer } from "../utils/fetchs/AcceptOffer";
@@ -51,6 +50,7 @@ export default function NotificationMenu() {
     setAnchorEl(null);
     setPage(1);
     setPage(0);
+    setStep(0);
     setHaveOffers(trades.length > 0);
   };
 
