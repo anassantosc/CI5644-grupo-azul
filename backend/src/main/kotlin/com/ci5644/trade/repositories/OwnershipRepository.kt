@@ -18,8 +18,6 @@ interface OwnershipRepository: JpaRepository<OwnershipEntity, Long> {
 
     fun findByUser(user: Int): List<OwnershipEntity>
 
-    fun findByUser(user: Int, pageable: Pageable): List<OwnershipEntity>
-
     @Query("SELECT o.user FROM OwnershipEntity o WHERE o.card = :card AND o.quantity > 1")
     fun findUserByCard(card: Int): List<Int>
 
