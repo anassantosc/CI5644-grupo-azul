@@ -27,7 +27,7 @@ class UserService(private val userRepository: UserRepository) : UserDetailsServi
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userRepository.findByUsername(username)
         if (user == null) {
-            throw UsernameNotFoundException("Not found: $username")
+            throw UsernameNotFoundException("No se encontró: $username")
         }
         return User.withUsername(user.username)
             .password(user.password)
@@ -42,7 +42,7 @@ class UserService(private val userRepository: UserRepository) : UserDetailsServi
     fun editUser(details: UserDetailsDto) {
         val user = userRepository.findByUsername(details.username)
         if (user == null) {
-            throw UsernameNotFoundException("Not found: ${details.username}")
+            throw UsernameNotFoundException("No se encontró: ${details.username}")
         }
         user.name = details.name
         user.username = details.username

@@ -41,7 +41,7 @@ class OfferController(private val offerService: OfferService) {
             val cardReceive = requestBody["cardReceive"]
     
             if (cardOffer == null || cardReceive == null || cardOffer == cardReceive ) {
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cardOffer and cardReceive must be provided")
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La carta a ofrecer y la carta a recibir deben ser proporcionadas")
             }
     
             offerService.createOffer(username, cardOffer!!, cardReceive!!)
@@ -69,12 +69,12 @@ class OfferController(private val offerService: OfferService) {
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie) 
 
             if (page < 0) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La página debe ser un número entero mayor o igual a 0")
             } 
 
             ResponseEntity.ok(offerService.getAvailableOffers(username, page))
         } catch (e: OfferNotFoundException) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La oferta no existe")
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
@@ -98,13 +98,13 @@ class OfferController(private val offerService: OfferService) {
             val offerId = requestBody["offerId"]
 
             if (offerId == null || offerId < 0) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("offerId number must be an integer greater or equal than 0")
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id de la oferta debe ser un entero mayor o igual a 0")
             }
 
             offerService.denyOffer(offerId)
             ResponseEntity.ok("Offer denied")
         } catch (e: OfferNotFoundException) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La oferta no existe")
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
         }
@@ -128,13 +128,13 @@ class OfferController(private val offerService: OfferService) {
             val offerId = requestBody["offerId"]
 
             if (offerId == null || offerId < 0) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("offerId number must be an integer greater or equal than 0")
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id de la oferta debe ser un entero mayor o igual a 0")
             }
     
             offerService.acceptOffer(offerId)
             ResponseEntity.ok("Offer accepted")
         } catch (e: OfferNotFoundException) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Offer not found")
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La oferta no existe")
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
         }
@@ -153,7 +153,7 @@ class OfferController(private val offerService: OfferService) {
             val cardReceive = requestBody["cardReceive"]
     
             if (offerId == null || cardOffer == null || cardReceive == null || cardOffer == cardReceive ) {
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cardOffer and cardReceive must be provided")
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La carta a ofrecer y la carta a recibir deben ser proporcionadas")
             }
     
             offerService.createCounterOffer(offerId!!, cardOffer!!, cardReceive!!)

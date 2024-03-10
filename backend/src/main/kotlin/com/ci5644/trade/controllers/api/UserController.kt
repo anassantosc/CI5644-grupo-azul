@@ -57,7 +57,7 @@ class UserController(private val authorizationService: AuthorizationService, pri
             }
 
             if (username != details.username) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot edit other users")
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No puede editar otros usuarios")
             }
 
             userService.editUser(details)
