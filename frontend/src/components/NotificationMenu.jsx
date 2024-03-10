@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useHistory } from "react";
 import {
   Badge,
   Box,
@@ -32,6 +32,7 @@ export default function NotificationMenu() {
   const [showModal, setShowModal] = useState(false);
   const open = Boolean(anchorEl);
   const showAlert = useAlert();
+  const history = useHistory();
 
   const getOffers = async () => {
     try {
@@ -65,6 +66,10 @@ export default function NotificationMenu() {
   const handleAccept = async (offerId) => {
     await AcceptOffer(offerId, showAlert);
     getOffers();
+
+    if (history.location.pathname === '/album') {
+      window.location.reload();
+    }
   };
 
   const handleDeny = async (offerId) => {
@@ -167,12 +172,12 @@ export default function NotificationMenu() {
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={4}>
                   <ListItemText className={styles.listItemText}>
-                    {offer.cardReceive}
+                    {offer.cardOffer}
                   </ListItemText>
                 </Grid>
                 <Grid item xs={4}>
                   <ListItemText className={styles.listItemText}>
-                    {offer.cardOffer}
+                    {offer.cardReceive}
                   </ListItemText>
                 </Grid>
                 <Grid item xs={4}>

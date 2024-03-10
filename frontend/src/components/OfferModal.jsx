@@ -10,18 +10,18 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import PropTypes from 'prop-types';
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import images from '../utils/constants/images';
-import { CreateOffer } from "../utils/fetchs/CreateOffer";
-import { CreateCounterOffer } from "../utils/fetchs/CreateCounterOffer";
-import { useAlert } from "../context/AlertContext";
-import { TableSelector } from "./TableSelector";
+import {CreateOffer} from "../utils/fetchs/CreateOffer";
+import {CreateCounterOffer} from "../utils/fetchs/CreateCounterOffer";
+import {useAlert} from "../context/AlertContext";
+import {TableSelector} from "./TableSelector";
 import styles from "../../styles/OfferModal.module.css";
-import { alertMessages, alertTypes, labels } from "../utils/constants";
+import {alertMessages, alertTypes, labels} from "../utils/constants";
 
-const OfferModal = ({ show, onClose, offer = null }) => {
+const OfferModal = ({show, onClose, offer = null}) => {
     const showAlert = useAlert();
-    const [offerData, setOfferData] = useState({ cardReceive: null, cardOffer: null })
+    const [offerData, setOfferData] = useState({cardReceive: null, cardOffer: null})
 
     const [showReceive, setShowReceive] = useState(false);
     const [showSend, setShowSend] = useState(false);
@@ -35,7 +35,7 @@ const OfferModal = ({ show, onClose, offer = null }) => {
     };
 
     const handleFieldChange = (key) => (e) => {
-        setOfferData({ ...offerData, [key]: e });
+        setOfferData({...offerData, [key]: e});
     };
 
     const handleConfirm = async () => {
@@ -54,7 +54,7 @@ const OfferModal = ({ show, onClose, offer = null }) => {
                 await CreateOffer(offerData, showAlert) :
                 await CreateCounterOffer(offerWithId, showAlert);
 
-            setOfferData({ cardReceive: null, cardOffer: null });
+            setOfferData({cardReceive: null, cardOffer: null});
 
         } catch (error) {
             console.error(alertMessages.offer_error, error);
@@ -65,28 +65,31 @@ const OfferModal = ({ show, onClose, offer = null }) => {
     }
 
     useEffect(() => {
-        setOfferData({ cardReceive: offer?.cardReceive, cardOffer: offer?.cardOffer})
+        setOfferData({cardReceive: offer?.cardReceive, cardOffer: offer?.cardOffer})
     }, [offer]);
 
     return (
-        <Dialog open={show} onClose={onClose} fullWidth maxWidth="sm" >
-            <DialogContent dividers className={styles.dialogContent} >
+        <Dialog className={styles.dialog} open={show} onClose={onClose} fullWidth maxWidth="sm">
+            <DialogContent dividers className={styles.dialogContent}>
                 <Box display="flex" alignItems="center">
-                    <Image priority src={images.logo} alt="Logo" width={140} height={140} />
-                    <Typography variant="h4" className={styles.dialogTitle} >{offer ? "Enviar contraoferta" : "Enviar oferta"}</Typography>
+                    <Image priority src={images.logo} alt="Logo" width={140} height={140}/>
+                    <Typography variant="h4"
+                                className={styles.dialogTitle}>
+                        {offer ? "Enviar contraoferta" : "Enviar oferta"}
+                    </Typography>
                 </Box>
                 <Box className={styles.formBox}>
                     <form noValidate autoComplete="off">
                         <Box className={styles.buttonGroup}>
                             <Button
-                                variant="outlined"
+                                variant="contained"
                                 id="receive"
                                 onClick={handleButtonClick('receive')}
                                 className={styles.receiveButton}>
                                 Carta a recibir
                             </Button>
                             <Button
-                                variant="outlined"
+                                variant="contained"
                                 id="send"
                                 onClick={handleButtonClick('send')}
                                 className={styles.sendButton}
@@ -94,7 +97,7 @@ const OfferModal = ({ show, onClose, offer = null }) => {
                                 Carta a enviar
                             </Button>
                         </Box>
-                        <FormControl fullWidth >
+                        <FormControl fullWidth className={styles.fields}>
                             {(!showReceive && !showSend) && (
                                 <>
                                     {offerData.cardReceive && (
@@ -103,7 +106,7 @@ const OfferModal = ({ show, onClose, offer = null }) => {
                                             label={labels.receive}
                                             defaultValue={`Carta a recibir: ${offerData.cardReceive}`}
                                             className={styles.receiveTextField}
-                                            InputProps={{ style: { color: "white" }, readOnly: true }}
+                                            InputProps={{style: {color: "white"}, readOnly: true}}
                                         />
                                     )}
                                     {offerData.cardOffer && (
@@ -112,25 +115,25 @@ const OfferModal = ({ show, onClose, offer = null }) => {
                                             label={labels.send}
                                             defaultValue={`Carta a enviar: ${offerData.cardOffer}`}
                                             className={styles.sendTextField}
-                                            InputProps={{ style: { color: "white" }, readOnly: true }}
+                                            InputProps={{style: {color: "white"}, readOnly: true}}
                                         />
                                     )}
                                 </>
                             )}
-                            {showReceive && (
-                                <TableSelector
-                                    onSelect={handleFieldChange('cardReceive')}
-                                    onClick={handleCloseReceive}
-                                    receive={true}
-                                    offer={offer} />
-                            )}
-                            {showSend && (
-                                <TableSelector
-                                    onSelect={handleFieldChange('cardOffer')}
-                                    onClick={handleCloseSend}
-                                    receive={false} />
-                            )}
                         </FormControl>
+                        {showReceive && (
+                            <TableSelector
+                                onSelect={handleFieldChange('cardReceive')}
+                                onClick={handleCloseReceive}
+                                receive={true}
+                                offer={offer}/>
+                        )}
+                        {showSend && (
+                            <TableSelector
+                                onSelect={handleFieldChange('cardOffer')}
+                                onClick={handleCloseSend}
+                                receive={false}/>
+                        )}
                     </form>
                 </Box>
             </DialogContent>
@@ -140,7 +143,7 @@ const OfferModal = ({ show, onClose, offer = null }) => {
                     size="medium"
                     onClick={() => {
                         onClose();
-                        setOfferData({ cardReceive: null, cardOffer: null });
+                        setOfferData({cardReceive: null, cardOffer: null});
                     }}
                     className={styles.cancelButton}
                 >
@@ -151,7 +154,7 @@ const OfferModal = ({ show, onClose, offer = null }) => {
                     size="medium"
                     onClick={() => {
                         handleConfirm();
-                        setOfferData({ cardReceive: null, cardOffer: null });
+                        setOfferData({cardReceive: null, cardOffer: null});
                     }}
                     className={styles.confirmButton}
                 >
