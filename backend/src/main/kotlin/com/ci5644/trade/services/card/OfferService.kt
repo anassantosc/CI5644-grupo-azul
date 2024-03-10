@@ -35,15 +35,15 @@ class OfferService(private val authorizationService: AuthorizationService, priva
     }
 
     private fun validateOfferStatus(offerId: Int) : OfferEntity {
-        val entity = offerRepository.findById(offerId)
-        if (entity == null) {
+        val offer = offerRepository.findById(offerId)
+        if (offer == null) {
             throw OfferNotFoundException()
         }
 
-        if (entity.status != OfferStatus.PENDING && entity.status != OfferStatus.COUNTEROFFER) {
+        if (offer.status != OfferStatus.PENDING && offer.status != OfferStatus.COUNTEROFFER) {
             throw IllegalArgumentException("El estado actual no es valido para aceptar la oferta")
         }
-        return entity
+        return offer
     }
 
     /* 
@@ -63,7 +63,7 @@ class OfferService(private val authorizationService: AuthorizationService, priva
         
         var isCreated = false
         for (userReceive in usersReceive) {
-            val entity = OfferEntity(
+            val offer = OfferEntity(
                 userOffer = userOffer,
                 userReceive = userReceive, 
                 cardOffer = cardOffer,
@@ -73,7 +73,7 @@ class OfferService(private val authorizationService: AuthorizationService, priva
             if (offerRepository.existByUsers(userOffer, userReceive, cardOffer, cardReceive)) {
                 continue
             }
-            offerRepository.save(entity)
+            offerRepository.save(offer)
             isCreated = true         
         }
 
@@ -100,9 +100,9 @@ class OfferService(private val authorizationService: AuthorizationService, priva
     * @return A offer with the new status
     */
     fun denyOffer(offerId: Int) {
-        val entity = validateOfferStatus(offerId)
-        entity.status = OfferStatus.CANCELLED
-        offerRepository.save(entity)
+        val offer = validateOfferStatus(offerId)
+        offer.status = OfferStatus.CANCELLED
+        offerRepository.save(offer)
     }
 
     /*
@@ -112,20 +112,20 @@ class OfferService(private val authorizationService: AuthorizationService, priva
     * @return A offer with the new status
     */
     fun acceptOffer(offerId: Int) {
-        val entity = validateOfferStatus(offerId)
+        val offer = validateOfferStatus(offerId)
         
-        val ownerOffer = ownershipRepository.findByUserAndCard(entity.userOffer, entity.cardOffer)
-        val ownerReceive = ownershipRepository.findByUserAndCard(entity.userReceive, entity.cardReceive)
+        val ownerOffer = ownershipRepository.findByUserAndCard(offer.userOffer, offer.cardOffer)
+        val ownerReceive = ownershipRepository.findByUserAndCard(offer.userReceive, offer.cardReceive)
             
         //Se verifica que el usuario tenga al menos 2 cartas para poder hacer el intercambio
         if (ownerOffer.quantity < 2 || ownerReceive.quantity < 2) {
-            entity.status = OfferStatus.AUTO_CANCELLED
+            offer.status = OfferStatus.AUTO_CANCELLED
             throw NoSuchElementException("El usuario no tiene suficientes cartas para hacer el intercambio")
         }
 
         //Se actualizan los datos de propiedad al aceptar la oferta
-        val newOwnerOffer = OwnershipEntity (user = entity.userReceive, card = entity.cardOffer)
-        val newOwnerReceive = OwnershipEntity (user = entity.userOffer, card = entity.cardReceive)
+        val newOwnerOffer = OwnershipEntity (user = offer.userReceive, card = offer.cardOffer)
+        val newOwnerReceive = OwnershipEntity (user = offer.userOffer, card = offer.cardReceive)
 
         ownershipRepository.save(newOwnerOffer)
         ownershipRepository.save(newOwnerReceive)
@@ -136,22 +136,22 @@ class OfferService(private val authorizationService: AuthorizationService, priva
         ownershipRepository.save(ownerOffer)
         ownershipRepository.save(ownerReceive)
 
-        entity.status = OfferStatus.ACCEPTED
-        offerRepository.save(entity)
+        offer.status = OfferStatus.ACCEPTED
+        offerRepository.save(offer)
 
         //Se cancelan las ofertas de los otros usuarios para el userOffer
-        var otherOffers = offerRepository.findByUserAndCard(entity.userOffer, entity.cardReceive)
+        var otherOffers = offerRepository.findByUserAndCard(offer.userReceive, offer.cardReceive)
         for (otherOffer in otherOffers) {
-            if (otherOffer.userReceive != entity.userReceive) {
+            if (otherOffer.userReceive != offer.userOffer) {
                 otherOffer.status = OfferStatus.AUTO_CANCELLED
                 offerRepository.save(otherOffer)
             }
         }
 
         //Se cancelan las ofertas de los otros usuarios para el userReceive
-        otherOffers = offerRepository.findByUserAndCard(entity.userReceive, entity.cardOffer)
+        otherOffers = offerRepository.findByUserAndCard(offer.userOffer, offer.cardOffer)
         for (otherOffer in otherOffers) {
-            if (otherOffer.userOffer != entity.userOffer) {
+            if (otherOffer.userOffer != offer.userReceive) {
                 otherOffer.status = OfferStatus.AUTO_CANCELLED
                 offerRepository.save(otherOffer)
             }
