@@ -140,18 +140,18 @@ class OfferService(private val authorizationService: AuthorizationService, priva
         offerRepository.save(offer)
 
         //Se cancelan las ofertas de los otros usuarios para el userOffer
-        var otherOffers = offerRepository.findByUserAndCard(offer.userReceive, offer.cardReceive)
+        var otherOffers = offerRepository.findByUserAndCard(offer.userOffer, offer.cardReceive)
         for (otherOffer in otherOffers) {
-            if (otherOffer.userReceive != offer.userOffer) {
+            if ((otherOffer.status == OfferStatus.PENDING || otherOffer.status == OfferStatus.COUNTEROFFER) && otherOffer.id != offer.id) {
                 otherOffer.status = OfferStatus.AUTO_CANCELLED
                 offerRepository.save(otherOffer)
             }
         }
 
         //Se cancelan las ofertas de los otros usuarios para el userReceive
-        otherOffers = offerRepository.findByUserAndCard(offer.userOffer, offer.cardOffer)
+        otherOffers = offerRepository.findByUserAndCard(offer.userReceive, offer.cardOffer)
         for (otherOffer in otherOffers) {
-            if (otherOffer.userOffer != offer.userReceive) {
+            if ((otherOffer.status == OfferStatus.PENDING || otherOffer.status == OfferStatus.COUNTEROFFER) && otherOffer.id != offer.id) {
                 otherOffer.status = OfferStatus.AUTO_CANCELLED
                 offerRepository.save(otherOffer)
             }
