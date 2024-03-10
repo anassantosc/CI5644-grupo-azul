@@ -27,11 +27,14 @@ class OwnershipService(private val authorizationService: AuthorizationService, p
      */
     fun getCardsPerPage(username: String, page: Int): List<CardEntity> {
         val userId = authorizationService.retrieveUser(username).id
-        val pageable: Pageable = PageRequest.of(page, 20)
-        val ownershipPage = ownershipRepository.findByUser(userId, pageable)
-        val ownedCards = ownershipPage.map { it.card }
+        val startIndex = (page * 20) + 1
+        val endIndex = startIndex + 21
+        val ownedCards = ownershipRepository.findByUser(userId)
+            .filter { it.card in startIndex until endIndex }
+            .map { it.card }
         return cardRepository.findAllById(ownedCards)
     }
+
 
     /**
      * Retrieves a list of pairs of (user, number of possessions), sorted by the number of possessions in descending order.
@@ -58,7 +61,6 @@ class OwnershipService(private val authorizationService: AuthorizationService, p
             0f // If the user does not posses any card, its progress is 0
         }
     }
-
 
     /*
     * Retrieve a paginated list of the cards with quantity > 1
