@@ -32,7 +32,7 @@ class OwnershipController(private val ownershipService: OwnershipService) {
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
 
             if (page < 0) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El número de página debe ser un entero mayor o igual a 0")
             }
 
             val pageOfOwnedCards = ownershipService.getCardsPerPage(username, page)
@@ -94,7 +94,7 @@ class OwnershipController(private val ownershipService: OwnershipService) {
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
 
             if (page < 0) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El número de página debe ser un entero mayor o igual a 0")
             }
 
             val duplicatedCards = ownershipService.getDuplicatedCards(username, page)
@@ -120,10 +120,10 @@ class OwnershipController(private val ownershipService: OwnershipService) {
             val username = JWTSecurityUtils.getAuthUserFromJWT(authCookie)
 
             if (page < 0) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Page number must be an integer greater or equal than 0")
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El número de página debe ser un entero mayor o igual a 0")
             }
             if (offerId != null && offerId < 0) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("offerId must be null or a positive number")
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El id de la oferta debe ser un entero mayor o igual a 0")
             }
 
             val nonOwnedCards = ownershipService.getNonOwnedCards(username, page, offerId)
