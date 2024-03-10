@@ -13,7 +13,6 @@ INSERT INTO pertenencia ("user", card, visibility, quantity) VALUES
 ('2', '9', 'true', '1'),
 ('2', '2', 'true', '10'),
 ('2', '13', 'true', '1'),
-('2', '53', 'true', '1'),
 ('2', '63', 'true', '1'),
 ('2', '37', 'true', '1'),
 ('3', '1', 'true', '1'),
