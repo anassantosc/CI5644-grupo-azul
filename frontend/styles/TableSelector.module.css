@@ -1,13 +1,13 @@
-.loading-container {
+.loadingContainer {
     text-align: center;
     margin: 50px;
 }
 
-.loading-text {
+.loadingText {
     color: white;
 }
 
-.status-message {
+.statusMessage {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,4 +35,5 @@
 
 .pagination {
     color: #ffffff;
+    border: none;
 }
