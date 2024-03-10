@@ -18,59 +18,58 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useAlert } from "../context/AlertContext";
 import OfferModal from "./OfferModal";
-import { useGetOffers } from "../hooks/useGetOffers";
+import { GetOffers } from "../utils/fetchs/GetOffers";
 import { AcceptOffer } from "../utils/fetchs/AcceptOffer";
 import { DenyOffer } from "../utils/fetchs/DenyOffer";
 import styles from "../../styles/NotificationMenu.module.css";
 
 export default function NotificationMenu() {
   const [page, setPage] = useState(0);
-  const [step, setStep] = useState(0);
-  const { offers: trades, loading, error } = useGetOffers(page);
-  const [haveOffers, setHaveOffers] = useState(trades.length > 0);
+  const [offers, setOffers] = useState([]);
   const [counterOffer, setCounterOffer] = useState(null);
+  const [haveOffers, setHaveOffers] = useState(offers.length > 0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [showModal, setShowModal] = useState(false);
   const open = Boolean(anchorEl);
   const showAlert = useAlert();
 
-  useEffect(() => {
-    if (page === 0) {
-      setHaveOffers(trades.length > 0);
+  const getOffers = async () => {
+    try {
+        const data = await GetOffers(page);
+        setOffers(data)
+    } catch (error) {
+        console.log(e)
     }
-  }, [trades]);
+  };
 
   const handleClick = (event) => {
-    console.log(trades);
-    console.log(trades.length);
-    console.log(haveOffers);
     setAnchorEl(event.currentTarget);
+    setPage(0);
   };
+  
   const handleClose = () => {
     setAnchorEl(null);
-    setPage(1);
     setPage(0);
-    setStep(0);
-    setHaveOffers(trades.length > 0);
   };
 
-  const nextStep = () => {
-    if (step < 4) {
-      setStep(step + 1);
-    } else {
-      setPage(page + 1);
-      setStep(0);
+  const nextPage = () => {
+    setPage(page + 1)
+  };
+
+  const prevPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
     }
   };
 
   const handleAccept = async (offerId) => {
-    const response = await AcceptOffer(offerId, showAlert);
-    handleClose();
+    await AcceptOffer(offerId, showAlert);
+    getOffers();
   };
 
   const handleDeny = async (offerId) => {
-    const response = await DenyOffer(offerId, showAlert);
-    handleClose();
+    await DenyOffer(offerId, showAlert);
+    getOffers();
   };
 
   const handleCounterOffer = (offer) => {
@@ -84,15 +83,15 @@ export default function NotificationMenu() {
     setCounterOffer(null);
   };
 
-  const prevStep = () => {
-    if (step > 0) {
-      setStep(step - 1);
-    } else {
-      if (page > 0) {
-        setPage(page - 1);
-      }
+  useEffect(() => {
+    if (page === 0) {
+      setHaveOffers(offers.length > 0);
     }
-  };
+  }, [offers]);
+
+  useEffect(() => {
+    getOffers();
+  }, [page]);
 
   return (
     <>
@@ -114,7 +113,7 @@ export default function NotificationMenu() {
           >
             <Badge
               badgeContent={
-                haveOffers ? (trades.length < 5 ? trades.length : "5+") : null
+                haveOffers ? (offers.length < 5 ? offers.length : "5+") : null
               }
               color="error"
             >
@@ -163,7 +162,7 @@ export default function NotificationMenu() {
               </Grid>
             </Grid>
           </MenuItem>
-          {trades.slice(5*step, 5*(step+1)).map((offer) => (
+          {offers.map((offer) => (
             <MenuItem key={offer.id} sx={{ cursor: "default" }}>
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={4}>
@@ -225,14 +224,17 @@ export default function NotificationMenu() {
           ))}
           <MenuItem className={`${styles.menuItem} ${styles.menuItemHover}`}>
             <Grid container justifyContent="space-around">
-              <IconButton onClick={prevStep} disabled={page === 0}>
+              <IconButton onClick={prevPage} disabled={page === 0}>
                 <ArrowBackIosIcon
                   sx={{ color: page === 0 ? "#8c8c8c" : "#FFFFFF" }}
                 />
               </IconButton>
-              <IconButton onClick={nextStep} disabled={trades.length < 5}>
+              <IconButton onClick={nextPage} disabled={offers.length < 5}>
                 <ArrowForwardIosIcon
-                  sx={{ color: trades.length < 5*(step + 1)  ? "#8c8c8c" : "#FFFFFF" }}
+                  sx={{
+                    color:
+                      offers.length < 5 ? "#8c8c8c" : "#FFFFFF",
+                  }}
                 />
               </IconButton>
             </Grid>
