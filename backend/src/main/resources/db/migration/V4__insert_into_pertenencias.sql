@@ -13,7 +13,6 @@ INSERT INTO pertenencia ("user", card, visibility, quantity) VALUES
 ('2', '9', 'true', '1'),
 ('2', '2', 'true', '10'),
 ('2', '13', 'true', '1'),
-('2', '53', 'true', '1'),
 ('2', '63', 'true', '1'),
 ('2', '37', 'true', '1'),
 ('3', '1', 'true', '1'),
@@ -102,7 +101,7 @@ INSERT INTO pertenencia ("user", card, visibility, quantity) VALUES
 ('3', '338', 'true', '1'),
 ('1', '400', 'true', '3'),
 ('2', '401', 'true', '3'),
-('3', '402', 'true', '3')
+('3', '402', 'true', '3'),
 ('1', '403', 'true', '3'),
 ('2', '404', 'true', '3'),
 ('3', '405', 'true', '3'),
@@ -327,5 +326,4 @@ INSERT INTO pertenencia ("user", card, visibility, quantity) VALUES
 ('3', '96', 'true', '8'),
 ('1', '97', 'true', '8'),
 ('2', '98', 'true', '8'),
-('3', '99', 'true', '8')
-;
+('3', '99', 'true', '8');
