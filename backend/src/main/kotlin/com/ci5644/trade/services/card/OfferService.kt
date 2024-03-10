@@ -89,7 +89,7 @@ class OfferService(private val authorizationService: AuthorizationService, priva
         */
     fun getAvailableOffers(username: String, page: Int) : List<OfferEntity> {
         val userId = authorizationService.retrieveUser(username).id
-        val pageable: Pageable = PageRequest.of(page, 20)
+        val pageable: Pageable = PageRequest.of(page, 5)
         return offerRepository.findAvailableByUserReceive(userId, pageable)
     }
     
