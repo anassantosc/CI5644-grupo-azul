@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import com.ci5644.trade.models.card.CardEntity
 import com.ci5644.trade.repositories.OfferRepository
 import kotlin.math.min
@@ -86,7 +87,7 @@ class OwnershipService(private val authorizationService: AuthorizationService, p
     */
     fun getNonOwnedCards(username: String, page: Int, offerId: Int?): List<Int> {
         val userId = authorizationService.retrieveUser(username).id
-        val pageable: Pageable = PageRequest.of(page, 20)
+        val pageable: Pageable = PageRequest.of(page, 20, Sort.by("card"))
 
         if (offerId != null) {
             val offer = offerRepository.findById(offerId) ?: throw OfferNotFoundException()
