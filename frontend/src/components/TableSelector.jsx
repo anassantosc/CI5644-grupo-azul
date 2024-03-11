@@ -41,7 +41,7 @@ export const TableSelector = ({onSelect, onClick, receive, offer = null}) => {
                 if (receive) {
                     const data = {
                         page,
-                        id: offer?.username
+                        id: offer?.id
                     };
                     temp = await GetWishlist(data);
                 } else {
@@ -59,7 +59,7 @@ export const TableSelector = ({onSelect, onClick, receive, offer = null}) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 750);
+        }, 1000);
 
         return () => clearTimeout(timer);
     }, []);
