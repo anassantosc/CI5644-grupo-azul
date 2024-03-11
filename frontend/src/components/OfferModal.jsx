@@ -54,8 +54,6 @@ const OfferModal = ({show, onClose, offer = null}) => {
                 await CreateOffer(offerData, showAlert) :
                 await CreateCounterOffer(offerWithId, showAlert);
 
-            setOfferData({cardReceive: null, cardOffer: null});
-
         } catch (error) {
             console.error(alertMessages.offer_error, error);
             showAlert(alertMessages.offer_error, alertTypes.error);
@@ -65,7 +63,7 @@ const OfferModal = ({show, onClose, offer = null}) => {
     }
 
     useEffect(() => {
-        setOfferData({cardReceive: offer?.cardReceive, cardOffer: offer?.cardOffer})
+        setOfferData({cardReceive: offer?.cardOffer, cardOffer: offer?.cardReceive})
     }, [offer]);
 
     return (
