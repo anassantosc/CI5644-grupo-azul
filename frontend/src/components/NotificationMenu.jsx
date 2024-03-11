@@ -147,7 +147,7 @@ export default function NotificationMenu() {
                             <Grid item xs={4}>
                                 <ListItemText className={styles.listItemTextTitle}>
                                     {" "}
-                                    Carta ofrecida{" "}
+                                    Carta a entregar{" "}
                                 </ListItemText>
                             </Grid>
                             <Grid item xs={4}>
