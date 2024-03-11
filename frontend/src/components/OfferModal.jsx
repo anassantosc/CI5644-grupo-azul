@@ -60,6 +60,7 @@ const OfferModal = ({show, onClose, offer = null}) => {
         }
 
         onClose();
+        setOfferData({cardReceive: null, cardOffer: null});
     }
 
     useEffect(() => {
@@ -152,7 +153,6 @@ const OfferModal = ({show, onClose, offer = null}) => {
                     size="medium"
                     onClick={() => {
                         handleConfirm();
-                        setOfferData({cardReceive: null, cardOffer: null});
                     }}
                     className={styles.confirmButton}
                 >

@@ -55,10 +55,10 @@ export default function NotificationMenu() {
     };
 
     const handleAccept = async (offerId) => {
-        await AcceptOffer(offerId, showAlert);
+        const response = await AcceptOffer(offerId, showAlert);
         await getOffers();
 
-       if (path === '/album') {
+       if (response.ok && path === '/album') {
             window.location.reload();
         }
     };
@@ -74,9 +74,10 @@ export default function NotificationMenu() {
         handleClose();
     };
 
-    const handleCloseModal = () => {
+    const handleCloseModal = async () => {
         setShowModal(false);
         setCounterOffer(null);
+        await getOffers();
     };
 
     useEffect(() => {

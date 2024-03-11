@@ -3,9 +3,10 @@ import { HTTPMethods, routes, alertMessages, alertTypes, statusCodes } from "../
 
 export const CreateCounterOffer = async (offerData, showAlert) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.offer}${routes.counteroffer}`;
-    const method = HTTPMethods.POST;
+    const method = HTTPMethods.PUT;
     const data = JSON.stringify(offerData);
     const headers = {};
+    console.log(method);
 
     try {
         const response = await secureFetch(url, method, data, headers);
