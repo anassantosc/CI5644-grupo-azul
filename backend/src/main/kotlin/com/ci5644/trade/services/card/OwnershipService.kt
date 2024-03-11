@@ -14,11 +14,13 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import com.ci5644.trade.models.card.CardEntity
 import com.ci5644.trade.repositories.OfferRepository
-import kotlin.math.min
+import org.slf4j.LoggerFactory
 
 @Service
 class OwnershipService(private val authorizationService: AuthorizationService, private val offerRepository: OfferRepository, private val ownershipRepository: OwnershipRepository, private val cardRepository: CardRepository) {
     
+    private val logger = LoggerFactory.getLogger(authorizationService::class.java)
+
     /**
      * Retrieve a paginated list of card entities owned by a user.
      *
@@ -86,11 +88,14 @@ class OwnershipService(private val authorizationService: AuthorizationService, p
     * @throws         OfferNotFoundException if the offer is not found
     */
     fun getNonOwnedCards(username: String, page: Int, offerId: Int?): List<Int> {
+        logger.info(offerId)
         val userId = authorizationService.retrieveUser(username).id
         val pageable: Pageable = PageRequest.of(page, 20)
 
         if (offerId != null) {
             val offer = offerRepository.findById(offerId) ?: throw OfferNotFoundException()
+            logger.info(offer.userOffer)
+            logger.info(userId)
             return ownershipRepository.findInterceptionCards(userId, offer.userOffer, pageable)
         } else {
             return ownershipRepository.findNonOwnedCards(userId, pageable)
