@@ -14,11 +14,11 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import com.ci5644.trade.models.card.CardEntity
 import com.ci5644.trade.repositories.OfferRepository
-import kotlin.math.min
 
 @Service
 class OwnershipService(private val authorizationService: AuthorizationService, private val offerRepository: OfferRepository, private val ownershipRepository: OwnershipRepository, private val cardRepository: CardRepository) {
     
+
     /**
      * Retrieve a paginated list of card entities owned by a user.
      *

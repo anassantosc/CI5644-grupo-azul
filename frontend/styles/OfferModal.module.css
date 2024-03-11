@@ -35,6 +35,18 @@
     color: white;
 }
 
+.receiveButton:hover {
+    background-color: #731530;
+    border: 1px solid #ffffff4d;
+    color: white;
+}
+
+.sendButton:hover {
+    background-color: #731530;
+    border: 1px solid #ffffff4d;
+    color: white;
+}
+
 .fields {
     display: grid;
     grid-template-columns: 1fr 1fr;
