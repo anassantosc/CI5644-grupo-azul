@@ -1,15 +1,16 @@
 package com.ci5644.trade.models.user
 
 import jakarta.persistence.*
-import org.hibernate.annotations.GenericGenerator
 
 @Entity
 @Table(name = "USUARIO")
 class UserEntity (
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long,
+        val id: Int = 0,
         var username: String,
         var password: String,
+        var name: String,
+        var email: String,
+        var gender: String?,
 )
-//psql -U azulito - azulito-pg
