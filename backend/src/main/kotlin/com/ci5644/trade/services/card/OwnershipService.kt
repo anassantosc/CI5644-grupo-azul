@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import com.ci5644.trade.models.card.CardEntity
 import com.ci5644.trade.repositories.OfferRepository
 import kotlin.math.min
