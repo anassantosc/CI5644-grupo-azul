@@ -17,10 +17,13 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.web.server.ResponseStatusException
 import org.springframework.http.HttpStatus
+import org.slf4j.LoggerFactory
 
 
 @Service
 class OfferService(private val authorizationService: AuthorizationService, private val offerRepository: OfferRepository, private val ownershipRepository: OwnershipRepository) {
+    
+    private val logger = LoggerFactory.getLogger(OfferService::class.java)
 
     private fun validateUserDoesNotOwnCard(userOfferId: Int, cardReceive: Int) {
         if (ownershipRepository.existsByUserAndCard(userOfferId, cardReceive)) {
@@ -140,8 +143,10 @@ class OfferService(private val authorizationService: AuthorizationService, priva
         offerRepository.save(offer)
 
         //Se cancelan las ofertas de los otros usuarios para el userOffer
+        logger.info("offer.userOffer, offer.cardReceive: ${offer.userOffer}, ${offer.cardReceive}")
         var otherOffers = offerRepository.findByUserAndCard(offer.userOffer, offer.cardReceive)
         for (otherOffer in otherOffers) {
+            logger.info("otherOffer: ${otherOffer.id}, ${otherOffer.status}, ${offer.id}, ${otherOffer.status == OfferStatus.PENDING}")
             if ((otherOffer.status == OfferStatus.PENDING || otherOffer.status == OfferStatus.COUNTEROFFER) && otherOffer.id != offer.id) {
                 otherOffer.status = OfferStatus.AUTO_CANCELLED
                 offerRepository.save(otherOffer)
@@ -149,8 +154,10 @@ class OfferService(private val authorizationService: AuthorizationService, priva
         }
 
         //Se cancelan las ofertas de los otros usuarios para el userReceive
+        logger.info("offer.userReceive, offer.cardOffer: ${offer.userReceive}, ${offer.cardOffer}")
         otherOffers = offerRepository.findByUserAndCard(offer.userReceive, offer.cardOffer)
         for (otherOffer in otherOffers) {
+            logger.info("otherOffer: ${otherOffer.id}, ${otherOffer.status}, ${offer.id}, ${otherOffer.status == OfferStatus.PENDING}")
             if ((otherOffer.status == OfferStatus.PENDING || otherOffer.status == OfferStatus.COUNTEROFFER) && otherOffer.id != offer.id) {
                 otherOffer.status = OfferStatus.AUTO_CANCELLED
                 offerRepository.save(otherOffer)

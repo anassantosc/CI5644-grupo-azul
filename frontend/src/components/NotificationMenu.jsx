@@ -1,15 +1,14 @@
-import React, {useState, useEffect} from "react";
-import { usePathname } from 'next/navigation'
+import React, { useState, useEffect, useHistory } from "react";
 import {
-    Badge,
-    Box,
-    Grid,
-    IconButton,
-    ListItemIcon,
-    ListItemText,
-    Menu,
-    MenuItem,
-    Tooltip,
+  Badge,
+  Box,
+  Grid,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Tooltip,
 } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 import TurnLeftIcon from "@mui/icons-material/TurnLeft";
@@ -17,11 +16,11 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import {useAlert} from "../context/AlertContext";
-import {GetOffers} from "../utils/fetchs/GetOffers";
-import {AcceptOffer} from "../utils/fetchs/AcceptOffer";
-import {DenyOffer} from "../utils/fetchs/DenyOffer";
+import { useAlert } from "../context/AlertContext";
 import OfferModal from "./OfferModal";
+import { GetOffers } from "../utils/fetchs/GetOffers";
+import { AcceptOffer } from "../utils/fetchs/AcceptOffer";
+import { DenyOffer } from "../utils/fetchs/DenyOffer";
 import styles from "../../styles/NotificationMenu.module.css";
 
 export default function NotificationMenu() {
@@ -216,42 +215,42 @@ export default function NotificationMenu() {
                                         >
                       <span>
                         <IconButton
-                            onClick={() => handleCounterOffer(offer)}
-                            disabled={offer.status !== "PENDING"}
+                          onClick={() => handleCounterOffer(offer)}
+                          disabled={offer.status !== "PENDING"}
                         >
-                          <TurnLeftIcon className={styles.iconButton}/>
+                          <TurnLeftIcon className={styles.iconButton} />
                         </IconButton>
                       </span>
-                                        </Tooltip>
-                                    </ListItemIcon>
-                                </Grid>
-                            </Grid>
-                        </MenuItem>
-                    ))}
-                    <MenuItem className={`${styles.menuItem} ${styles.menuItemHover}`}>
-                        <Grid container justifyContent="space-around">
-                            <IconButton onClick={prevPage} disabled={page === 0}>
-                                <ArrowBackIosIcon
-                                    sx={{color: page === 0 ? "#8c8c8c" : "#FFFFFF"}}
-                                />
-                            </IconButton>
-                            <IconButton onClick={nextPage} disabled={offers.length < 5}>
-                                <ArrowForwardIosIcon
-                                    sx={{
-                                        color:
-                                            offers.length < 5 ? "#8c8c8c" : "#FFFFFF",
-                                    }}
-                                />
-                            </IconButton>
-                        </Grid>
-                    </MenuItem>
-                </Menu>
-            )}
-            <OfferModal
-                show={showModal}
-                onClose={handleCloseModal}
-                offer={counterOffer}
-            />
-        </>
-    );
+                    </Tooltip>
+                  </ListItemIcon>
+                </Grid>
+              </Grid>
+            </MenuItem>
+          ))}
+          <MenuItem className={`${styles.menuItem} ${styles.menuItemHover}`}>
+            <Grid container justifyContent="space-around">
+              <IconButton onClick={prevPage} disabled={page === 0}>
+                <ArrowBackIosIcon
+                  sx={{ color: page === 0 ? "#8c8c8c" : "#FFFFFF" }}
+                />
+              </IconButton>
+              <IconButton onClick={nextPage} disabled={offers.length < 5}>
+                <ArrowForwardIosIcon
+                  sx={{
+                    color:
+                      offers.length < 5 ? "#8c8c8c" : "#FFFFFF",
+                  }}
+                />
+              </IconButton>
+            </Grid>
+          </MenuItem>
+        </Menu>
+      )}
+      <OfferModal
+        show={showModal}
+        onClose={handleCloseModal}
+        offer={counterOffer}
+      />
+    </>
+  );
 }
