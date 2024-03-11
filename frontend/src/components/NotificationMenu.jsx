@@ -1,26 +1,17 @@
-import React, { useState, useEffect, useHistory } from "react";
-import {
-  Badge,
-  Box,
-  Grid,
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Tooltip,
-} from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Badge, Box, Grid, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip,} from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 import TurnLeftIcon from "@mui/icons-material/TurnLeft";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useAlert } from "../context/AlertContext";
+import {useAlert} from "../context/AlertContext";
 import OfferModal from "./OfferModal";
-import { GetOffers } from "../utils/fetchs/GetOffers";
-import { AcceptOffer } from "../utils/fetchs/AcceptOffer";
-import { DenyOffer } from "../utils/fetchs/DenyOffer";
+import {GetOffers} from "../utils/fetchs/GetOffers";
+import {AcceptOffer} from "../utils/fetchs/AcceptOffer";
+import {DenyOffer} from "../utils/fetchs/DenyOffer";
+import {usePathname} from "next/navigation"
 import styles from "../../styles/NotificationMenu.module.css";
 
 export default function NotificationMenu() {
