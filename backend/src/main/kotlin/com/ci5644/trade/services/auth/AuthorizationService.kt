@@ -21,8 +21,17 @@ import org.springframework.security.crypto.password.PasswordEncoder
  * Service class for handling authorization-related operations.
  */
 @Service
-class AuthorizationService(private var userRepository: UserRepository, private var authenticationManager: AuthenticationManager, private var encoder: PasswordEncoder) {
-    
+class AuthorizationService {
+
+    @Autowired
+    private lateinit var authenticationManager: AuthenticationManager
+
+    @Autowired
+    private lateinit var userRepository: UserRepository
+
+    @Autowired
+    private lateinit var encoder: PasswordEncoder
+      
     /**
      * Retrieves user entity by username.
      * @param username String - The username of the user.
