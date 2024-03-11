@@ -73,8 +73,10 @@ class OfferController(private val offerService: OfferService) {
             } 
 
             ResponseEntity.ok(offerService.getAvailableOffers(username, page))
+        } catch (e: NoSuchElementException) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
         } catch (e: OfferNotFoundException) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La oferta no existe")
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body<Unit>(null)
         }
