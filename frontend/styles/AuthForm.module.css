@@ -1,0 +1,45 @@
+.authForm {
+    height: auto;
+    width: 100%;
+    max-width: 22rem;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: space-around;
+    padding: 3rem 4rem;
+    background-color: #fff2;
+    border-radius: 10px;
+    border: 1px solid #fffe;
+    color: #fff;
+    font-size: .9rem;
+}
+
+@media (max-width: 600px) {
+    .authForm {
+        padding: 1.5rem 2rem;
+        font-size: 0.8rem;
+    }
+}
+
+.colorButton {
+    height: 29px;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.boxPadding {
+    padding-right: 7px;
+}
+
+.h1Style {
+    margin: 0;
+}
+
+.linkStyle {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.linkStyle:hover {
+    text-decoration: underline;
+}

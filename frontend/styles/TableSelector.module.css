@@ -1,0 +1,39 @@
+.loadingContainer {
+    text-align: center;
+    margin: 50px;
+}
+
+.loadingText {
+    color: white;
+}
+
+.statusMessage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    margin: 50px;
+}
+
+.tableContainer {
+    background-color: #581E3D;
+}
+
+.title {
+    margin: 10px;
+    text-align: center;
+    color: white;
+}
+
+.cardButton {
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+
+}
+
+.pagination {
+    color: #ffffff;
+    border: none;
+}

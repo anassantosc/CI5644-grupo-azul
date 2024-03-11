@@ -1,20 +1,27 @@
-import * as React from 'react';
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
-import TimelineDot from '@mui/lab/TimelineDot';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import {
+    Timeline,
+    TimelineItem,
+    TimelineSeparator,
+    TimelineConnector,
+    TimelineContent, 
+    TimelineOppositeContent,
+    TimelineDot } from "@mui/lab";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Typography from "@mui/material/Typography";
+import PropTypes from "prop-types";
 
-export default function TopMundial({firstPlace, secondPlace, thirdPlace}) {
+export default function TopMundial({ firstPlace, secondPlace, thirdPlace }) {
     return (
-        <Timeline position="alternate">
+        <Timeline
+            position="alternate"
+            sx={{
+                width: "100%",
+            }}
+        >
             <TimelineItem>
                 <TimelineOppositeContent
-                    sx={{ m: 'auto 0' }}
+                    sx={{ m: "auto 0" }}
                     align="right"
                     variant="body2"
                     color="text.secondary"
@@ -28,16 +35,18 @@ export default function TopMundial({firstPlace, secondPlace, thirdPlace}) {
                     </TimelineDot>
                     <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent sx={{ py: '12px', px: 2 }}>
+                <TimelineContent sx={{ py: "12px", px: 2 }}>
                     <Typography variant="h6" component="span">
                         {firstPlace.first}
                     </Typography>
-                    <Typography>Progreso: {firstPlace.second} %</Typography>
+                    <Typography>
+                        Progreso: {firstPlace.second.toFixed(2)} %
+                    </Typography>
                 </TimelineContent>
             </TimelineItem>
             <TimelineItem>
                 <TimelineOppositeContent
-                    sx={{ m: 'auto 0' }}
+                    sx={{ m: "auto 0" }}
                     variant="body2"
                     color="text.secondary"
                 >
@@ -50,16 +59,18 @@ export default function TopMundial({firstPlace, secondPlace, thirdPlace}) {
                     </TimelineDot>
                     <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent sx={{ py: '12px', px: 2 }}>
+                <TimelineContent sx={{ py: "12px", px: 2 }}>
                     <Typography variant="h6" component="span">
                         {secondPlace.first}
                     </Typography>
-                    <Typography>Progreso: {secondPlace.second} % </Typography>
+                    <Typography>
+                        Progreso: {secondPlace.second.toFixed(2)} %{" "}
+                    </Typography>
                 </TimelineContent>
             </TimelineItem>
             <TimelineItem>
                 <TimelineOppositeContent
-                    sx={{ m: 'auto 0' }}
+                    sx={{ m: "auto 0" }}
                     variant="body2"
                     color="text.secondary"
                 >
@@ -70,15 +81,23 @@ export default function TopMundial({firstPlace, secondPlace, thirdPlace}) {
                     <TimelineDot color="primary" variant="outlined">
                         <AccountCircleIcon />
                     </TimelineDot>
-                    <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
+                    <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
                 </TimelineSeparator>
-                <TimelineContent sx={{ py: '12px', px: 2 }}>
+                <TimelineContent sx={{ py: "12px", px: 2 }}>
                     <Typography variant="h6" component="span">
                         {thirdPlace.first}
                     </Typography>
-                    <Typography>Progreso: {thirdPlace.second} %</Typography>
+                    <Typography>
+                        Progreso: {thirdPlace.second.toFixed(2)} %
+                    </Typography>
                 </TimelineContent>
             </TimelineItem>
         </Timeline>
     );
 }
+
+TopMundial.propTypes = {
+    firstPlace: PropTypes.object,
+    secondPlace: PropTypes.object,
+    thirdPlace: PropTypes.object,
+};

@@ -3,6 +3,8 @@ package com.ci5644.trade.repositories
 import com.ci5644.trade.models.card.CardEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Repository
 import java.util.Optional
 
@@ -14,6 +16,6 @@ interface CardRepository : JpaRepository<CardEntity, Int> {
     override fun findById(id: Int): Optional<CardEntity>
 
     @Query("SELECT c FROM CardEntity c") 
-    override fun findAll(): List<CardEntity>
+    override fun findAll(pageable: Pageable): Page<CardEntity>
 
 }

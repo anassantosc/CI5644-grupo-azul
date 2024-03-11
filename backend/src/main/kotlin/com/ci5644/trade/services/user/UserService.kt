@@ -3,6 +3,7 @@ package com.ci5644.trade.services.user
 import com.ci5644.trade.repositories.UserRepository
 import com.ci5644.trade.models.user.UserEntity
 import com.ci5644.trade.dto.UserDetailsDto
+import com.ci5644.trade.services.auth.AuthorizationService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.security.core.userdetails.User
@@ -18,7 +19,7 @@ class UserService : UserDetailsService {
 
     @Autowired
     lateinit var userRepository: UserRepository
-
+    
     /**
      * Loads user details by username.
      * @param username String - The username of the user.
@@ -27,9 +28,10 @@ class UserService : UserDetailsService {
      */
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
-        if (!userRepository.existsByUsername(username))
-            throw UsernameNotFoundException("Not found: $username")
         val user = userRepository.findByUsername(username)
+        if (user == null) {
+            throw UsernameNotFoundException("No se encontró: $username")
+        }
         return User.withUsername(user.username)
             .password(user.password)
             .build()
@@ -41,9 +43,10 @@ class UserService : UserDetailsService {
      * @throws UsernameNotFoundException if the user with the specified username does not exist.
      */
     fun editUser(details: UserDetailsDto) {
-        if (!userRepository.existsByUsername(details.username))
-            throw UsernameNotFoundException("Not found: $details.username")
         val user = userRepository.findByUsername(details.username)
+        if (user == null) {
+            throw UsernameNotFoundException("No se encontró: ${details.username}")
+        }
         user.name = details.name
         user.username = details.username
         user.email = details.email
