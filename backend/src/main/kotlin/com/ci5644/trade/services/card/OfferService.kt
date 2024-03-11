@@ -73,9 +73,15 @@ class OfferService(private val authorizationService: AuthorizationService, priva
                 cardReceive = cardReceive, 
                 status = OfferStatus.PENDING
             )
+
             if (offerRepository.existByUsers(userOffer, userReceive, cardOffer, cardReceive)) {
                 continue
             }
+
+            if (offerRepository.existByUsers(userReceive, userOffer, cardReceive, cardOffer)) {
+                continue
+            }
+
             offerRepository.save(offer)
             isCreated = true         
         }
@@ -190,6 +196,10 @@ class OfferService(private val authorizationService: AuthorizationService, priva
         offer.cardReceive = cardReceive
         
         if (offerRepository.existByUsers(offer.userOffer, offer.userReceive, cardOffer, cardReceive)) {
+            throw IllegalArgumentException("Una oferta con las mismas caracteristicas ya existe")
+        }
+
+        if (offerRepository.existByUsers(offer.userReceive, offer.userOffer, cardReceive, cardOffer)) {
             throw IllegalArgumentException("Una oferta con las mismas caracteristicas ya existe")
         }
 
