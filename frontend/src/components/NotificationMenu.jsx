@@ -55,10 +55,10 @@ export default function NotificationMenu() {
     };
 
     const handleAccept = async (offerId) => {
-        const [message, status] = await AcceptOffer(offerId, showAlert);
+        const [response, message, status] = await AcceptOffer(offerId, showAlert);
         await getOffers();
         showAlert(message, status)
-        if (path === '/album') {
+        if (response.ok && path === '/album') {
             window.location.reload();
         }
     };
@@ -74,9 +74,10 @@ export default function NotificationMenu() {
         handleClose();
     };
 
-    const handleCloseModal = () => {
+    const handleCloseModal = async () => {
         setShowModal(false);
         setCounterOffer(null);
+        await getOffers();
     };
 
     useEffect(() => {
@@ -147,7 +148,7 @@ export default function NotificationMenu() {
                             <Grid item xs={4}>
                                 <ListItemText className={styles.listItemTextTitle}>
                                     {" "}
-                                    Carta ofrecida{" "}
+                                    Carta a entregar{" "}
                                 </ListItemText>
                             </Grid>
                             <Grid item xs={4}>

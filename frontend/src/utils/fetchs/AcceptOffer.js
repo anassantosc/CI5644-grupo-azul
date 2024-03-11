@@ -11,11 +11,11 @@ export const AcceptOffer = async (offerId, showAlert) => {
         const response = await secureFetch(url, method, data, headers);
 
         if (response.ok) {
-            return [alertMessages.accept_trade, alertTypes.success];
+            return [response, alertMessages.accept_trade, alertTypes.success];
         } else if (response.status === statusCodes.bad_request) {
-            return [response.message, alertTypes.error];
+            return [response, response.message, alertTypes.error];
         } else {
-            return [alertMessages.unknown_error, alertTypes.error];
+            return [response, alertMessages.unknown_error, alertTypes.error];
         }
     } catch (error) {
         console.error(error);

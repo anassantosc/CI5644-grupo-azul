@@ -21,18 +21,20 @@ interface OwnershipRepository: JpaRepository<OwnershipEntity, Long> {
     @Query("SELECT o.user FROM OwnershipEntity o WHERE o.card = :card AND o.quantity > 1")
     fun findUserByCard(card: Int): List<Int>
 
-    @Query("SELECT o.card FROM OwnershipEntity o WHERE o.user = :user AND o.quantity > 1")
+    @Query("SELECT o.card FROM OwnershipEntity o WHERE o.user = :user AND o.quantity > 1 ORDER BY o.card ASC")
     fun findDuplicatedCards(user: Int, pageable: Pageable): List<Int>
-    @Query("SELECT o.card FROM OwnershipEntity o WHERE o.user = :user AND o.quantity > 1")
+    @Query("SELECT o.card FROM OwnershipEntity o WHERE o.user = :user AND o.quantity > 1 ORDER BY o.card ASC")
     fun findDuplicatedCards(user: Int): List<Int>
 
     @Query("SELECT c.id FROM CardEntity c " +
-            "LEFT JOIN OwnershipEntity o ON c.id = o.card AND o.user = :user WHERE o.id IS NULL")
+            "LEFT JOIN OwnershipEntity o ON c.id = o.card AND o.user = :user WHERE o.id IS NULL " +
+            "ORDER BY c.id ASC")
     fun findNonOwnedCards(user: Int, pageable: Pageable): List<Int>
 
     @Query("SELECT c.id FROM CardEntity c " +
-            "LEFT JOIN OwnershipEntity o1 ON (c.id = o1.card AND o1.user = :userOfferId AND o1.quantity > 1) " +
-            "LEFT JOIN OwnershipEntity o2 ON (c.id = o2.card AND o2.user = :userReceiveId) WHERE o2.id IS NULL")
+            "JOIN OwnershipEntity o1 ON (c.id = o1.card AND o1.user = :userOfferId AND o1.quantity > 1) " +
+            "LEFT JOIN OwnershipEntity o2 ON (c.id = o2.card AND o2.user = :userReceiveId) WHERE o2.id IS NULL " +
+            "ORDER BY c.id ASC")
     fun findInterceptionCards(userReceiveId: Int, userOfferId: Int, pageable: Pageable): List<Int>
 
     @Query("SELECT u.username, count(o) FROM OwnershipEntity o JOIN UserEntity u ON u.id = o.user GROUP BY u.id ORDER BY count(o) DESC")
