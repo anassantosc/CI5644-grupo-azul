@@ -32,7 +32,7 @@ interface OwnershipRepository: JpaRepository<OwnershipEntity, Long> {
     fun findNonOwnedCards(user: Int, pageable: Pageable): List<Int>
 
     @Query("SELECT c.id FROM CardEntity c " +
-            "LEFT JOIN OwnershipEntity o1 ON (c.id = o1.card AND o1.user = :userOfferId AND o1.quantity > 1) " +
+            "JOIN OwnershipEntity o1 ON (c.id = o1.card AND o1.user = :userOfferId AND o1.quantity > 1) " +
             "LEFT JOIN OwnershipEntity o2 ON (c.id = o2.card AND o2.user = :userReceiveId) WHERE o2.id IS NULL " +
             "ORDER BY c.id ASC")
     fun findInterceptionCards(userReceiveId: Int, userOfferId: Int, pageable: Pageable): List<Int>
