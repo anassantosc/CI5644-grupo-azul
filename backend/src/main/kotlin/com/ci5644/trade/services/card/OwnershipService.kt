@@ -88,14 +88,14 @@ class OwnershipService(private val authorizationService: AuthorizationService, p
     * @throws         OfferNotFoundException if the offer is not found
     */
     fun getNonOwnedCards(username: String, page: Int, offerId: Int?): List<Int> {
-        logger.info(offerId)
+        logger.info(offerId?.toString() ?: "Valor de offerId es nulo")
         val userId = authorizationService.retrieveUser(username).id
         val pageable: Pageable = PageRequest.of(page, 20)
 
         if (offerId != null) {
             val offer = offerRepository.findById(offerId) ?: throw OfferNotFoundException()
-            logger.info(offer.userOffer)
-            logger.info(userId)
+            logger.info(offer.userOffer.toString())
+            logger.info(userId.toString())
             return ownershipRepository.findInterceptionCards(userId, offer.userOffer, pageable)
         } else {
             return ownershipRepository.findNonOwnedCards(userId, pageable)
