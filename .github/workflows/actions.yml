@@ -9,7 +9,7 @@ name: Marmota Salvaje
 
 on:
   push:
-    branches: [ "development" ]
+    branches: [ "development", "feature/backend" ]
   pull_request:
     branches: [ "development" ]
 env:
