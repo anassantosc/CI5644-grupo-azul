@@ -1,5 +1,6 @@
 package com.ci5644.trade.config
 
+import com.ci5644.trade.config.SecurityConstants
 import com.ci5644.trade.config.JWT.EntryPointJWT
 import com.ci5644.trade.config.JWT.JWTFilter
 import com.ci5644.trade.services.user.UserService
@@ -126,7 +127,7 @@ class SecurityConfig {
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf("http://localhost:8080", "http://localhost:3000")
+        configuration.allowedOrigins = listOf(SecurityConstants.BACKEND_URL, SecurityConstants.FRONTEND_URL)
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE")
         configuration.allowedHeaders = listOf("*") // Accept all headers
         configuration.allowCredentials = true
