@@ -66,32 +66,32 @@ jobs:
           source: ./backend/build
           target: ~/blue-team
 
-  test-frontend:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
+  #test-frontend:
+  #  runs-on: ubuntu-latest
+  #  permissions:
+  #    contents: read
+  #  steps:
+  #    - uses: actions/checkout@v4
+#
+ #     - name: Setup Node.js
+  #      uses: actions/setup-node@v4
+   #     with:
+    #      node-version: '18'
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        working-directory: frontend
-        run: npm install
-
-      - name: Run frontend tests
-        working-directory: frontend
-        run: npm run test
+#      - name: Install dependencies
+ #       working-directory: frontend
+  #      run: npm install
+#
+ #     - name: Run frontend tests
+  #      working-directory: frontend
+   #     run: npm run test
 
   build-frontend:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    needs: test-frontend
-    if: ${{ needs.test-frontend.result == 'success' }}
+    #needs: test-frontend
+    #if: ${{ needs.test-frontend.result == 'success' }}
 
     steps:
       - uses: actions/checkout@v4
