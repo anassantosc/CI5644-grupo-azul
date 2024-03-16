@@ -139,7 +139,7 @@ jobs:
 
       - name: Build Frontend and Publish
         run: |
-          docker build --build . --file frontend/Dockerfile --tag ${{env.REGISTRY}}/${{env.FRONTEND_IMAGE_NAME}}
+          docker build . --file frontend/Dockerfile --tag ${{env.REGISTRY}}/${{env.FRONTEND_IMAGE_NAME}}
           docker push ${{env.REGISTRY}}/${{env.FRONTEND_IMAGE_NAME}}
 
   deploy:
