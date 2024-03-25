@@ -110,7 +110,7 @@ export default function NotificationMenu() {
                     >
                         <Badge
                             badgeContent={
-                                haveOffers ? (offers.length < 5 ? offers.length : "5+") : null
+                                haveOffers ? ((offers.length < 5 && page === 0) ? offers.length : "5+") : null
                             }
                             color="error"
                         >
