@@ -18,4 +18,15 @@ data class UserDetailsDto(
             )
         }
     }
+
+    fun validate(): String? {
+        val errorMessage = StringBuilder()
+
+        if (username.length < 5) {
+            errorMessage.append("Username cannot be less than 5 characters. ")
+        }
+
+        return if (errorMessage.isNotEmpty()) errorMessage.toString() else null
+    }
+
 }

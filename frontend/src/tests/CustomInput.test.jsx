@@ -5,7 +5,7 @@ import CustomInput from '../components/CustomInput';
 // Test para verificar que el componente se renderiza correctamente
 it('renders correctly', () => {
   const { getByLabelText } = render(
-    <CustomInput type="text" label="Test Input" onChange={() => {}} name="test" />
+    <CustomInput type="text" label="Test Input" onChange={() => {}} name="test" required={true} options={null}/>
   );
   expect(getByLabelText('Test Input *')).toBeInTheDocument();
 });
@@ -14,7 +14,7 @@ it('renders correctly', () => {
 it('updates on change', () => {
   const onChangeMock = jest.fn();
   const { getByLabelText } = render(
-    <CustomInput type="text" label="Test Input" onChange={onChangeMock} name="test" />
+    <CustomInput type="text" label="Test Input" onChange={onChangeMock} name="test" required={true} options={null}/>
   );
   fireEvent.change(getByLabelText('Test Input *'), { target: { value: 'test value' } });
   expect(onChangeMock).toHaveBeenCalled();

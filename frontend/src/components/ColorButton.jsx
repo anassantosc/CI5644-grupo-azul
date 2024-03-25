@@ -1,9 +1,9 @@
 import React from "react";
-import { Button } from "@mui/material";
-import { styled } from "@mui/system";
+import {Button} from "@mui/material";
+import {styled} from "@mui/system";
 import PropTypes from "prop-types";
 
-const StyledButton = styled(Button)(({ bgcolor, textcolor }) => ({
+const StyledButton = styled(Button)(({bgcolor, textcolor}) => ({
     backgroundColor: bgcolor,
     color: textcolor,
     padding: "10px 15px",
@@ -41,3 +41,4 @@ ColorButton.propTypes = {
     children: PropTypes.node,
     onClick: PropTypes.func,
 };
+

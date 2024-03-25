@@ -1,0 +1,9 @@
+.toolbarStyles {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 15px 15px;
+    border-bottom: 1px solid #FFF;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+

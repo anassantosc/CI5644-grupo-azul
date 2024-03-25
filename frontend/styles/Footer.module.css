@@ -6,4 +6,58 @@
     padding: 20px;
     height: 150px;
     width: auto;
+    display: flex;
+}
+
+.footerText {
+    text-align: left;
+    margin-bottom: 7%;
+    font-size: 20px;
+}
+
+.footerSocialIcons {
+    margin-top: 2%;
+}
+
+.footerSocial {
+    margin-bottom: 3%;
+}
+
+.footerSocialBold {
+    font-weight: bold;
+    font-size: 20rem;
+    letter-spacing: 4px;
+}
+
+.footerSocialH7 {
+    font-size: 1.5em;
+}
+
+.footerSocialButton {
+    color: white;
+}
+
+.footerContainer {
+    color: white;
+}
+
+.footerGrid {
+    flex-grow: 1;
+    flex-direction: row;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+}
+
+.footerGridXs {
+    display: block;
+}
+
+.footerGridMd {
+    display: flex;
+}
+
+.footerDivider {
+    background-color: white;
+    margin-bottom: 2%;
 }

@@ -37,7 +37,7 @@ class EntryPointJWT : AuthenticationEntryPoint {
     ) {
         val errorMessage = authException.message
         if (errorMessage != null && errorMessage.lowercase().contains("bad credentials")) {
-            response.sendError(HttpServletResponse.SC_CONFLICT, errorMessage)
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, errorMessage)
         } else {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, errorMessage)
         }

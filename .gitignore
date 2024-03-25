@@ -3,6 +3,7 @@
 
 # Ignorar archivos generados por IntelliJ IDEA
 .idea/
+.idea/*
 
 # Ignorar carpetas y archivos generados por npm y yarn
 node_modules/
@@ -10,10 +11,12 @@ yarn-error.log
 yarn-debug.log*
 npm-debug.log*
 .npm/
+*/package-lock.json
 
 # Ignorar carpetas y archivos generados por Gradle
 build/
 .gradle/
+.gradle/*
 
 # Ignorar carpetas y archivos generados por el sistema
 bin/
@@ -31,10 +34,6 @@ docker-compose.yml
 
 # Ignorar snapshots de tests unitarios
 *.test.jsx.snap
-
-# Ignorar archivos de configuración específicos
-.env
-.env.local
 
 # Ignorar archivos de configuración de Next.js
 .next/

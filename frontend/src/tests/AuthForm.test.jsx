@@ -1,11 +1,11 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AuthForm from '../components/AuthForm';
 
 // Test para verificar que el componente se renderiza correctamente (Login)
 it('renders correctly', () => {
   const { getByLabelText } = render(
-    <AuthForm onSubmit={() => {}} onChange={() => {}} values={{username: '', password: ''}} errors={{}} isLogin={true} />
+    <AuthForm onSubmit={() => {}} onChange={() => {}} values={{username: '', password: ''}} isLogin={true} />
   );
   expect(getByLabelText('Usuario *')).toBeInTheDocument();
   expect(getByLabelText('Contraseña *')).toBeInTheDocument();
@@ -14,7 +14,7 @@ it('renders correctly', () => {
 // Test para verificar que el componente se renderiza correctamente (Register)
 it('renders correctly', () => {
   const { getByLabelText } = render(
-    <AuthForm onSubmit={() => {}} onChange={() => {}} values={{username: '', password: '', confirmPassword: ''}} errors={{}} isLogin={false} />
+    <AuthForm onSubmit={() => {}} onChange={() => {}} values={{username: '', password: '', confirmPassword: '', gender: 'Masculino'}} isLogin={false} />
   );
   expect(getByLabelText('Usuario *')).toBeInTheDocument();
   expect(getByLabelText('Contraseña *')).toBeInTheDocument();
@@ -25,7 +25,7 @@ it('renders correctly', () => {
 it('updates on change', () => {
   const onChangeMock = jest.fn();
   const { getByLabelText } = render(
-    <AuthForm onSubmit={() => {}} onChange={onChangeMock} values={{username: '', password: '', confirmPassword: ''}} errors={{}} isLogin={false} />
+    <AuthForm onSubmit={() => {}} onChange={onChangeMock} values={{username: '', password: '', confirmPassword: '', name: '', mail: '', gender: 'Masculino'}} isLogin={false} />
   );
   fireEvent.change(getByLabelText('Usuario *'), { target: { value: 'test user' } });
   fireEvent.change(getByLabelText('Contraseña *'), { target: { value: 'test password' } });
@@ -33,10 +33,22 @@ it('updates on change', () => {
   expect(onChangeMock).toHaveBeenCalledTimes(3);
 });
 
-// Test para verificar que se muestra el texto de ayuda cuando se pasa un error
-it('shows helper text when error is passed', () => {
-  const { getByText } = render(
-    <AuthForm onSubmit={() => {}} onChange={() => {}} values={{username: '', password: '', confirmPassword: ''}} errors={{username: 'Test error'}} isLogin={true} />
-  );
-  expect(getByText('Test error')).toBeInTheDocument();
+// Test para verificar que el formulario se renderiza correctamente con los props dados
+test("renderiza el componente AuthForm con los props dados", () => {
+  const props = {
+    onSubmit: () => {},
+    onChange: () => {},
+    values: {username: '', password: '', confirmPassword: '', name: '', mail: '', gender: 'Masculino'},
+    isLogin: false
+  };
+
+  render(<AuthForm {...props} />);
+
+  const usernameElement = screen.getByLabelText('Usuario *');
+  const passwordElement = screen.getByLabelText('Contraseña *');
+  const confirmPasswordElement = screen.getByLabelText('Confirmar contraseña *');
+
+  expect(usernameElement).toBeTruthy();
+  expect(passwordElement).toBeTruthy();
+  expect(confirmPasswordElement).toBeTruthy();
 });
