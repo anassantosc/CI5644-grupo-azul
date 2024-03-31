@@ -28,6 +28,11 @@ const alertMessages = {
     offer_not_exists: "La oferta no existe",
     accept_trade_error: "Error al aceptar el intercambio",
     deny_trade_error: "Error al rechazar el intercambio",
+    credit_card_long_error: "La tarjeta de crédito debe tener entre 13 y 16 dígitos",
+    credit_card_expiration_error: "La tarjeta de crédito está vencida",
+    credit_card_cvv_error: "El CVV debe tener 3 o 4 dígitos",
+    sucess_credit_card: "Tarjeta de crédito editada exitosamente",
+    credit_card_error: "Error al editar la tarjeta de crédito: ",
 }
 
 export default alertMessages;
