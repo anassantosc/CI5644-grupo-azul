@@ -2,7 +2,6 @@ import { Box, Button, Dialog, DialogContent, DialogActions, FormControl, InputLa
 import Image from "next/image";
 import PropTypes from 'prop-types';
 import React, { useState } from "react";
-import Picker from '../components/Picker';
 import { useAlert } from "../context/AlertContext";
 import { alertMessages, alertTypes, regex, images, labels, statusCodes } from "../utils/constants";
 

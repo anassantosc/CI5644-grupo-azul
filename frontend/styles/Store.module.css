@@ -1,0 +1,79 @@
+.storeBox {
+    background-color: rgba(255, 255, 255, 0.3);
+    margin: 50px;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: hidden;
+
+}
+
+.titleStore {
+    font-weight: bold;
+    font-size: 30px;
+    color: white;
+    margin: 4px;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+
+.textPackage {
+    margin-right: 10px;
+    margin-bottom: 2px;
+    color: white;
+}
+
+.saleButton {
+    background-color: #731530;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.saleButton:hover {
+    background-color: #73153078;
+}
+
+.payButton {
+    background-color: #731530;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payButton:hover {
+    background-color: #73153078;
+}
+
+.cancelButton {
+    color: white;
+    background-color: black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.cancelButton:hover {
+    background-color: #00000078;
+}
+
+.subtitle {
+    font-weight: 300;
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.607);
+    margin: 4px;
+    padding: 4px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
