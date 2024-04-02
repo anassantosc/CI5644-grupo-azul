@@ -5,6 +5,7 @@ import ColorButton from "./ColorButton";
 import CustomInput from "./CustomInput";
 import {Link, Box } from "@mui/material";
 import styles from "./../../styles/AuthForm.module.css";
+import SpecialsButtons from "./SpecialsButtons";
 import { routes, labels, inputTypes, genderOptions, inputNames, formOptions, colors } from "../utils/constants";
 
 const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
@@ -80,6 +81,8 @@ const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
                 <Box className={styles.boxPadding}> Continuar </Box>{" "}
                 <ArrowForwardIcon />
             </ColorButton>
+
+            
 
             {isLogin ? (
                 <Box>

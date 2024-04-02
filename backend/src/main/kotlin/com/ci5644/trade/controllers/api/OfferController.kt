@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page
 
 
 
+
 /**
  * Controller that contains all the endpoints related to offer management.
  */

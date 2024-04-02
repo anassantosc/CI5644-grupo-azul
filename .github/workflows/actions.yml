@@ -1,15 +1,8 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: Marmota Salvaje
 
 on:
   push:
-    branches: [ "development" ]
+    branches: [ "development", "feature/backend" ]
   pull_request:
     branches: [ "development" ]
 env:
@@ -80,25 +73,25 @@ jobs:
   #  steps:
   #    - uses: actions/checkout@v4
 #
-  #    - name: Setup Node.js
+ #     - name: Setup Node.js
   #      uses: actions/setup-node@v4
-  #      with:
-  #        node-version: '18'
-#
-  #    - name: Install dependencies
-  #      working-directory: frontend
+   #     with:
+    #      node-version: '18'
+
+#      - name: Install dependencies
+ #       working-directory: frontend
   #      run: npm install
 #
-  #    - name: Run frontend tests
+ #     - name: Run frontend tests
   #      working-directory: frontend
-  #      run: npm run test
+   #     run: npm run test
 
   build-frontend:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    # needs: test-frontend
-    # if: ${{ needs.test-frontend.result == 'success' }}
+    #needs: test-frontend
+    #if: ${{ needs.test-frontend.result == 'success' }}
 
     steps:
       - uses: actions/checkout@v4
@@ -164,6 +157,7 @@ jobs:
           script: |
             cd blue-team
             docker compose down
+            docker compose down --rmi all
             docker compose pull
             docker compose up -d
             exit

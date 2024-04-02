@@ -55,10 +55,10 @@ export default function NotificationMenu() {
     };
 
     const handleAccept = async (offerId) => {
-        const response = await AcceptOffer(offerId, showAlert);
+        const [response, message, status] = await AcceptOffer(offerId, showAlert);
         await getOffers();
-
-       if (response.ok && path === '/album') {
+        showAlert(message, status)
+        if (response.ok && path === '/album') {
             window.location.reload();
         }
     };
@@ -110,7 +110,7 @@ export default function NotificationMenu() {
                     >
                         <Badge
                             badgeContent={
-                                haveOffers ? (offers.length < 5 ? offers.length : "5+") : null
+                                haveOffers ? ((offers.length < 5 && page === 0) ? offers.length : "5+") : null
                             }
                             color="error"
                         >
@@ -207,42 +207,42 @@ export default function NotificationMenu() {
                                         >
                       <span>
                         <IconButton
-                          onClick={() => handleCounterOffer(offer)}
-                          disabled={offer.status !== "PENDING"}
+                            onClick={() => handleCounterOffer(offer)}
+                            disabled={offer.status !== "PENDING"}
                         >
-                          <TurnLeftIcon className={styles.iconButton} />
+                          <TurnLeftIcon className={styles.iconButton}/>
                         </IconButton>
                       </span>
-                    </Tooltip>
-                  </ListItemIcon>
-                </Grid>
-              </Grid>
-            </MenuItem>
-          ))}
-          <MenuItem className={`${styles.menuItem} ${styles.menuItemHover}`}>
-            <Grid container justifyContent="space-around">
-              <IconButton onClick={prevPage} disabled={page === 0}>
-                <ArrowBackIosIcon
-                  sx={{ color: page === 0 ? "#8c8c8c" : "#FFFFFF" }}
-                />
-              </IconButton>
-              <IconButton onClick={nextPage} disabled={offers.length < 5}>
-                <ArrowForwardIosIcon
-                  sx={{
-                    color:
-                      offers.length < 5 ? "#8c8c8c" : "#FFFFFF",
-                  }}
-                />
-              </IconButton>
-            </Grid>
-          </MenuItem>
-        </Menu>
-      )}
-      <OfferModal
-        show={showModal}
-        onClose={handleCloseModal}
-        offer={counterOffer}
-      />
-    </>
-  );
+                                        </Tooltip>
+                                    </ListItemIcon>
+                                </Grid>
+                            </Grid>
+                        </MenuItem>
+                    ))}
+                    <MenuItem className={`${styles.menuItem} ${styles.menuItemHover}`}>
+                        <Grid container justifyContent="space-around">
+                            <IconButton onClick={prevPage} disabled={page === 0}>
+                                <ArrowBackIosIcon
+                                    sx={{color: page === 0 ? "#8c8c8c" : "#FFFFFF"}}
+                                />
+                            </IconButton>
+                            <IconButton onClick={nextPage} disabled={offers.length < 5}>
+                                <ArrowForwardIosIcon
+                                    sx={{
+                                        color:
+                                            offers.length < 5 ? "#8c8c8c" : "#FFFFFF",
+                                    }}
+                                />
+                            </IconButton>
+                        </Grid>
+                    </MenuItem>
+                </Menu>
+            )}
+            <OfferModal
+                show={showModal}
+                onClose={handleCloseModal}
+                offer={counterOffer}
+            />
+        </>
+    );
 }
