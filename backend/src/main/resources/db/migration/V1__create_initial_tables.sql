@@ -7,6 +7,14 @@ CREATE TABLE USUARIO (
     gender    VARCHAR(16) 
 );
 
+CREATE TABLE TARJETAPAGO (
+    id       SERIAL PRIMARY KEY,
+    numero   VARCHAR(16) NOT NULL,
+    vencimiento DATE NOT NULL,
+    cvv      VARCHAR(3) NOT NULL,
+    usuario_id INT NOT NULL REFERENCES USUARIO(id)
+);
+
 CREATE TABLE BARAJITA (
     id          INT         PRIMARY KEY,
     player_name VARCHAR(50) NOT NULL,
