@@ -14,7 +14,6 @@
     margin: 4px;
     padding: 4px;
     display: flex;
-    justify-content: center;
     gap: 1em;
 }
 
@@ -22,6 +21,7 @@
     margin-right: 10px;
     margin-bottom: 2px;
     color: white;
+    width: 70px;
 }
 
 .saleButton {
@@ -29,7 +29,6 @@
     color: white;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-left: 40px;
     display: flex;
     justify-content: center;
     align-items: center;

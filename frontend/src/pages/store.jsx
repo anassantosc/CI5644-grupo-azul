@@ -8,7 +8,8 @@ import { useAlert } from "../context/AlertContext";
 function Store() {
     const [packages, setPackages] = useState(1);
     const [showPayment, setShowPayment] = useState(false);
-    const payment = useState();
+    const [payment, setPayment] = useState(0);
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
     const showAlert = useAlert();
 
     const handleBuyBox = (quantity) => {
@@ -26,6 +27,7 @@ function Store() {
     const handlePayment = (bool) => {
         if (bool) {
             showAlert('Compra exitosa', 'success');
+            setPaymentSuccess(true);
         } else {
             setShowPayment(false);
             showAlert('Compra cancelada', 'error');
@@ -66,6 +68,19 @@ function Store() {
         );
     }
 
+    if (paymentSuccess) {
+        return (
+            <Layout>
+                <Box className={styles.storeBox}>
+                    <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={6} >
+                            <a href="">Visualizar barajitas nuevas</a>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Layout>
+        );
+    }
 
     return (
         <Layout>
@@ -82,7 +97,12 @@ function Store() {
                             Tienda de Barajitas
                         </Typography>
                     </Grid>
-                    <Grid item xs={6} justifyContent="center" alignItems="center" marginBottom="2.5em">
+                    <Grid 
+                        item 
+                        xs={6} 
+                        justifyContent="center" 
+                        alignItems="center" 
+                    >
                         <Typography variant="h6" className={styles.subtitle}>
                             Comprar una caja
                         </Typography>
@@ -95,9 +115,16 @@ function Store() {
                             Comprar
                         </Button>        
                     </Grid>
-                    <Grid item xs={6} justifyContent="center" alignItems="center">
+                    <Grid 
+                        item
+                        xs={6}
+                        container
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
                         <Typography variant="h6" className={styles.subtitle}>
-                            Comprar por paquetes
+                            Comprar
                         </Typography>
                         <TextField
                             type="number"
@@ -107,7 +134,11 @@ function Store() {
                             size="small"
                             color="secondary"
                             className={styles.textPackage}
+                            inputProps={{ min: 1, max: 99 }}
                         />
+                        <Typography variant="h6" className={styles.subtitle}>
+                            paquetes
+                        </Typography>
                         <Button 
                             variant="contained"
                             color="primary"
