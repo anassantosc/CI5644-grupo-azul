@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import javax.naming.AuthenticationException
 import org.springframework.security.crypto.password.PasswordEncoder
+import javax.servlet.http.HttpServletResponse
 
 
 /**
@@ -98,5 +99,21 @@ class AuthorizationService {
         } catch (e: AuthenticationException) {
             throw AuthenticationException(e.message)
         }
+    }
+
+    fun processOAuthPostLogin(email: String, password: String, servletResponse: HttpServletResponse) {
+        val user = userRepository.findByUsername(email)
+        if (user == null) {
+            val registerDTO = RegisterDTO(
+                username = email,
+                password = password,
+                name = email,
+                email = email,
+                gender = null
+            )
+            registerUser(registerDTO)
+        }
+        val jwtCookie = loginUser(email, password)
+        servletResponse.addHeader("JWT", jwtCookie.toString())
     }
 }
