@@ -7,6 +7,8 @@ import { Background } from "../components/Background";
 import { useAlert } from "../context/AlertContext";
 import { Login } from "../utils/auth/Login";
 import styles from "../../styles/Login.module.css";
+import secureFetch from "../utils/fetchs/SecureFetch";
+import { HTTPMethods, routes } from "../utils/constants";
 
 const LoginPage = () => {
     const [values, setValues] = useState({ username: "", password: "" });
@@ -36,6 +38,11 @@ const LoginPage = () => {
         }
     };
 
+    const handleGoogleLogin = async () => {
+        router.push("/oauth2/authorization/google");
+    };
+
+
     return (
         <div className={styles.login}>
             <Background />
@@ -43,6 +50,11 @@ const LoginPage = () => {
                 <Image priority className={styles.loginLogo} src={images.logo} sizes="100vw" width={0} height={0} alt="logo" />
                 <h1 className={styles.loginH1}>Marmota Salvaje</h1>
             </div>
+
+            <button onClick={handleGoogleLogin}>Iniciar sesión con Google</button>
+
+
+            <a href="/oauth2/authorization/facebook">Login with Facebook</a>
 
             <AuthForm
                 onSubmit={handleSubmit}
