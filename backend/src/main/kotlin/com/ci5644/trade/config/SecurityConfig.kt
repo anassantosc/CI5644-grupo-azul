@@ -4,6 +4,9 @@ import com.ci5644.trade.config.SecurityConstants
 import com.ci5644.trade.config.JWT.EntryPointJWT
 import com.ci5644.trade.config.JWT.JWTFilter
 import com.ci5644.trade.services.user.UserService
+import com.ci5644.trade.config.oauth2.CustomerOAuth2User
+import com.ci5644.trade.config.oauth2.CustomerOAuth2UserService
+import com.ci5644.trade.config.oauth2.OAuth2LoginSuccessHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -21,6 +24,7 @@ import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import java.util.*
 import java.lang.Exception
+import org.springframework.security.oauth2.*
 
 
 /**
@@ -34,6 +38,12 @@ class SecurityConfig {
 
     @Autowired
     private val unauthorizedHandler: EntryPointJWT? = null
+
+    @Autowired
+    lateinit private var oAuth2UserService: CustomerOAuth2UserService 
+
+    @Autowired
+    lateinit private var oAuth2LoginSuccessHandler: OAuth2LoginSuccessHandler 
 
     /**
      * Provides a custom PasswordEncoder bean.
@@ -107,10 +117,20 @@ class SecurityConfig {
             .authorizeHttpRequests { auth ->
                 auth
                     .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers("/login").permitAll()
+                    .requestMatchers("/").permitAll()
                     .requestMatchers("/api/**").authenticated()
-                    .anyRequest().authenticated()
+                    .requestMatchers("/login.html").permitAll()
+                    .requestMatchers("/css/**").permitAll()
+                    .requestMatchers("/images/**").permitAll()
+                    .anyRequest().permitAll()
             }
-            .httpBasic()
+            .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                    .userService(oAuth2UserService)
+            .and()
+            .successHandler(oAuth2LoginSuccessHandler)
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
