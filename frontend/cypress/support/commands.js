@@ -23,3 +23,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('generateSignupFixture', () => {
+  const { faker } = require("@faker-js/faker");
+
+  cy.writeFile('cypress/fixtures/signup.json', {
+    'username': faker.internet.displayName(),
+    'password': faker.internet.password({ length: 12 }),
+    'name': faker.person.fullName(),
+    'email': faker.internet.email(),
+    'gender': faker.person.gender()
+  });
+});

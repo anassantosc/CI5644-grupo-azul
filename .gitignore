@@ -49,3 +49,5 @@ logs/
 # Ignorar archivos de compilación de Java
 *.class
 *.jar
+
+frontend/cypress/fixtures/signup.json
