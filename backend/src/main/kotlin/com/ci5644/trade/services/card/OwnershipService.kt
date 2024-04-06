@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import com.ci5644.trade.models.card.CardEntity
 import com.ci5644.trade.repositories.OfferRepository
+import com.ci5644.trade.utils.SecureRandomUtil
 
 @Service
 class OwnershipService(private val authorizationService: AuthorizationService, private val offerRepository: OfferRepository, private val ownershipRepository: OwnershipRepository, private val cardRepository: CardRepository) {
@@ -95,6 +96,25 @@ class OwnershipService(private val authorizationService: AuthorizationService, p
         } else {
             return ownershipRepository.findNonOwnedCards(userId, pageable)
         }
+    }
+
+    /* 
+     * Retrieves the user with the given username, and generates a random ownership for that user.
+     * 
+     * @param username The username of the user
+     * @return         A random ownership for the user
+     */
+    fun generateRandomOwnership(userId: Int): OwnershipEntity {
+        val randomCardId = SecureRandomUtil.getRandomInt(1, 640)
+        val ownership = if (ownershipRepository.existsByUserAndCard(userId, randomCardId)) {
+            val existingOwnership = ownershipRepository.findByUserAndCard(userId, randomCardId)
+            existingOwnership.quantity += 1
+            existingOwnership
+        } else {
+            OwnershipEntity(user = userId, card = randomCardId)
+        }
+        ownershipRepository.save(ownership)
+        return ownership
     }
 
 }
