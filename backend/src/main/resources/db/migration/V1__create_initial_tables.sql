@@ -4,15 +4,10 @@ CREATE TABLE USUARIO (
     password    VARCHAR(128) NOT NULL,
     name    VARCHAR(55) NOT NULL,
     email    VARCHAR(64) NOT NULL,
+    card_number   VARCHAR(16),
+    expiration_date DATE,
+    cvv      VARCHAR(3),
     gender    VARCHAR(16) 
-);
-
-CREATE TABLE TARJETAPAGO (
-    id       SERIAL PRIMARY KEY,
-    numero   VARCHAR(16) NOT NULL,
-    vencimiento DATE NOT NULL,
-    cvv      VARCHAR(3) NOT NULL,
-    usuario_id INT NOT NULL REFERENCES USUARIO(id)
 );
 
 CREATE TABLE BARAJITA (
@@ -46,6 +41,8 @@ CREATE TABLE OFERTA (
 CREATE TABLE COMPRA (
     id         SERIAL PRIMARY KEY,
     id_usuario INT  NOT NULL REFERENCES USUARIO (id),
-    dte        DATE NOT NULL,
-    price      FLOAT
+    dte        TIMESTAMP NOT NULL,
+    price      FLOAT,
+    quantity   INT  NOT NULL CHECK (quantity > 0),
+    status     VARCHAR(50) NOT NULL CHECK (status IN ('PENDING', 'PROCESSED'))
 );
