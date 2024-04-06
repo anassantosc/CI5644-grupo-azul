@@ -4,7 +4,40 @@
     border-radius: 10px;
     padding: 20px;
     overflow: hidden;
+}
 
+.boughtCardsBox {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    margin: 50px;
+    min-height: 540px;
+}
+
+.cardsContainer {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.boughtTitle {
+    font-weight: 300;
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.607);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.boughtLength {
+    font-weight: 600;
+    font-size: 18px;
+    color: #731530;
+    text-align: center;
+    margin: 10px auto;
 }
 
 .titleStore {
@@ -75,4 +108,22 @@
     display: flex;
     justify-content: center;
     gap: 1em;
+}
+
+.packButtonGroup {
+    composes: buttonContainer;
+    margin: 10px auto;
+}
+
+.nextPackButton {
+    background-color: #731530;
+    color: white;
+    margin: 10px auto;
+}
+
+.packLink {
+    color: #731530;
+    font-weight: 600;
+    text-decoration-color: #731530;
+    margin: 10px auto;
 }

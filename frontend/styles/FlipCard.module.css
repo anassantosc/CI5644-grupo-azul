@@ -21,6 +21,11 @@
     left: 0;
 }
 
+.backCardSize {
+    width: 100%;
+    height: 100%;
+}
+
 .flipped {
     transform: rotateY(180deg);
 }
