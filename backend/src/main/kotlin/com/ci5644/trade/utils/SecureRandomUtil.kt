@@ -1,3 +1,5 @@
+package com.ci5644.trade.utils
+
 import java.security.SecureRandom
 
 object SecureRandomUtil {
