@@ -1,8 +1,11 @@
 package com.ci5644.trade.config
 
+import com.ci5644.trade.config.SecurityConstants
 import com.ci5644.trade.config.JWT.EntryPointJWT
 import com.ci5644.trade.config.JWT.JWTFilter
 import com.ci5644.trade.services.user.UserService
+import com.ci5644.trade.config.oauth2.CustomerOAuth2User
+import com.ci5644.trade.config.oauth2.CustomerOAuth2UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -20,19 +23,33 @@ import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import java.util.*
 import java.lang.Exception
+import org.springframework.security.oauth2.*
+import org.slf4j.LoggerFactory
+import com.ci5644.trade.services.auth.AuthorizationService
+import org.springframework.security.core.Authentication
+import java.io.IOException
+import javax.servlet.ServletException
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler
 
 
 /**
  * Configuration class for security settings.
  */
 @Configuration
-class SecurityConfig {
+class SecurityConfig(private val userDetailsService: UserService) {
+
+    private val logger = LoggerFactory.getLogger(SecurityConfig::class.java)
 
     @Autowired
-    lateinit var userDetailsService: UserService
+    private lateinit var authService: AuthorizationService
 
     @Autowired
     private val unauthorizedHandler: EntryPointJWT? = null
+
+    @Autowired
+    lateinit private var oAuth2UserService: CustomerOAuth2UserService 
 
     /**
      * Provides a custom PasswordEncoder bean.
@@ -92,33 +109,39 @@ class SecurityConfig {
     @Bean
     fun filterChain(http: HttpSecurity) : SecurityFilterChain {
         http
-            .headers()
-            .xssProtection()
-            .and()
-            .contentSecurityPolicy("script-src")
-            .and().and()
             .csrf().disable()
             .cors()
             .and()
             .exceptionHandling()
             .authenticationEntryPoint(unauthorizedHandler)
             .and()
-            .authorizeHttpRequests { auth ->
-                auth
-                    .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/api/**").authenticated()
-                    .anyRequest().authenticated()
-            }
-            .httpBasic()
+            .authorizeHttpRequests()
+            .requestMatchers("/auth/**").permitAll()
+            .requestMatchers("/api/**").authenticated()
+            .anyRequest().authenticated()
             .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .formLogin().permitAll()
+            .and()
+            .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                    .userService(oAuth2UserService)
+            .and()
+            .successHandler { request, response, authentication ->
+                val oauthUser = authentication.principal as CustomerOAuth2User
+                authService.processOAuthPostLogin(oauthUser.getFullName(), oauthUser.getEmail(), SecurityConstants.USER_PSSWD_SECRET, response)
+                response.sendRedirect(SecurityConstants.FRONTEND_URL + "/album")
+            }
+            .failureHandler(SimpleUrlAuthenticationFailureHandler())
+            .and()
+            .logout()
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }
-    
+
+
     /**
      * Provides a custom CorsConfigurationSource bean for CORS configuration.
      * @return CorsConfigurationSource - Custom CorsConfigurationSource bean.
@@ -126,7 +149,7 @@ class SecurityConfig {
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf("http://localhost:8080", "http://localhost:3000")
+        configuration.allowedOrigins = listOf(SecurityConstants.BACKEND_URL, SecurityConstants.FRONTEND_URL)
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE")
         configuration.allowedHeaders = listOf("*") // Accept all headers
         configuration.allowCredentials = true

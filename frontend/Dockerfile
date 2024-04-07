@@ -6,7 +6,6 @@ COPY ./frontend/package.json .
 COPY ./frontend/package-lock.json .
 
 RUN npm install
-
 COPY ./frontend .
 EXPOSE 3000
 
