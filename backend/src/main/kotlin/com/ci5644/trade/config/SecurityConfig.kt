@@ -6,7 +6,6 @@ import com.ci5644.trade.config.JWT.JWTFilter
 import com.ci5644.trade.services.user.UserService
 import com.ci5644.trade.config.oauth2.CustomerOAuth2User
 import com.ci5644.trade.config.oauth2.CustomerOAuth2UserService
-import com.ci5644.trade.config.oauth2.OAuth2LoginSuccessHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -25,25 +24,32 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import java.util.*
 import java.lang.Exception
 import org.springframework.security.oauth2.*
+import org.slf4j.LoggerFactory
+import com.ci5644.trade.services.auth.AuthorizationService
+import org.springframework.security.core.Authentication
+import java.io.IOException
+import javax.servlet.ServletException
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler
 
 
 /**
  * Configuration class for security settings.
  */
 @Configuration
-class SecurityConfig {
+class SecurityConfig(private val userDetailsService: UserService) {
+
+    private val logger = LoggerFactory.getLogger(SecurityConfig::class.java)
 
     @Autowired
-    lateinit var userDetailsService: UserService
+    private lateinit var authService: AuthorizationService
 
     @Autowired
     private val unauthorizedHandler: EntryPointJWT? = null
 
     @Autowired
     lateinit private var oAuth2UserService: CustomerOAuth2UserService 
-
-    @Autowired
-    lateinit private var oAuth2LoginSuccessHandler: OAuth2LoginSuccessHandler 
 
     /**
      * Provides a custom PasswordEncoder bean.
@@ -103,43 +109,39 @@ class SecurityConfig {
     @Bean
     fun filterChain(http: HttpSecurity) : SecurityFilterChain {
         http
-            .headers()
-            .xssProtection()
-            .and()
-            .contentSecurityPolicy("script-src")
-            .and().and()
             .csrf().disable()
             .cors()
             .and()
             .exceptionHandling()
             .authenticationEntryPoint(unauthorizedHandler)
             .and()
-            .authorizeHttpRequests { auth ->
-                auth
-                    .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/login").permitAll()
-                    .requestMatchers("/").permitAll()
-                    .requestMatchers("/api/**").authenticated()
-                    .requestMatchers("/login.html").permitAll()
-                    .requestMatchers("/css/**").permitAll()
-                    .requestMatchers("/images/**").permitAll()
-                    .anyRequest().permitAll()
-            }
+            .authorizeHttpRequests()
+            .requestMatchers("/auth/**").permitAll()
+            .requestMatchers("/api/**").authenticated()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin().permitAll()
+            .and()
             .oauth2Login()
                 .loginPage("/login")
                 .userInfoEndpoint()
                     .userService(oAuth2UserService)
             .and()
-            .successHandler(oAuth2LoginSuccessHandler)
+            .successHandler { request, response, authentication ->
+                val oauthUser = authentication.principal as CustomerOAuth2User
+                authService.processOAuthPostLogin(oauthUser.getFullName(), oauthUser.getEmail(), SecurityConstants.USER_PSSWD_SECRET, response)
+                response.sendRedirect(SecurityConstants.FRONTEND_URL + "/album")
+            }
+            .failureHandler(SimpleUrlAuthenticationFailureHandler())
             .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .logout()
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }
-    
+
+
     /**
      * Provides a custom CorsConfigurationSource bean for CORS configuration.
      * @return CorsConfigurationSource - Custom CorsConfigurationSource bean.
