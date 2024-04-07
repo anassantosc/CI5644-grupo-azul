@@ -15,14 +15,18 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import javax.naming.AuthenticationException
 import org.springframework.security.crypto.password.PasswordEncoder
-import javax.servlet.http.HttpServletResponse
-
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
+import jakarta.servlet.http.Cookie
+import org.slf4j.LoggerFactory
 
 /**
  * Service class for handling authorization-related operations.
  */
 @Service
 class AuthorizationService {
+
+    private val logger = LoggerFactory.getLogger(AuthorizationService::class.java)
 
     @Autowired
     private lateinit var authenticationManager: AuthenticationManager
@@ -101,19 +105,30 @@ class AuthorizationService {
         }
     }
 
-    fun processOAuthPostLogin(email: String, password: String, servletResponse: HttpServletResponse) {
+    fun processOAuthPostLogin(name: String, email: String, password: String, servletResponse: HttpServletResponse) {
         val user = userRepository.findByUsername(email)
         if (user == null) {
             val registerDTO = RegisterDTO(
                 username = email,
                 password = password,
-                name = email,
+                name = name,
                 email = email,
                 gender = null
             )
             registerUser(registerDTO)
         }
-        val jwtCookie = loginUser(email, password)
-        servletResponse.addHeader("JWT", jwtCookie.toString())
+        try {
+            val jwtCookie = loginUser(email, password)
+
+            val cookieString = "${jwtCookie.name}=${jwtCookie.value}"
+            val expireTimeSeconds = SecurityConstants.AUTH_COOKIE_EXPIRE_TIME
+            servletResponse.addHeader("Set-Cookie", "$cookieString; Path=/; Max-Age=$expireTimeSeconds")
+        } catch (e: AuthenticationException) {
+            logger.error("Password Incorrect", e)
+            servletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Password Incorrect")
+        } catch (e: Exception) {
+            logger.error("Error", e)
+            servletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error")
+        }
     }
 }
