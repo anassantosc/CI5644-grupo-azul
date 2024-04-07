@@ -8,8 +8,7 @@ import jakarta.validation.constraints.Size
 data class RegisterDTO(
     @NotNull
     @NotEmpty
-    @Size(max = 16)
-    @Pattern(regexp = "^[A-Za-z0-9]+$")
+    @Size(max = 32)
     val username: String,
 
     @NotNull

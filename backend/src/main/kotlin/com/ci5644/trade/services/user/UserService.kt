@@ -51,6 +51,9 @@ class UserService : UserDetailsService {
         user.username = details.username
         user.email = details.email
         user.gender = details.gender
+        user.cardNumber = details.cardNumber
+        user.expirationDate = details.expirationDate?.atEndOfMonth()
+        user.cvv = details.cvv
         userRepository.save(user)
     }
 }
