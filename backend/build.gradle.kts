@@ -19,6 +19,8 @@ java {
 
 repositories {
     mavenCentral()
+    google()
+    jcenter()
 }
 
 dependencies {
@@ -41,13 +43,18 @@ dependencies {
     implementation("org.hibernate.validator:hibernate-validator:7.0.2.Final")
     implementation("org.projectlombok:lombok:1.18.22")
     testImplementation(kotlin("test"))
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.flywaydb:flyway-core")
     implementation("io.jsonwebtoken:jjwt-api:0.11.2")
     implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("org.springframework.boot:spring-boot-starter-logging")
+    //implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    //implementation("androidx.annotation:annotation:1.3.0")
+    //implementation("com.google.api-client:google-api-client:1.30.8")
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")   
+    implementation("org.springframework.security:spring-security-oauth2-client")
 }
 
 buildscript {

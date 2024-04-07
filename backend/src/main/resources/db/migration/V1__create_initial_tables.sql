@@ -1,6 +1,6 @@
 CREATE TABLE USUARIO (
     id       SERIAL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
+    username VARCHAR(32) NOT NULL,
     password    VARCHAR(128) NOT NULL,
     name    VARCHAR(55) NOT NULL,
     email    VARCHAR(64) NOT NULL,

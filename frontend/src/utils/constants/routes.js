@@ -24,6 +24,7 @@ const routes = {
     offerId: (id) => `&offerId=${id}`,
     deny: '/deny',
     accept: '/accept',
+    callback: '/callback'
 }
 
 export default routes;
