@@ -7,14 +7,15 @@ import { Background } from "../components/Background";
 import { useAlert } from "../context/AlertContext";
 import { Login } from "../utils/auth/Login";
 import styles from "../../styles/Login.module.css";
-import secureFetch from "../utils/fetchs/SecureFetch";
-import { HTTPMethods, routes } from "../utils/constants";
 
 const LoginPage = () => {
     const [values, setValues] = useState({ username: "", password: "" });
     const [errors, setErrors] = useState({});
     const showAlert = useAlert();
     const router = useRouter();
+
+    const facebookAuthUrl = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/facebook`;
+    const googleAuthUrl = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`;
 
     const handleChange = (event) => {
         setValues({
@@ -38,11 +39,6 @@ const LoginPage = () => {
         }
     };
 
-    const handleGoogleLogin = async () => {
-        router.push("/oauth2/authorization/google");
-    };
-
-
     return (
         <div className={styles.login}>
             <Background />
@@ -51,10 +47,9 @@ const LoginPage = () => {
                 <h1 className={styles.loginH1}>Marmota Salvaje</h1>
             </div>
 
-            <button onClick={handleGoogleLogin}>Iniciar sesión con Google</button>
+            <a href={facebookAuthUrl}>Login with Facebook</a>
 
-
-            <a href="/oauth2/authorization/facebook">Login with Facebook</a>
+            <a href={googleAuthUrl}>Login with Facebook</a>
 
             <AuthForm
                 onSubmit={handleSubmit}
