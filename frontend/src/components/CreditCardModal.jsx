@@ -4,33 +4,28 @@ import PropTypes from 'prop-types';
 import React, { useState } from "react";
 import { useAlert } from "../context/AlertContext";
 import { alertMessages, alertTypes, regex, images, labels, statusCodes } from "../utils/constants";
+import { EditUser } from "../utils/fetchs/EditUser";
 
 const CreditCardModal = ({ show, onClose, user, onChange }) => {
     const showAlert = useAlert();
-    const [userData, setUserData] = useState(
-        { creditCard: user.creditCard || "",
+    const [userData, setUserData] = useState({ 
+        cardNumber: user.cardNumber || "",
         expirationDate: user.expirationDate || "",
-        cvv: user.cvv || "" })
+        cvv: user.cvv || "",
+        name: user.name || "",
+        email: user.email || "",
+        gender: user.gender || ""})
 
     const handleFieldChange = (key) => (e) => {
         setUserData({ ...userData, [key]: e.target.value });
     };
 
-    /*
-    const handleDateChange = (date) => {
-        setUserData((prevState) => ({
-            ...prevState,
-            expirationDate: date.format("YYYY-MM"),
-        }))
-    };
-
-    */
     const validateFields = () => {
-        if (!userData.creditCard || !userData.expirationDate || !userData.cvv) {
+        if (!userData.cardNumber || !userData.expirationDate || !userData.cvv) {
             showAlert(alertMessages.fill_fields, alertTypes.warning);
             return false
         }
-        if (!regex.creditCard.test(userData.creditCard)) {
+        if (!regex.cardNumber.test(userData.cardNumber)) {
             showAlert(alertMessages.credit_card_long_error, alertTypes.warning);
             return false
         }
@@ -50,10 +45,12 @@ const CreditCardModal = ({ show, onClose, user, onChange }) => {
 
         const userChanges = {
             username: user.username,
+            name: user.name,
+            email: user.email,
+            gender: user.gender,
             ...userData
         };
 
-        /*
         try {
             const response = await EditUser(userChanges);
 
@@ -70,7 +67,7 @@ const CreditCardModal = ({ show, onClose, user, onChange }) => {
         } catch (error) {
             console.error(alertMessages.credit_card_error, error);
         }
-        */
+        
         onClose();
     }
 
@@ -86,11 +83,11 @@ const CreditCardModal = ({ show, onClose, user, onChange }) => {
                 <Box bgcolor="rgba(255, 255, 255, 0.1)" borderRadius={10} p={2}>
                     <form noValidate autoComplete="off">
                         <TextField
-                            label={labels.creditCard}
+                            label={labels.cardNumber}
                             variant="outlined"
                             color="secondary"
-                            value={userData.creditCard}
-                            onChange={handleFieldChange("creditCard")}
+                            value={userData.cardNumber}
+                            onChange={handleFieldChange("cardNumber")}
                             fullWidth
                             sx={{
                                 color: 'white', mb: 2

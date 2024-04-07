@@ -1,10 +1,12 @@
 import React, {useState} from "react";
 import Layout from "../layout/Layout";
-import {Box, Grid, Typography, TextField, Button, Link} from "@mui/material";
+import { Box, Grid, Typography, TextField, Button, Link } from "@mui/material";
 import styles from "../../styles/Store.module.css";
-import {useAlert} from "../context/AlertContext";
-import {FlipCard} from "../components/FlipCard";
-import {boughtCards} from "./storeTemp";
+import { useAlert } from "../context/AlertContext";
+import { FlipCard } from "../components/FlipCard";
+//import { boughtCards } from "./storeTemp";
+import prices from "../utils/constants/prices";
+import { GetPurchasedCards } from "../utils/fetchs/GetPurchasedCards";
 
 function Store() {
     const [packages, setPackages] = useState(1);
@@ -14,24 +16,46 @@ function Store() {
     const [revealed, setRevealed] = useState(false);
     const [packOpenProgress, setPackOpenProgress] = useState(0);
     const showAlert = useAlert();
+    const [boughtCards,setBoughtCards] = useState([[{
+        id: null,
+        playerName: null,
+        country: null,
+        shirtNumber: null,
+        position: null,
+        height: null,
+        weight: null,
+    }]]);
 
 
-    const handleBuyBox = (quantity) => {
-        setPackages(quantity);
+    const handleBuyBox = () => {
         showAlert('Seleccionaste una caja', 'info');
         setShowPayment(true);
+        setPackages(100)
+        setPayment(prices.box);
     }
 
     const handleBuyPackage = (quantity) => {
-        setPackages(quantity);
         showAlert('Seleccionaste nuevos paquetes de barajitas', 'info');
         setShowPayment(true);
+        setPackages(quantity);
+        setPayment(packages * prices.package);
     }
 
-    const handlePayment = (paymentDone) => {
+    const handlePayment = async (quantity, paymentDone) => {
         paymentDone ? showAlert('Compra exitosa', 'success') : showAlert('Compra cancelada', 'error');
         setPaymentSuccess(paymentDone);
+    
+        if (paymentDone) {
+            try {
+                const purchasedCards = await GetPurchasedCards(quantity);
+                setBoughtCards(purchasedCards);
+            } catch (error) {
+                console.error(error);
+                showAlert('Hubo un error al obtener las tarjetas compradas', 'error');
+            }
+        }
     }
+    
 
     const handleNextPack = () => {
         setRevealed(false);
@@ -54,14 +78,20 @@ function Store() {
                                     variant="contained"
                                     color="primary"
                                     className={styles.payButton}
-                                    onClick={() => handlePayment(true)}
+                                    onClick={() => 
+                                        handlePayment(packages,true)
+                                    }
                                 >
                                     Pagar
                                 </Button>
                                 <Button
                                     variant="contained"
                                     size="medium"
-                                    onClick={() => handlePayment(false)}
+                                    onClick={() => {
+                                        handlePayment(false);
+                                        setShowPayment(false);
+                                        setPayment(0);
+                                    }}
                                     className={styles.cancelButton}
                                 >
                                     Cancelar
@@ -82,9 +112,8 @@ function Store() {
                         ¡Descubre tus nuevas barajitas!
                     </Typography>
                     <Box className={styles.cardsContainer}>
-
-                        {
-                            boughtCards[packOpenProgress].map(
+                    {
+                        boughtCards[packOpenProgress] && boughtCards[packOpenProgress].map(
                                 card => (
                                     <FlipCard
                                         key={card.id}
@@ -92,12 +121,13 @@ function Store() {
                                         number={card.id}
                                         position={card ? card.position : null}
                                         height={card ? card.height + "m" : "0.0m"}
-                                        weight={card ? card.weight.toFixed(1) + "Kg" : "0.0Kg"}
+                                        weight={card && card.weight && !isNaN(parseFloat(card.weight)) ? parseFloat(card.weight).toFixed(1) + "Kg" : "0.0Kg"}
                                         flipped={revealed}
                                     />
                                 )
                             )
                         }
+
                     </Box>
 
                     <Typography variant="h6" className={styles.boughtLength}>
@@ -160,7 +190,7 @@ function Store() {
                             variant="contained"
                             color="primary"
                             className={styles.saleButton}
-                            onClick={() => handleBuyBox('box', 100)}
+                            onClick={() => handleBuyBox()}
                         >
                             Comprar
                         </Button>
@@ -187,7 +217,7 @@ function Store() {
                             inputProps={{min: 1, max: 99}}
                         />
                         <Typography variant="h6" className={styles.subtitle}>
-                            paquetes
+                            paquete(s)
                         </Typography>
                         <Button
                             variant="contained"

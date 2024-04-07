@@ -27,12 +27,12 @@ export default function Profile() {
         name: null,
         email: null,
         gender: null,
-        creditCard: null,
+        cardNumber: null,
         expirationDate: null,
         cvv: null,
     });
     const progress = useProgress(user.id);
-    const creditCardText = user.creditCard ? "Cambiar" : "Agregar";
+
 
 
     useEffect(() => {
@@ -89,7 +89,7 @@ export default function Profile() {
                             className={styles.creditCardButton}
                         >
                             <CreditCardIcon className={styles.creditCardIcon} />
-                            {creditCardText} información de la tarjeta
+                            Editar información de la tarjeta
 
                         </Button>
                         {user.username !== null && 
