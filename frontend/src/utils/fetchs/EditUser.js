@@ -13,6 +13,7 @@ export const EditUser = async (userData) => {
         if (!response.ok) {
             throw new Error(`${alertMessages.http_error} ${response.status}`);
         }
+        console.log(response)
         return response;
     } catch (error) {
         console.error(error);

@@ -24,6 +24,8 @@ const routes = {
     offerId: (id) => `&offerId=${id}`,
     deny: '/deny',
     accept: '/accept',
+    purchase: '/purchase',
+    quantity: (quantity) => `?quantity=${quantity}`,	
     callback: '/callback'
 }
 

@@ -6,6 +6,7 @@ import { useAlert } from "../context/AlertContext";
 import { FlipCard } from "../components/FlipCard";
 //import { boughtCards } from "./storeTemp";
 import prices from "../utils/constants/prices";
+import { alertMessages, alertTypes, statusCodes } from "../utils/constants";
 import { GetPurchasedCards } from "../utils/fetchs/GetPurchasedCards";
 
 function Store() {
@@ -41,19 +42,30 @@ function Store() {
         setPayment(packages * prices.package);
     }
 
-    const handlePayment = async (quantity, paymentDone) => {
-        paymentDone ? showAlert('Compra exitosa', 'success') : showAlert('Compra cancelada', 'error');
-        setPaymentSuccess(paymentDone);
+    const handlePayment = async (paymentDone) => {
     
         if (paymentDone) {
             try {
-                const purchasedCards = await GetPurchasedCards(quantity);
-                setBoughtCards(purchasedCards);
+                const correctQuantity = Number(packages);
+                const purchasedCards = await GetPurchasedCards(correctQuantity, showAlert);
+                if (purchasedCards.length > 0) {
+                    showAlert('Compra exitosa', alertTypes.success);
+                    setBoughtCards(purchasedCards);
+                    setPaymentSuccess(true);
+                }
+                
             } catch (error) {
                 console.error(error);
-                showAlert('Hubo un error al obtener las tarjetas compradas', 'error');
+                setPaymentSuccess(false);
+                setPayment(0);
             }
+            
+        } else {
+            setShowPayment(false);
+            setPayment(0);
+            showAlert('Compra cancelada', 'error');
         }
+        
     }
     
 
@@ -79,7 +91,7 @@ function Store() {
                                     color="primary"
                                     className={styles.payButton}
                                     onClick={() => 
-                                        handlePayment(packages,true)
+                                        handlePayment(true)
                                     }
                                 >
                                     Pagar
@@ -89,8 +101,6 @@ function Store() {
                                     size="medium"
                                     onClick={() => {
                                         handlePayment(false);
-                                        setShowPayment(false);
-                                        setPayment(0);
                                     }}
                                     className={styles.cancelButton}
                                 >
@@ -223,7 +233,7 @@ function Store() {
                             variant="contained"
                             color="primary"
                             className={styles.saleButton}
-                            onClick={() => handleBuyPackage('package', packages)}
+                            onClick={() => handleBuyPackage(packages)}
                         >
                             Comprar
                         </Button>

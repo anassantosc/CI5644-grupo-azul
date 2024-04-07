@@ -32,8 +32,8 @@ const alertMessages = {
     credit_card_long_error: "La tarjeta de crédito debe tener entre 13 y 16 dígitos",
     credit_card_expiration_error: "La tarjeta de crédito está vencida",
     credit_card_cvv_error: "El CVV debe tener 3 o 4 dígitos",
-    sucess_credit_card: "Tarjeta de crédito editada exitosamente",
     credit_card_error: "Error al editar la tarjeta de crédito: ",
+    credit_card_not_found: "Debe ingresar los datos de la tarjeta de crédito",
 }
 
 export default alertMessages;
