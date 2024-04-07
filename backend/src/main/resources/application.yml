@@ -32,15 +32,15 @@ spring:
     oauth2:
       client:
         registration:
-        #   google:
-        #     client-id: 299136953332-pp4ndg7v43dmh5e16bnb5k2q4m1jm0ko.apps.googleusercontent.com
-        #     client-secret: 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
-        #     scope:
-        #         - email
-        #         - profile
-            facebook:
-              clientId: 1462257131030960
-              clientSecret: f10eba43950fdb5e1c367732c5e4e7b1
-              scope:
+          google:
+            client-id: 299136953332-pp4ndg7v43dmh5e16bnb5k2q4m1jm0ko.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+                - email
+                - profile
+          facebook:
+            clientId: 1462257131030960
+            clientSecret: f10eba43950fdb5e1c367732c5e4e7b1
+            scope:
                 - email
                 - public_profile
