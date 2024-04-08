@@ -52,7 +52,7 @@ describe('Profile', () => {
         cy.contains('Género del Usuario no disponible');
       });
 
-      cy.get('button:contains("Editar")').should('exist');
+      cy.get('button').contains('Editar');
     });
 
     // Main box with the user progress
@@ -72,7 +72,7 @@ describe('Profile', () => {
 
     // Main box with user information
     cy.get('div[id="profile-box"]').within(() => {
-      cy.get('button:contains("Editar")').should('exist').click();
+      cy.get('button[id="edit-button"]').contains("Editar").click();
     });
 
     cy.get('div[role="dialog"]').within(() => {
@@ -96,7 +96,7 @@ describe('Profile', () => {
 
     // Main box with user information
     cy.get('div[id="profile-box"]').within(() => {
-      cy.get('button:contains("Editar")').should('exist').click();
+      cy.get('button[id="edit-button"]').contains("Editar").click();
     });
 
     cy.get('div[role="dialog"]').within(() => {

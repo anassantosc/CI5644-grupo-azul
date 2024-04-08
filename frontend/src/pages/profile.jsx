@@ -87,6 +87,7 @@ export default function Profile() {
                             size="medium"
                             onClick={handleShowCreditCard}
                             className={styles.creditCardButton}
+                            id="credit-card-button"
                         >
                             <CreditCardIcon className={styles.creditCardIcon} />
                             Editar información de la tarjeta
@@ -99,6 +100,7 @@ export default function Profile() {
                             size="medium"
                             onClick={handleShow}
                             className={styles.editButton}
+                            id="edit-button"
                         >
                             Editar
                         </Button>
