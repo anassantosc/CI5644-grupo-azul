@@ -45,6 +45,7 @@ const LoginPage = () => {
                 <h1 className={styles.loginH1}>Marmota Salvaje</h1>
             </div>
 
+
             <AuthForm
                 onSubmit={handleSubmit}
                 onChange={handleChange}
