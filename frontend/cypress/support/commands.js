@@ -28,10 +28,25 @@ Cypress.Commands.add('generateSignupFixture', () => {
   const { faker } = require("@faker-js/faker");
 
   cy.writeFile('cypress/fixtures/signup.json', {
-    'username': faker.internet.displayName(),
+    'username': `${faker.person.firstName()}${faker.person.lastName()}`,
     'password': faker.internet.password({ length: 12 }),
     'name': faker.person.fullName(),
     'email': faker.internet.email(),
     'gender': faker.person.gender()
   });
+});
+
+Cypress.Commands.add('login', () => {
+  cy.visit('http://localhost:3000/login');
+
+  /*
+    We have some users already register by default in the database so
+    we use that user to not depend on the user that is created dynamically 
+    for the tests of register
+  */
+  cy.get('input[name="username"]').type('simonpuyosa');
+  cy.get('input[name="password"]').type('alluhakbar');
+
+  // We submit the form
+  cy.get('button[type="submit"]').click();
 });
