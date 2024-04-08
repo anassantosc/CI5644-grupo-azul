@@ -1,9 +1,12 @@
 CREATE TABLE USUARIO (
     id       SERIAL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
+    username VARCHAR(32) NOT NULL,
     password    VARCHAR(128) NOT NULL,
     name    VARCHAR(55) NOT NULL,
     email    VARCHAR(64) NOT NULL,
+    card_number   VARCHAR(16),
+    expiration_date DATE,
+    cvv      VARCHAR(3),
     gender    VARCHAR(16) 
 );
 
@@ -38,6 +41,8 @@ CREATE TABLE OFERTA (
 CREATE TABLE COMPRA (
     id         SERIAL PRIMARY KEY,
     id_usuario INT  NOT NULL REFERENCES USUARIO (id),
-    dte        DATE NOT NULL,
-    price      FLOAT
+    dte        TIMESTAMP NOT NULL,
+    price      FLOAT,
+    quantity   INT  NOT NULL CHECK (quantity > 0),
+    status     VARCHAR(50) NOT NULL CHECK (status IN ('PENDING', 'PROCESSED'))
 );

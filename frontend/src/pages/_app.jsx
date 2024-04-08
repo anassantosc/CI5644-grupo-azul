@@ -4,9 +4,11 @@ import PropTypes from "prop-types";
 
 export default function MyApp({ Component, pageProps }) {
     return (
+
         <AlertProvider>
             <Component {...pageProps} />
         </AlertProvider>
+
     );
 }
 

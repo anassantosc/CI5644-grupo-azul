@@ -4,6 +4,7 @@ const images = {
     pack: '/assets/pack.png',
     playerBackground: '/assets/player-background.png',
     unknownPlayer: '/assets/unknown-player.png',
+    backCard: '/assets/back-card.png',
     G: '/assets/G.png',
 };
 

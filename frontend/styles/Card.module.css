@@ -35,6 +35,7 @@
     flex-direction: column;
     align-items: center;
 }
+
 .card__attr__itemReverse {
     color: white;
     display: flex;
