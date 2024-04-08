@@ -35,6 +35,7 @@ export const Navbar = ({
 
     return (
         <Toolbar
+            id="navbar"
             disableGutters
             sx={{
                 backgroundColor: "rgba(255, 255, 255, 0.1);",
@@ -92,11 +93,10 @@ export const Navbar = ({
             </Box>
             {isLogin && <NotificationMenu/>}
 
-            <Box sx={{ flexGrow: 0, marginRight: 5 }}>
+            <Box aria-label="auth-menu" sx={{ flexGrow: 0, marginRight: 5 }}>
                 <Tooltip title="Menú">
                     <IconButton
                         size="large"
-                        aria-label="account of current user"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         onClick={handleOpenUserMenu}

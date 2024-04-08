@@ -51,7 +51,7 @@ export default function Profile() {
 
     return (
         <Layout>
-            <Box className={styles.profileBox}>
+            <Box className={styles.profileBox} id="profile-box">
                 <Grid container spacing={2} alignItems="center">
                     <Grid item xs={4} container justifyContent="center">
                         <Avatar
@@ -66,19 +66,19 @@ export default function Profile() {
                         direction="column"
                         justifyContent="center"
                     >
-                        <Typography className={styles.username} >
+                        <Typography className={styles.username} id="username-section">
                             <AlternateEmailIcon className={styles.usernameIcon} />
                             {user.username || "Nombre de Usuario no disponible"}
                         </Typography>
-                        <Typography className={styles.name}>
+                        <Typography className={styles.name} id="name-section">
                             <BadgeIcon className={styles.infoIcon} />
                             {user.name || "Nombre no disponible"}
                         </Typography>
-                        <Typography className={styles.userInfo}>
+                        <Typography className={styles.userInfo} id="email-section">
                             <EmailIcon className={styles.infoIcon} />
                             {user.email || "Correo Electrónico no disponible"}
                         </Typography>
-                        <Typography className={styles.userInfo}>
+                        <Typography className={styles.userInfo} id="gender-section">
                             <WcIcon className={styles.infoIcon} />
                             {user.gender || "Género del Usuario no disponible"}
                         </Typography>
@@ -87,6 +87,7 @@ export default function Profile() {
                             size="medium"
                             onClick={handleShowCreditCard}
                             className={styles.creditCardButton}
+                            id="credit-card-button"
                         >
                             <CreditCardIcon className={styles.creditCardIcon} />
                             Editar información de la tarjeta
@@ -99,6 +100,7 @@ export default function Profile() {
                             size="medium"
                             onClick={handleShow}
                             className={styles.editButton}
+                            id="edit-button"
                         >
                             Editar
                         </Button>
@@ -109,7 +111,7 @@ export default function Profile() {
                 </Grid>
             </Box>
 
-            <Box className={styles.progressBox}>
+            <Box className={styles.progressBox} id="progress-box">
                 <Grid container spacing={2} alignItems="center">
                     <Grid item xs={4} container justifyContent="center">
                         <Typography
