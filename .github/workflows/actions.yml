@@ -156,8 +156,9 @@ jobs:
           port: 22
           script: |
             cd blue-team
-            docker compose down
+            echo ${{secrets.PAT}} | docker login ghcr.io -u anassantosc --password-stdin
             docker compose down --rmi all
+            docker image prune --all --force
             docker compose pull
             docker compose up -d
             exit

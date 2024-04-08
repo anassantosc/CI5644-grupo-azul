@@ -14,6 +14,7 @@ import PropTypes from "prop-types";
 export default function TopMundial({ firstPlace, secondPlace, thirdPlace }) {
     return (
         <Timeline
+            id="player-timeline"
             position="alternate"
             sx={{
                 width: "100%",

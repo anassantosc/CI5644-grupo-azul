@@ -47,7 +47,7 @@ export const FooterSocial = () => {
 
 export const Footer = () => {
     return (
-        <Box className={styles.container}>
+        <Box id="footer" className={styles.container}>
             <Grid
                 container
                 columnSpacing={1}

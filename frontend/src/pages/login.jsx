@@ -7,6 +7,7 @@ import { Background } from "../components/Background";
 import { useAlert } from "../context/AlertContext";
 import { Login } from "../utils/auth/Login";
 import styles from "../../styles/Login.module.css";
+import SpecialsButtons from "../components/SpecialsButtons";
 
 const LoginPage = () => {
     const [values, setValues] = useState({ username: "", password: "" });
@@ -44,6 +45,7 @@ const LoginPage = () => {
                 <h1 className={styles.loginH1}>Marmota Salvaje</h1>
             </div>
 
+
             <AuthForm
                 onSubmit={handleSubmit}
                 onChange={handleChange}
@@ -51,6 +53,7 @@ const LoginPage = () => {
                 errors={errors}
                 isLogin={true}
             />
+            <SpecialsButtons/>
         </div>
     );
 };

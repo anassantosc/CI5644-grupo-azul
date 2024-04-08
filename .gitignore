@@ -5,6 +5,8 @@
 .idea/
 .idea/*
 
+frontend/dist/
+frontend/dist/*
 # Ignorar carpetas y archivos generados por npm y yarn
 node_modules/
 yarn-error.log
@@ -49,3 +51,5 @@ logs/
 # Ignorar archivos de compilación de Java
 *.class
 *.jar
+
+frontend/cypress/fixtures/signup.json
