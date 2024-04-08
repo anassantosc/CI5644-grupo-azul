@@ -1,110 +1,97 @@
-import React from "react";
-import CustomInput from "./CustomInput";
-import ColorButton from "./ColorButton";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import LocalPoliceIcon from "@mui/icons-material/LocalPolice";
 import PropTypes from "prop-types";
+import React from "react";
+import ColorButton from "./ColorButton";
+import CustomInput from "./CustomInput";
+import {Link, Box } from "@mui/material";
+import styles from "./../../styles/AuthForm.module.css";
+import { routes, labels, inputTypes, genderOptions, inputNames, formOptions, colors } from "../utils/constants";
 
-import Box from "@mui/material/Box";
-import { Link } from "@mui/material";
-
-const AuthForm = ({ onSubmit, onChange, values, errors, isLogin }) => {
-    const style = {
-        height: "auto",
-        width: "100%",
-        maxWidth: "22rem",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "left",
-        justifyContent: "space-around",
-        padding: "3rem 4rem",
-        backgroundColor: "#fff2",
-        borderRadius: "10px",
-        border: "1px solid #fffe",
-        color: "#fff",
-        fontSize: ".9rem",
-        "@media (max-width:600px)": {
-            padding: "1.5rem 2rem",
-            fontSize: "0.8rem",
-        },
-    };
-
+const AuthForm = ({ onSubmit, onChange, values, isLogin }) => {
     return (
-        <Box component="form" onSubmit={onSubmit} sx={style}>
-            <h1 style={{ margin: 0 }}>
-                {isLogin ? "Iniciar sesión." : "Registrate"}
+        <Box component='form' onSubmit={onSubmit} className={styles.authForm}>
+            <h1 className={styles.h1Style}>
+                {isLogin ? formOptions.login : formOptions.signup}
             </h1>
 
             <CustomInput
-                type="text"
-                label="Usuario"
+                type={inputTypes.text}
+                label={labels.username}
                 onChange={onChange}
                 value={values.username}
-                error={errors.username}
-                name="username"
+                name={inputNames.username}
+                required
             />
             <CustomInput
-                type="password"
-                label="Contraseña"
+                type={inputTypes.password}
+                label={labels.password}
                 onChange={onChange}
                 value={values.password}
-                error={errors.password}
-                name="password"
+                name={inputNames.password}
+                required
             />
             {!isLogin && (
-                <CustomInput
-                    type="password"
-                    label="Confirmar contraseña"
-                    onChange={onChange}
-                    value={values.confirmPassword}
-                    error={errors.confirmPassword}
-                    name="confirmPassword"
-                />
+                <React.Fragment>
+                    <CustomInput
+                        type={inputTypes.password}
+                        label={labels.confirmPassword}
+                        onChange={onChange}
+                        value={values.confirmPassword}
+                        name={inputNames.confirmPassword}
+                        required
+                    />
+                    <CustomInput
+                        label={labels.name}
+                        onChange={onChange}
+                        value={values.name}
+                        name={inputNames.name}
+                        required
+                    />
+                    <CustomInput
+                        type={inputTypes.email}
+                        label={labels.email}
+                        onChange={onChange}
+                        value={values.email}
+                        name={inputNames.email}
+                        required
+                    />
+                    <CustomInput
+                        type={inputTypes.select}
+                        label={labels.gender}
+                        defaultValue={values.gender}
+                        onChange={onChange}
+                        value={values.gender}
+                        name={inputNames.gender}
+                        required
+                        options={[
+                            { value: genderOptions.male, label: genderOptions.male},
+                            { value: genderOptions.female, label: genderOptions.female },
+                            { value: genderOptions.other, label: genderOptions.other },
+                        ]}
+                    />
+                </React.Fragment>
             )}
-            {isLogin && (
-                <Box sx={{ marginTop: "7px", alignSelf: "end" }}>
-                    <Link
-                        href="/RecoverPassword"
-                        underline="hover"
-                        color="white"
-                    >
-                        ¿Olvidaste tu contraseña?
-                    </Link>
-                </Box>
-            )}
-
             <ColorButton
-                textcolor="#fff"
-                bgcolor="#731530"
-                type="submit"
-                sx={{ height: "29px", marginBottom: "1rem", marginTop: "1rem" }}
+                bgcolor={colors.primary}
+                textcolor={colors.secondary}
+                type={inputTypes.submit}
+                className={styles.colorButton}
             >
-                <Box sx={{ paddingRight: "7px" }}> Continuar </Box>{" "}
+                <Box className={styles.boxPadding}> Continuar </Box>{" "}
                 <ArrowForwardIcon />
             </ColorButton>
 
-            <ColorButton
-                textcolor="#fff"
-                bgcolor="#EA5323"
-                sx={{ height: "29px", marginBottom: "1rem" }}
-            >
-                <LocalPoliceIcon />
-                <Box sx={{ paddingLeft: "7px" }}>
-                    {" "}
-                    {isLogin ? "Iniciar" : "Registrate"} con Auth0{" "}
-                </Box>
-            </ColorButton>
             {isLogin ? (
                 <Box>
                     ¿No tienes una cuenta?{" "}
-                    <Link href="/Register" underline="hover" color="white">
+                    <Link href={routes.signup} className={styles.linkStyle}>
                         Registrate
                     </Link>
                 </Box>
             ) : (
                 <Box>
                     ¿Ya tienes una cuenta?{" "}
-                    <Link href="/Login" underline="hover" color="white">
+                    <Link href={routes.login} className={styles.linkStyle}>
                         Inicia sesión
                     </Link>
                 </Box>
@@ -121,12 +108,10 @@ AuthForm.propTypes = {
     values: PropTypes.shape({
         username: PropTypes.string,
         password: PropTypes.string,
-        confirmPassword: PropTypes.string
-    }),
-    errors: PropTypes.shape({
-        username: PropTypes.string,
-        password: PropTypes.string,
-        confirmPassword: PropTypes.string
+        name: PropTypes.string,
+        email: PropTypes.string,
+        gender: PropTypes.string,
+        confirmPassword: PropTypes.string,
     }),
     isLogin: PropTypes.bool,
 };

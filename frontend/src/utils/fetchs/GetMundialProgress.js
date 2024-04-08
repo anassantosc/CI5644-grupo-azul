@@ -1,17 +1,20 @@
-import secureFetch from './SecureFetch';
+import secureFetch from "./SecureFetch";
+import { HTTPMethods, routes, alertMessages } from "../constants";
 
 export const GetMundialProgress = async () => {
-    const url = `http://localhost:8080/api/ownership/getMundialProgress`;
-    const method = "GET";
+    const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.api}${routes.ownership}${routes.getMundialProgress}`;
+    const method = HTTPMethods.GET;
     const data = null;
     const headers = {};
 
-    const response = await secureFetch(url, method, data, headers);
+    try {
+        const response = await secureFetch(url, method, data, headers);
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`${alertMessages.http_error} ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
     }
-
-    const mundialProgress = await response.json();
-    return mundialProgress;
-}
+};
