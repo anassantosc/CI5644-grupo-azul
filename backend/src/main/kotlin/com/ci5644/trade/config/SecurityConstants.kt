@@ -9,8 +9,8 @@ object SecurityConstants {
     const val JWT_AUTH_SECRET = "ONOMATOPEYAPARANQUTIRIMICUAROETERNONMASTOICLEIDOMAXILOFACIALESTACIONAMIENTO"
     const val USER_PSSWD_SECRET = "TELEFERICO"
 
-    //const val URL = "http://140.82.30.53"
-    const val URL = "http://localhost"
+    const val URL = "http://140.82.30.53"
+    //const val URL = "http://localhost"
     const val BACKEND_URL = URL + ":8080"
     const val FRONTEND_URL = URL + ":3000"
 }
