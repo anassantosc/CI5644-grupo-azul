@@ -1,0 +1,129 @@
+.storeBox {
+    background-color: rgba(255, 255, 255, 0.3);
+    margin: 50px;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.boughtCardsBox {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    margin: 50px;
+    min-height: 540px;
+}
+
+.cardsContainer {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.boughtTitle {
+    font-weight: 300;
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.607);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.boughtLength {
+    font-weight: 600;
+    font-size: 18px;
+    color: #731530;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.titleStore {
+    font-weight: bold;
+    font-size: 30px;
+    color: white;
+    margin: 4px;
+    padding: 4px;
+    display: flex;
+    gap: 1em;
+}
+
+.textPackage {
+    margin-right: 10px;
+    margin-bottom: 2px;
+    color: white;
+    width: 70px;
+}
+
+.saleButton {
+    background-color: #731530;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.saleButton:hover {
+    background-color: #73153078;
+}
+
+.payButton {
+    background-color: #731530;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payButton:hover {
+    background-color: #73153078;
+}
+
+.cancelButton {
+    color: white;
+    background-color: black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.cancelButton:hover {
+    background-color: #00000078;
+}
+
+.subtitle {
+    font-weight: 300;
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.607);
+    margin: 4px;
+    padding: 4px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+
+.packButtonGroup {
+    composes: buttonContainer;
+    margin: 10px auto;
+}
+
+.nextPackButton {
+    background-color: #731530;
+    color: white;
+    margin: 10px auto;
+}
+
+.packLink {
+    color: #731530;
+    font-weight: 600;
+    text-decoration-color: #731530;
+    margin: 10px auto;
+}

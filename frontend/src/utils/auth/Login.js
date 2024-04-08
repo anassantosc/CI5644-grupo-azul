@@ -1,5 +1,5 @@
 import secureFetch from "../fetchs/SecureFetch";
-import { HTTPMethods, alertMessages, alertTypes, routes, statusCodes } from "../constants";
+import {HTTPMethods, alertMessages, alertTypes, routes, statusCodes} from "../constants";
 
 export const Login = async (userData, showAlert) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}${routes.auth}${routes.login}`;
@@ -9,7 +9,7 @@ export const Login = async (userData, showAlert) => {
 
     try {
         const response = await secureFetch(url, method, data, headers);
-
+        console.log("response", response);
         if (response.ok) {
             showAlert(alertMessages.success_login, alertTypes.success);
         } else if (response.status === statusCodes.bad_request) {

@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.google {
+    margin-top: 15px;
+    background-color: white;
+    color: black;
+}
+
+.google:hover {
+    background-color: black;
+    color: white;
+}
+
+.googleLogo {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.facebook {
+    background-color: #2e519d;
+    color: white;
+    margin-top: 10px;
+}
+
+.facebook:hover {
+    background-color: white;
+    color: #2e519d;
+}

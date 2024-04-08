@@ -1,10 +1,5 @@
-import {
-    faDumbbell,
-    faFlag,
-    faRulerVertical,
-    faUpDownLeftRight,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faDumbbell, faFlag, faRulerVertical, faUpDownLeftRight,} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import PropTypes from "prop-types";
 import React from "react";
@@ -18,7 +13,7 @@ const IMAGES_PROPS = {
     priority: true,
 };
 
-export const Card = ({ name, number, position, height, weight }) => {
+export const Card = ({name, number, position, height, weight}) => {
 
     return name ? (
         <div className={styles.card}>
@@ -27,19 +22,19 @@ export const Card = ({ name, number, position, height, weight }) => {
                     <div
                         className={`${styles.card__attr__item}, ${styles.card__attr__itemReverse}`}
                     >
-                        <FontAwesomeIcon icon={faFlag} />
+                        <FontAwesomeIcon icon={faFlag}/>
                         <h3 className={styles.card__heading}>{number}</h3>
                     </div>
                     <div className={styles.card__attr__item}>
-                        <FontAwesomeIcon icon={faUpDownLeftRight} />
+                        <FontAwesomeIcon icon={faUpDownLeftRight}/>
                         <p className={styles.card__text}>{position}</p>
                     </div>
                     <div className={styles.card__attr__item}>
-                        <FontAwesomeIcon icon={faRulerVertical} />
+                        <FontAwesomeIcon icon={faRulerVertical}/>
                         <p className={styles.card__text}>{height}</p>
                     </div>
                     <div className={styles.card__attr__item}>
-                        <FontAwesomeIcon icon={faDumbbell} />
+                        <FontAwesomeIcon icon={faDumbbell}/>
                         <p className={styles.card__text}>{weight}</p>
                     </div>
                 </div>

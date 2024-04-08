@@ -7,6 +7,9 @@ const labels = {
     gender: 'Género',
     send: 'Carta a enviar',
     receive: 'Carta a recibir',
+    cardNumber: 'Número de Tarjeta de credito',
+    expirationDate: 'Fecha de expiración',
+    cvv: 'Código de seguridad',
 }
 
 export default labels;
