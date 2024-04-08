@@ -36,17 +36,31 @@ Cypress.Commands.add('generateSignupFixture', () => {
   });
 });
 
-Cypress.Commands.add('login', () => {
-  cy.visit('http://localhost:3000/login');
+Cypress.Commands.add(
+  'login', 
+  ({
+    visit_homepage
+  } = {
+    visit_homepage: false
+  }) => {
+    cy.visit('http://localhost:3000/login');
 
-  /*
-    We have some users already register by default in the database so
-    we use that user to not depend on the user that is created dynamically 
-    for the tests of register
-  */
-  cy.get('input[name="username"]').type('simonpuyosa');
-  cy.get('input[name="password"]').type('alluhakbar');
+    /*
+      We have some users already register by default in the database so
+      we use that user to not depend on the user that is created dynamically 
+      for the tests of register
+    */
+    cy.get('input[name="username"]').type('simonpuyosa');
+    cy.get('input[name="password"]').type('alluhakbar');
 
-  // We submit the form
-  cy.get('button[type="submit"]').click();
-});
+    // We submit the form
+    cy.get('button[type="submit"]').click();
+
+    // We go to the homepage without breaking the flow
+    if (visit_homepage) {
+      cy.get('#navbar').within(() => {
+        cy.get('img[alt="logo"]').parent().click();
+      })
+    }
+  }
+);
