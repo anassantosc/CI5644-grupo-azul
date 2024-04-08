@@ -4,7 +4,6 @@ import { Box, Grid, Typography, TextField, Button, Link } from "@mui/material";
 import styles from "../../styles/Store.module.css";
 import { useAlert } from "../context/AlertContext";
 import { FlipCard } from "../components/FlipCard";
-//import { boughtCards } from "./storeTemp";
 import prices from "../utils/constants/prices";
 import { alertMessages, alertTypes, statusCodes } from "../utils/constants";
 import { GetPurchasedCards } from "../utils/fetchs/GetPurchasedCards";
