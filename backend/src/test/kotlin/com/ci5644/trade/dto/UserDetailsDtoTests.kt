@@ -19,7 +19,10 @@ class UserDetailsTest {
             username = "username",
             name = "name",
             email = "email",
-            gender = "test"
+            gender = "test",
+            cardNumber = null,
+            expirationDate = null,
+            cvv = null
         )
 
         assertThat(userDetailsDto.username).isEqualTo("username")
@@ -34,7 +37,10 @@ class UserDetailsTest {
             username = "username",
             name = "name",
             email = "email",
-            gender = null
+            gender = null,
+            cardNumber = null,
+            expirationDate = null,
+            cvv = null
         )
 
         assertThat(userDetailsDto.username).isEqualTo("username")
@@ -49,7 +55,10 @@ class UserDetailsTest {
             username = "username",
             name = "name",
             email = "email",
-            gender = null
+            gender = null,
+            cardNumber = null,
+            expirationDate = null,
+            cvv = null
         )
 
         assertThat(userDetailsDto.validate()).isNull()
@@ -61,9 +70,12 @@ class UserDetailsTest {
             username = "user",
             name = "name",
             email = "email",
-            gender = null
+            gender = null,
+            cardNumber = null,
+            expirationDate = null,
+            cvv = null
         )
 
-        assertThat(userDetailsDto.validate()).isEqualTo("Username cannot be less than 5 characters. ")
+        assertThat(userDetailsDto.validate()).isEqualTo("El nombre de usuario debe tener al menos 5 caracteres. \n")
     }
 }
